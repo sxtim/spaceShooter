@@ -9,7 +9,8 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
     private Graphics2D g; //переменная кисточка
-    private GameBack backGround;
+    public GameBack backGround;
+    public static Player player;
 
 
     //Constructor
@@ -19,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+        addKeyListener(new Listeners()); //добавляем в конструктор панели слушателя клавиатуры
     }
 
     //Functions
@@ -31,7 +33,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);//способ обработки цвета холста
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
+
         backGround = new GameBack();//инициализируем задний фон
+        player = new Player();// инициализируем плеера
 
         while (true) {// TODO States
             gameUpdate();
@@ -49,12 +54,16 @@ public class GamePanel extends JPanel implements Runnable {
     public void gameUpdate() { // обновляет состояния
         //BackGround update
         backGround.update();
-
+        //Player update
+        player.update();
     }
 
     public void gameRender() { // обновляет картинку
         //BackGround update
         backGround.draw(g);
+
+        //Player draw
+        player.draw(g);
     }
 
     private void gameDraw() { // передаем изображение в нашу компоненту
