@@ -23,23 +23,23 @@ public class Player {
         dy = 0;
         r = 5;
         color1 = Color.WHITE;
-        speed = 5;
+        speed = 1;
 
     }
 
     //Functions
     public void update() {
         if(up && y > r){
-            y -= speed;
+            dy = - speed;
         }
         if(down && y < GamePanel.HEIGHT - r){
-            y += speed;
+            dy = speed;
         }
         if(left && x > r){
-            x -= speed;
+            dx = -speed;
         }
         if(right && x < GamePanel.HEIGHT - r){
-            x += speed;
+            dx = speed;
         }
 
     }
