@@ -23,7 +23,7 @@ public class Player {
         dy = 0;
         r = 5;
         color1 = Color.WHITE;
-        speed = 1;
+        speed = 5;
 
     }
 
@@ -41,6 +41,15 @@ public class Player {
         if(right && x < GamePanel.HEIGHT - r){
             dx = speed;
         }
+        if(up && left || up && right || down && left || down && right){
+            dy = dy * Math.sin(45);
+            dx = dx * Math.cos(45);
+        }
+        y += dy;
+        x += dx;
+
+        dy = 0;
+        dx = 0;
 
     }
 
