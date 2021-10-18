@@ -15,6 +15,7 @@ public class Player {
     public static boolean right;
     private int speed;
 
+
     public Player() {
         x = (double) GamePanel.WIDTH / 2;
         y = (double) GamePanel.HEIGHT / 2;
@@ -50,6 +51,7 @@ public class Player {
         g.setColor(color1.darker());
         g.drawOval((int) (x - r), (int)(y - r), 2 * r, 2 * r);
         g.setStroke(new BasicStroke(1));
+
     }
 
 
