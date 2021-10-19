@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Field
@@ -11,6 +12,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Graphics2D g; //переменная кисточка
     public GameBack backGround;
     public static Player player;
+    public static ArrayList<Bullet> bullets;
 
 
     //Constructor
@@ -35,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
 
+        bullets = new ArrayList<>();
+
         backGround = new GameBack();//инициализируем задний фон
         player = new Player();// инициализируем плеера
 
@@ -56,15 +60,18 @@ public class GamePanel extends JPanel implements Runnable {
         backGround.update();
         //Player update
         player.update();
+        //Bullets update
+
     }
 
     public void gameRender() { // обновляет картинку
         //BackGround update
         backGround.draw(g);
-
         //Player draw
         player.draw(g);
-    }
+
+        }
+
 
     private void gameDraw() { // передаем изображение в нашу компоненту
         Graphics g2 = this.getGraphics(); // выводим на JPanel нарисованные элементы

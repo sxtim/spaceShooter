@@ -38,7 +38,7 @@ public class Player {
         if(left && x > r){
             dx = -speed;
         }
-        if(right && x < GamePanel.HEIGHT - r){
+        if(right && x < GamePanel.WIDTH - r){
             dx = speed;
         }
         if(up && left || up && right || down && left || down && right){
