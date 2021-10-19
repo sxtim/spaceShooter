@@ -61,7 +61,9 @@ public class GamePanel extends JPanel implements Runnable {
         //Player update
         player.update();
         //Bullets update
-
+        for (Bullet bullet : bullets) {
+            bullet.update();
+        }
     }
 
     public void gameRender() { // обновляет картинку
@@ -69,9 +71,11 @@ public class GamePanel extends JPanel implements Runnable {
         backGround.draw(g);
         //Player draw
         player.draw(g);
-
+        //Bullets draw
+        for (Bullet bullet : bullets) {
+            bullet.draw(g);
         }
-
+    }
 
     private void gameDraw() { // передаем изображение в нашу компоненту
         Graphics g2 = this.getGraphics(); // выводим на JPanel нарисованные элементы

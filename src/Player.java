@@ -14,7 +14,7 @@ public class Player {
     public static boolean left;
     public static boolean right;
     private int speed;
-
+    public static boolean isFiring;
 
     public Player() {
         x = (double) GamePanel.WIDTH / 2;
@@ -51,6 +51,10 @@ public class Player {
         dy = 0;
         dx = 0;
 
+        if(isFiring){
+            GamePanel.bullets.add(new Bullet());
+        }
+
     }
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
@@ -63,5 +67,13 @@ public class Player {
 
     }
 
+    public double getX(){
+        return x;
+    }
+
+
+    public double getY(){
+        return y;
+    }
 
 }

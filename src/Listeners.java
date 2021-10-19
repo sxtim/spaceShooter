@@ -19,6 +19,9 @@ public class Listeners implements KeyListener {
 
         if (key == KeyEvent.VK_D)
             Player.right = true;
+        if (key == KeyEvent.VK_SPACE){
+            Player.isFiring = true;
+        }
 
     }
 
@@ -38,6 +41,10 @@ public class Listeners implements KeyListener {
 
         if (key == KeyEvent.VK_D)
             Player.right = false;
+
+        if (key == KeyEvent.VK_SPACE){
+            Player.isFiring = false;
+        }
 
     }
 

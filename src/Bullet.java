@@ -13,8 +13,8 @@ public class Bullet {
 
     //Constructor
     public Bullet(){
-        x = 0;
-        y = 0;
+        x = (int)GamePanel.player.getX();
+        y = (int)GamePanel.player.getY();
         r = 2;
         speed = 10;
         color = Color.WHITE;
