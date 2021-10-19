@@ -22,7 +22,8 @@ public class GamePanel extends JPanel implements Runnable {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
-        addKeyListener(new Listeners()); //добавляем в конструктор панели слушателя клавиатуры
+        addKeyListener(new Listeners());//добавляем в конструктор панели слушателя клавиатуры
+        addMouseListener(new Listeners());//добавляем в конструктор панели слушателя мыши
     }
 
     //Functions

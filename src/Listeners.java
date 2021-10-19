@@ -1,8 +1,6 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
-public class Listeners implements KeyListener {
-
+public class Listeners extends MouseAdapter implements KeyListener, MouseListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -19,7 +17,7 @@ public class Listeners implements KeyListener {
 
         if (key == KeyEvent.VK_D)
             Player.right = true;
-        if (key == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_SPACE) {
             Player.isFiring = true;
         }
 
@@ -42,10 +40,20 @@ public class Listeners implements KeyListener {
         if (key == KeyEvent.VK_D)
             Player.right = false;
 
-        if (key == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_SPACE) {
             Player.isFiring = false;
         }
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        Player.isFiring = true;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        Player.isFiring = false;
     }
 
 
@@ -54,4 +62,18 @@ public class Listeners implements KeyListener {
 
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
