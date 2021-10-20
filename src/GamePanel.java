@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -44,12 +46,19 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();// инициализируем плеера
 
         while (true) {// TODO States
+            long timer = System.nanoTime();
             gameUpdate();
             gameRender();
             gameDraw();
 
+
+            //
+//            System.out.println(bullets.size());
+//            long elapsed = (System.nanoTime() - timer) / 100000;
+//            System.out.println(elapsed);
+
             try {
-                thread.sleep(30); //TODO FPS
+                thread.sleep(33); //TODO FPS
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

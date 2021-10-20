@@ -28,6 +28,8 @@ public class Player {
     }
 
     //Functions
+
+    //Moves player
     public void update() {
         if(up && y > r){
             dy = - speed;
@@ -42,15 +44,17 @@ public class Player {
             dx = speed;
         }
         if(up && left || up && right || down && left || down && right){
-            dy = dy * Math.sin(45);
-            dx = dx * Math.cos(45);
+
+            double angle = Math.toRadians(45);//корректировка угла движения(переводим градусы в радианы)
+            dy = dy * Math.sin(angle);
+            dx = dx * Math.cos(angle);
         }
         y += dy;
         x += dx;
 
         dy = 0;
         dx = 0;
-
+        //Shoot player
         if(isFiring){
             GamePanel.bullets.add(new Bullet());
         }

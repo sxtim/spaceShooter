@@ -25,6 +25,15 @@ public class Bullet {
         y -= speed;
     }
 
+    //проверка не улетела ли пуля за экран
+    public boolean remove(){
+        if(y < 0){
+            return true;
+        } else
+        return false;
+    }
+
+
     public void draw(Graphics2D g){
         g.setColor(color);
         g.fillOval((int)x,(int)y,r,2 * r);
