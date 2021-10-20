@@ -34,6 +34,10 @@ public class Bullet {
     public void draw(Graphics2D g){
         g.setColor(color);
         g.fillOval((int)x,(int)y,r,2 * r);
+        //ищем в каком классе переопределяется метод drawOval
+//        String name = g.getClass().getName();
+//        System.out.println(name);
+//        sun.java2d.SunGraphics2D
 
 
 

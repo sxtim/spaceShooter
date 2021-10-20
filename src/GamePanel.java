@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GameBack backGround;
     public static Player player;
     public static ArrayList<Bullet> bullets;
+    public static ArrayList<Enemy> enemies;
 
 
     //Constructor
@@ -40,7 +41,8 @@ public class GamePanel extends JPanel implements Runnable {
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
 
-        bullets = new ArrayList<>();
+                bullets = new ArrayList<>();
+                enemies = new ArrayList<>();
 
         backGround = new GameBack();//инициализируем задний фон
         player = new Player();// инициализируем плеера
@@ -54,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
             //проверка количества пуль
-//            System.out.println(bullets.size());
+//           System.out.println(bullets.size());
             //тайминг работы цикла
 //            long elapsed = (System.nanoTime() - timer) / 100000;
 //            System.out.println(elapsed);
@@ -76,9 +78,9 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
             boolean remove = bullets.get(i).remove();
-            if(remove){
-                bullets.remove(i);
-                i--;
+            if(remove){ //если пуля выходит за прелеы
+                bullets.remove(i);//удаляем пулю из списка
+//                i--;//переводим счетчик назад
             }
         }
     }
