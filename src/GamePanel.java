@@ -46,14 +46,16 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();// инициализируем плеера
 
         while (true) {// TODO States
+            //инициализация тайминга
             long timer = System.nanoTime();
             gameUpdate();
             gameRender();
             gameDraw();
 
 
-            //
+            //проверка количества пуль
 //            System.out.println(bullets.size());
+            //тайминг работы цикла
 //            long elapsed = (System.nanoTime() - timer) / 100000;
 //            System.out.println(elapsed);
 
@@ -71,8 +73,13 @@ public class GamePanel extends JPanel implements Runnable {
         //Player update
         player.update();
         //Bullets update
-        for (Bullet bullet : bullets) {
-            bullet.update();
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).update();
+            boolean remove = bullets.get(i).remove();
+            if(remove){
+                bullets.remove(i);
+                i--;
+            }
         }
     }
 

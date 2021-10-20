@@ -27,10 +27,7 @@ public class Bullet {
 
     //проверка не улетела ли пуля за экран
     public boolean remove(){
-        if(y < 0){
-            return true;
-        } else
-        return false;
+        return y < 0;
     }
 
 
