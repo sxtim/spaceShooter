@@ -43,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
 
                 bullets = new ArrayList<>();
                 enemies = new ArrayList<>();
+                enemies.add(new Enemy(1,1));
+                enemies.add(new Enemy(1, 1));
 
         backGround = new GameBack();//инициализируем задний фон
         player = new Player();// инициализируем плеера
@@ -83,6 +85,10 @@ public class GamePanel extends JPanel implements Runnable {
 //                i--;//переводим счетчик назад
             }
         }
+        //Enemies update
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).update();
+        }
     }
 
     public void gameRender() { // обновляет картинку
@@ -93,6 +99,10 @@ public class GamePanel extends JPanel implements Runnable {
         //Bullets draw
         for (Bullet bullet : bullets) {
             bullet.draw(g);
+        }
+        //Draw enemies
+        for (Enemy enemy : enemies) {
+            enemy.draw(g);
         }
     }
 
