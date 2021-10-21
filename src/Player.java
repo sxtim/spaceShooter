@@ -24,14 +24,15 @@ public class Player {
         dx = 0;
         dy = 0;
         r = 5;
-        color1 = Color.WHITE;
         speed = 5;
+
+        color1 = Color.WHITE;
 
     }
 
     //Functions
 
-    //Moves player
+    //Move player
     public void update() {
         if(up && y > r){
             dy = - speed;

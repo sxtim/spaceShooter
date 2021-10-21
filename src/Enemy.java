@@ -29,27 +29,31 @@ public class Enemy {
                         r = 7;
 
                         speed = 2;
+                        health = 2;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         dx = Math.sin(angle) * speed; //смещение шариков
                         dy = Math.cos(angle) * speed;
                 }
         }
     }
-
-
     //Functions
+    public boolean remove(){
+       return health <= 0;
+    }
+
     public void update() {
     x += dx;
-
     y += dy;
-
     //проверка выхода за пределы поля
     //еесли враг вышел за пределы поля, то возвращаем его
     if(x < 0 && dx < 0) dx = -dx;
     if(x > GamePanel.WIDTH && dx > 0) dx = -dx;
     if(y < 0 && dy < 0) dy = -dy;
     if(y > GamePanel.HEIGHT && dy > 0) dy = -dy;
+    }
 
+    public void hit(){//при попадание именьшаем здоровье
+        health--;
     }
 
 
@@ -62,4 +66,16 @@ public class Enemy {
         g.setStroke(new BasicStroke(1));
     }
 
+    //Getters
+
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+
+    public int getR() {
+        return r;
+    }
 }

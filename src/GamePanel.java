@@ -89,6 +89,25 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
         }
+        //Bullets-enemies collide
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            double ex = e.getX();//получаем координаты врага
+            double ey = e.getY();
+
+            for (int j = 0; j < bullets.size(); j++) {
+                Bullet b = bullets.get(i);
+                double bx = b.getX();//difference (разница медну врагом и пулей)
+                double by = b.getY();//difference (разница медну врагом и пулей)
+
+                double dx = ex - bx;//difference (разница медну врагом и пулей)
+                double dy = ey - by;//difference (разница медну врагом и пулей)
+
+                double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
+
+
+            }
+        }
     }
 
     public void gameRender() { // обновляет картинку
