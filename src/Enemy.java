@@ -40,6 +40,7 @@ public class Enemy {
     //Functions
     public void update() {
     x += dx;
+
     y += dy;
 
     //проверка выхода за пределы поля
@@ -58,7 +59,7 @@ public class Enemy {
         g.setStroke(new BasicStroke(3));
         g.setColor(color.darker());
         g.drawOval((int)x - r, (int)y -r, 2 * r, 2 * r);
-        g.setStroke(new BasicStroke(3));
+        g.setStroke(new BasicStroke(1));
     }
 
 }

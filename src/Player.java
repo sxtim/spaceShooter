@@ -1,3 +1,5 @@
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.awt.*;
 
 public class Player {
@@ -51,7 +53,10 @@ public class Player {
         }
         y += dy;
         x += dx;
-
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
+        System.out.println("DX: " + dx);
+        System.out.println("DY: " + dy);
         dy = 0;
         dx = 0;
         //Shoot player
