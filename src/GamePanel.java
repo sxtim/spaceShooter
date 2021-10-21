@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
             double ey = e.getY();
 
             for (int j = 0; j < bullets.size(); j++) {
-                Bullet b = bullets.get(i);
+                Bullet b = bullets.get(j);
                 double bx = b.getX();//difference (разница медну врагом и пулей)
                 double by = b.getY();//difference (разница медну врагом и пулей)
 
@@ -105,7 +105,16 @@ public class GamePanel extends JPanel implements Runnable {
 
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 
-
+                if((int) dist <= e.getR() + b.getR()){//если дистанция между врагом и пулей меньше
+                    e.hit();                          //чем сумма радиусов врага и пули, то есть попадание
+                    bullets.remove(j);                //удаляем пулю и выходим из цикла
+                    break;
+                }
+            }
+            boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+            if(remove){
+                enemies.remove(i);
+                i--;
             }
         }
     }
