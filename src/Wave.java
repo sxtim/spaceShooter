@@ -70,8 +70,10 @@ public class Wave {
         if(alpha > 255) alpha = 255;//корректируем alpha
         g.setFont(new Font("consolas", Font.PLAIN, 20));
         g.setColor(new Color(255,255,255,(int) alpha));//рисуем с эффектом
+        String s = waveText + waveNumber;
+        long length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth(); //получаем длину текста в пикселях
 
-        g.drawString(waveText, GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2);
+        g.drawString(s, GamePanel.WIDTH / 2 - (int) length / 2, GamePanel.HEIGHT / 2);
     }
 
 
