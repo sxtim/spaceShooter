@@ -22,7 +22,7 @@ public class Player {
     public Player() {
         health = 3;
         x = (double) GamePanel.WIDTH / 2;
-        y = (double) GamePanel.HEIGHT / 2;
+        y = (double) GamePanel.HEIGHT / 1.3;
         dx = 0;
         dy = 0;
         r = 5;
