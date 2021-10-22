@@ -89,11 +89,11 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
         }
-        //Bullets-enemies collide
+        //Bullets-enemies collides
         for (int i = 0; i < enemies.size(); i++) {
             Enemy e = enemies.get(i);
-            double ex = e.getX();//получаем координаты врага
-            double ey = e.getY();
+            double ex = e.getX();//получаем координаты врага по икс
+            double ey = e.getY();//получаем координаты по Y
 
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
@@ -107,15 +107,16 @@ public class GamePanel extends JPanel implements Runnable {
 
                 if((int) dist <= e.getR() + b.getR()){//если дистанция между врагом и пулей меньше
                     e.hit();                          //чем сумма радиусов врага и пули, то есть попадание
-                    bullets.remove(j);                //удаляем пулю и выходим из цикла
+                    bullets.remove(j);                  //удаляем пулю и выходим из цикла
+                    boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+                    if(remove){                 //если
+                        enemies.remove(i);
+                        i--;
+                    }
                     break;
                 }
             }
-            boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
-            if(remove){
-                enemies.remove(i);
-                i--;
-            }
+
         }
     }
 

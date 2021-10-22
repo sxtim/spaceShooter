@@ -77,6 +77,12 @@ public class Player {
 
     }
 
+    //Getters
+
+    public int getR() {
+        return r;
+    }
+
     public double getX(){
         return x;
     }
