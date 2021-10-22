@@ -29,7 +29,7 @@ public class Enemy {
                         r = 7;
 
                         speed = 2;
-                        health = 2;
+                        health = 10;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         dx = Math.sin(angle) * speed; //смещение шариков
                         dy = Math.cos(angle) * speed;

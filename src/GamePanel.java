@@ -86,8 +86,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Enemies update
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).update();
+        for (Enemy enemy : enemies) {
+            enemy.update();
         }
         //Bullets-enemies collides
         for (int i = 0; i < enemies.size(); i++) {
@@ -97,8 +97,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
-                double bx = b.getX();//difference (разница медну врагом и пулей)
-                double by = b.getY();//difference (разница медну врагом и пулей)
+                double bx = b.getX();///получаем координаты по икс
+                double by = b.getY();//получаем координаты по Y
 
                 double dx = ex - bx;//difference (разница медну врагом и пулей)
                 double dy = ey - by;//difference (разница медну врагом и пулей)
@@ -116,6 +116,31 @@ public class GamePanel extends JPanel implements Runnable {
                     break;
                 }
             }
+        }
+        //Player-enemy collides
+        for(int i = 0; i < enemies.size(); i++ ){//цикл по врагам
+            Enemy e = enemies.get(i);
+            double eX = e.getX();
+            double eY = e.getY();
+
+            double pX = player.getX();//координаты плеера
+            double pY = player.getY();
+
+                double dX = eX - pX;//difference (разница медну врагом и пулей)
+                double dY = eY - pY;//difference (разница медну врагом и пулей)
+
+                double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
+
+                if((int) distance <= e.getR() + player.getR()){
+                    e.hit();
+                    player.hit();
+                    boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+                    if(remove){
+                        enemies.remove(i);
+                        i--;
+                    }
+                }
+
 
         }
     }

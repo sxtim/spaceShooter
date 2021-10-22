@@ -17,8 +17,10 @@ public class Player {
     public static boolean right;
     private int speed;
     public static boolean isFiring;
+    private int health;
 
     public Player() {
+        health = 3;
         x = (double) GamePanel.WIDTH / 2;
         y = (double) GamePanel.HEIGHT / 2;
         dx = 0;
@@ -54,18 +56,26 @@ public class Player {
         }
         y += dy;
         x += dx;
-        System.out.println("X: " + x);
-        System.out.println("Y: " + y);
-        System.out.println("DX: " + dx);
-        System.out.println("DY: " + dy);
+        //Отображение координат
+//        System.out.println("X: " + x);
+//        System.out.println("Y: " + y);
+//        System.out.println("DX: " + dx);
+//        System.out.println("DY: " + dy);
         dy = 0;
         dx = 0;
+
+
         //Shoot player
         if(isFiring){
             GamePanel.bullets.add(new Bullet());
         }
 
     }
+        public void hit(){
+        health--;
+            System.out.println(health);
+        }
+
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
         g.setColor(color1);
@@ -91,5 +101,6 @@ public class Player {
     public double getY(){
         return y;
     }
+
 
 }
