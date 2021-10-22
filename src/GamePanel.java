@@ -18,6 +18,10 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Enemy> enemies;
     public static Wave wave;
 
+    private int FPS;
+    private double millisPerFrame;//миллисеккунд чтобы получить фпс
+    private long timerFPS;
+    private int sleepTime;
 
     //Constructor
     public GamePanel() {
@@ -38,6 +42,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        FPS = 60;
+        millisPerFrame =  1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
+        sleepTime = 0;
+
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);//способ обработки цвета холста
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
@@ -51,23 +59,30 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (true) {// TODO States
             //инициализация тайминга
-            long timer = System.nanoTime();
+            timerFPS = System.nanoTime();
+
             gameUpdate();
             gameRender();
             gameDraw();
-
 
             //проверка количества пуль
 //           System.out.println(bullets.size());
             //тайминг работы цикла
 //            long elapsed = (System.nanoTime() - timer) / 100000;
 //            System.out.println(elapsed);
-
-            try {
-                thread.sleep(33); //TODO FPS
+            //таймеры чтобы не зависимо от длительности цикла всегда получалось 30 фпс
+            timerFPS = (System.nanoTime() - timerFPS) / 1000000;
+            if(millisPerFrame > timerFPS) {
+                sleepTime = (int) (millisPerFrame - timerFPS);
+            } else sleepTime = 1;
+                try {
+                Thread.sleep(sleepTime); //TODO FPS
+                    System.out.println(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+                timerFPS = 0;
+                sleepTime = 1;
         }
     }
 

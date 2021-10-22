@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE - ";
         waveNumber = 1;
-        waveMultiplier = 6;
+        waveMultiplier = 2;
 
         waveTimer = 0;
         waveDelay = 5000;
@@ -30,7 +30,7 @@ public class Wave {
     public void createEnemies() {
         int enemyCount = waveNumber * waveMultiplier;
         if (waveNumber < 4) {//до 4 волны создаем определенный алгоритм
-            while(enemyCount > 0) {//до тех пор пока врагов меньше 0, ьудем создавать врагов
+            while(enemyCount > 0) {//до тех пор пока врагов меньше 0, будем создавать врагов
                 int type = 1;
                 int rank = 1;
                 GamePanel.enemies.add(new Enemy (type, rank));
@@ -69,7 +69,7 @@ public class Wave {
         if(alpha < 0) alpha = 0;//корректируем alpha
         if(alpha > 255) alpha = 255;//корректируем alpha
         g.setFont(new Font("consolas", Font.PLAIN, 20));
-        g.setColor(new Color(255,255,255,(int) alpha));//рисуем с эффектом
+        g.setColor(new Color(200,52,200,(int) alpha));//рисуем с эффектом
         String s = waveText + waveNumber;
         long length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth(); //получаем длину текста в пикселях
 
