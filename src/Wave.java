@@ -37,7 +37,7 @@ public class Wave {
                 enemyCount -= type * rank;
             }
         }
-
+        waveNumber++;
     }
 
 
