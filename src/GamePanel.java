@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static Player player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
+    public static Wave wave;
 
 
     //Constructor
@@ -41,10 +42,9 @@ public class GamePanel extends JPanel implements Runnable {
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
 
-                bullets = new ArrayList<>();
-                enemies = new ArrayList<>();
-                enemies.add(new Enemy(1,1));
-                enemies.add(new Enemy(1, 1));
+        bullets = new ArrayList<>();
+        enemies = new ArrayList<>();
+        wave = new Wave();
 
         backGround = new GameBack();//инициализируем задний фон
         player = new Player();// инициализируем плеера
@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
             boolean remove = bullets.get(i).remove();
-            if(remove){ //если пуля выходит за прелеы
+            if (remove) { //если пуля выходит за прелеы
                 bullets.remove(i);//удаляем пулю из списка
 //                i--;//переводим счетчик назад
             }
@@ -105,11 +105,11 @@ public class GamePanel extends JPanel implements Runnable {
 
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 
-                if((int) dist <= e.getR() + b.getR()){//если дистанция между врагом и пулей меньше
+                if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
                     e.hit();                          //чем сумма радиусов врага и пули, то есть попадание
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
-                    if(remove){                 //если
+                    if (remove) {                 //если
                         enemies.remove(i);
                         i--;
                     }
@@ -118,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Player-enemy collides
-        for(int i = 0; i < enemies.size(); i++ ){//цикл по врагам
+        for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
             Enemy e = enemies.get(i);
             double eX = e.getX();
             double eY = e.getY();
@@ -126,27 +126,27 @@ public class GamePanel extends JPanel implements Runnable {
             double pX = player.getX();//координаты плеера
             double pY = player.getY();
 
-                double dX = eX - pX;//difference (разница медну врагом и пулей)
-                double dY = eY - pY;//difference (разница медну врагом и пулей)
+            double dX = eX - pX;//difference (разница медну врагом и пулей)
+            double dY = eY - pY;//difference (разница медну врагом и пулей)
 
-                double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
+            double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
-                if((int) distance <= e.getR() + player.getR()){
-                    e.hit();
-                    player.hit();
-                    boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
-                    if(remove){
-                        enemies.remove(i);
-                        i--;
-                    }
+            if ((int) distance <= e.getR() + player.getR()) {
+                e.hit();
+                player.hit();
+                boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+                if (remove) {
+                    enemies.remove(i);
+                    i--;
                 }
-
-
+            }
         }
+        //Wave update
+        wave.update();
     }
 
     public void gameRender() { // обновляет картинку
-        //BackGround update
+        //BackGround draw
         backGround.draw(g);
         //Player draw
         player.draw(g);
@@ -158,6 +158,9 @@ public class GamePanel extends JPanel implements Runnable {
         for (Enemy enemy : enemies) {
             enemy.draw(g);
         }
+        //Draw wave
+        if(wave.showWave())//если надо показывать то пишем на экране текст
+        wave.draw(g);
     }
 
     private void gameDraw() { // передаем изображение в нашу компоненту

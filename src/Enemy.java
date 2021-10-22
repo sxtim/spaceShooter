@@ -11,7 +11,7 @@ public class Enemy {
     Color color;
     private double speed;
 
-    private double health;
+    private int health;
     private int type;
     private int rank;
 
@@ -54,6 +54,7 @@ public class Enemy {
 
     public void hit(){//при попадание именьшаем здоровье
         health--;
+        System.out.println(health);
     }
 
 
