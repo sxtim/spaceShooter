@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();// инициализируем плеера
 
         while (true) {// TODO States
-            //инициализация тайминга
+            //инициализация таймера ФПС
             timerFPS = System.nanoTime();
 
             gameUpdate();

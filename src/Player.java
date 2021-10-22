@@ -68,6 +68,7 @@ public class Player {
         //Shoot player
         if(isFiring){
             GamePanel.bullets.add(new Bullet());
+            isFiring = false;
         }
 
     }

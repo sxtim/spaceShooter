@@ -47,13 +47,11 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        Player.isFiring = true;
-    }
+    public void mousePressed(MouseEvent e){}
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Player.isFiring = false;
+
     }
 
 
@@ -64,7 +62,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+            Player.isFiring = true;
     }
 
     @Override
