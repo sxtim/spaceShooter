@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE - ";
         waveNumber = 1;
-        waveMultiplier = 2;
+        waveMultiplier = 3;
 
         waveTimer = 0;
         waveDelay = 5000;
@@ -30,7 +30,7 @@ public class Wave {
     public void createEnemies() {
         int enemyCount = waveNumber * waveMultiplier;
         if (waveNumber < 4) {//до 4 волны создаем определенный алгоритм
-            while(enemyCount > 0) {//до тех пор пока врагов меньше 0, будем создавать врагов
+            while(enemyCount > 0) {//создаем врагов
                 int type = 1;
                 int rank = 1;
                 GamePanel.enemies.add(new Enemy (type, rank));

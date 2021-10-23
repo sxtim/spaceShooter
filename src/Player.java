@@ -1,9 +1,12 @@
 import jdk.swing.interop.SwingInterOpUtils;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player {
     //Fields
+    private static Image imageShip = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/playership5.png").getImage();
     private double x;
     private double y;
     private double dx; //коифициент смещения по диагонали
@@ -20,12 +23,13 @@ public class Player {
     private int health;
 
     public Player() {
+
         health = 3;
         x = (double) GamePanel.WIDTH / 2;
         y = (double) GamePanel.HEIGHT / 1.3;
         dx = 0;
         dy = 0;
-        r = 5;
+        r = 50;
         speed = 5;
 
         color1 = Color.WHITE;
@@ -42,7 +46,7 @@ public class Player {
         if(down && y < GamePanel.HEIGHT - r){
             dy = speed;
         }
-        if(left && x > r){
+        if(left && x > 0){
             dx = -speed;
         }
         if(right && x < GamePanel.WIDTH - r){
@@ -74,17 +78,22 @@ public class Player {
     }
         public void hit(){
         health--;
-//            System.out.println(health);
+            System.out.println(health);
         }
 
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
+        g.drawImage(imageShip, (int)x, (int)y, null);
         g.setColor(color1);
-        g.fillOval((int) (x - r), (int)(y - r), 2 * r, 2 * r);
-        g.setStroke(new BasicStroke(3));
-        g.setColor(color1.darker());
-        g.drawOval((int) (x - r), (int)(y - r), 2 * r, 2 * r);
-        g.setStroke(new BasicStroke(1));
+
+
+        //Player в виде точки
+//        g.setColor(color1);
+//        g.fillOval((int) (x - r), (int)(y - r), 2 * r, 2 * r);
+//        g.setStroke(new BasicStroke(3));
+//        g.setColor(color1.darker());
+//        g.drawOval((int) (x - r), (int)(y - r), 2 * r, 2 * r);
+//        g.setStroke(new BasicStroke(1));
 
     }
 

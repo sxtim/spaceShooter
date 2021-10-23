@@ -1,7 +1,9 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class GameBack {
     //Fields
+    private static Image backImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/background.png").getImage();
     private Color color;
 
 
@@ -17,7 +19,9 @@ public class GameBack {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(color);
-        g.fillRect(0,0, GamePanel.WIDTH, GamePanel.HEIGHT);//рисуем прямоугольник желтый
+
+        g.drawImage(backImage, 0,0, null);
+//        g.setColor(color);
+//        g.fillRect(0,0, GamePanel.WIDTH, GamePanel.HEIGHT);//рисуем прямоугольник желтый
     }
 }

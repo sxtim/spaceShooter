@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Field
-    public static int WIDTH = 400;
-    public static int HEIGHT = 400;
+    public static int WIDTH = 800;
+    public static int HEIGHT = 800;
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
     private Graphics2D g; //переменная кисточка
@@ -65,19 +65,15 @@ public class GamePanel extends JPanel implements Runnable {
             gameRender();
             gameDraw();
 
-            //проверка количества пуль
-//           System.out.println(bullets.size());
-            //тайминг работы цикла
-//            long elapsed = (System.nanoTime() - timer) / 100000;
-//            System.out.println(elapsed);
-            //таймеры чтобы не зависимо от длительности цикла всегда получалось 30 фпс
+
+            //таймеры чтобы не зависимо от длительности цикла всегда получалось 60 фпс
             timerFPS = (System.nanoTime() - timerFPS) / 1000000;
             if(millisPerFrame > timerFPS) {
                 sleepTime = (int) (millisPerFrame - timerFPS);
             } else sleepTime = 1;
                 try {
                 Thread.sleep(sleepTime); //TODO FPS
-                    System.out.println(sleepTime);
+                    System.out.println(FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -26,7 +26,7 @@ public class Enemy {
                     case (1):
                         x = Math.random() * GamePanel.WIDTH;
                         y = 0;
-                        r = 7;
+                        r = 15;
 
                         speed = 2;
                         health = 10;
@@ -52,7 +52,7 @@ public class Enemy {
     if(y > GamePanel.HEIGHT && dy > 0) dy = -dy;
     }
 
-    public void hit(){//при попадание именьшаем здоровье
+    public void hit(){//при попадании уменьшаем здоровье
         health--;
         System.out.println(health);
     }
