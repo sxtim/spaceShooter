@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class GameBack {
     //Fields
-    private static Image backImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/background.png").getImage();
+    private static Image backImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/background1.png").getImage();
     private Color color;
 
 

@@ -2,6 +2,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Player {
@@ -83,9 +84,16 @@ public class Player {
 
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
-        g.drawImage(imageShip, (int)x, (int)y, null);
-        g.setColor(color1);
+        //TODO
+//        AffineTransform origForm; //создаем объект класса AffineTransform
+//        origForm = g.getTransform();//получаем текущее значение
+//        AffineTransform newForm = (AffineTransform)(origForm.clone());//клонируем текущее значение
+//        newForm.rotate(angl, x + 29, y + 25);//вертим полученное изображение
+//        g.setTransform(newForm);//ставим трансформированное изображение
+//        g.drawImage(imageShip, (int) x, (int) y, null);//рисуем картинку
+//        g.setTransform(origForm);//возвращаем старое значение
 
+        g.drawImage(imageShip, (int)x, (int)y, null);
 
         //Player в виде точки
 //        g.setColor(color1);

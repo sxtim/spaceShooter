@@ -1,8 +1,10 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Enemy {
 
     //Fields
+    private static Image enemyImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/Meteor_01_1.png").getImage();
     private double x;
     private double y;
     private double dx;//сдвиг при движении
@@ -59,12 +61,14 @@ public class Enemy {
 
 
     public void draw(Graphics2D g) {
-        g.setColor(color);
-        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
-        g.setStroke(new BasicStroke(3));
-        g.setColor(color.darker());
-        g.drawOval((int)x - r, (int)y -r, 2 * r, 2 * r);
-        g.setStroke(new BasicStroke(1));
+        g.drawImage(enemyImage, (int)x, (int)y, null);
+
+//        g.setColor(color);
+//        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
+//        g.setStroke(new BasicStroke(3));
+//        g.setColor(color.darker());
+//        g.drawOval((int)x - r, (int)y -r, 2 * r, 2 * r);
+//        g.setStroke(new BasicStroke(1));
     }
 
     //Getters

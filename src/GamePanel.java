@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Field
-    public static int WIDTH = 800;
+    public static int WIDTH = 848;
     public static int HEIGHT = 800;
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
