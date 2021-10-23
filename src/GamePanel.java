@@ -9,6 +9,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Field
     public static int WIDTH = 848;
     public static int HEIGHT = 800;
+
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
     private Graphics2D g; //переменная кисточка
@@ -17,6 +18,13 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
     public static Wave wave;
+
+    private enum STATES{
+        MENU,
+        PLAY
+    }
+
+    private STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
 
     private int FPS;
     private double millisPerFrame;//миллисеккунд чтобы получить фпс
@@ -42,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        FPS = 60;
+        FPS = 65;
         millisPerFrame =  1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
         sleepTime = 0;
 
@@ -58,6 +66,11 @@ public class GamePanel extends JPanel implements Runnable {
         player = new Player();// инициализируем плеера
 
         while (true) {// TODO States
+            if(state.equals(STATES.MENU)){
+
+
+            }
+
             //инициализация таймера ФПС
             timerFPS = System.nanoTime();
 

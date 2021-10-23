@@ -52,6 +52,7 @@ public class Wave {
         //после каждой волны таймер будет пропускать 5 сек и снова создавать врагов
         if (waveTimerDiff > waveDelay) {
             createEnemies();
+            //обнуляем таймеры
             waveTimer = 0;
             waveTimerDiff = 0;
         }
