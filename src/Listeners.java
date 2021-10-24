@@ -8,6 +8,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
     }
 
     public void onKeyPress(boolean pressed, KeyEvent e) {
+        int key = e.getKeyCode();
         if (key == KeyEvent.VK_W)
             Player.up = pressed;
 
