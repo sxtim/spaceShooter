@@ -4,7 +4,7 @@ import java.awt.*;
 public class Enemy {
 
     //Fields
-    private static Image enemyImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/Meteor_01_1.png").getImage();
+    private static Image enemyImage = new ImageIcon("Image/Meteor_01_1.png").getImage();
     private double x;
     private double y;
     private double dx;//сдвиг при движении
