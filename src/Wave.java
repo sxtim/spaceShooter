@@ -21,8 +21,6 @@ public class Wave {
         waveTimer = 0;
         waveDelay = 5000;
         waveTimerDiff = 0;
-
-
     }
 
 

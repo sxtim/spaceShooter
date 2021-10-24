@@ -4,46 +4,30 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();// числовое значение клавиши нажатой на клавиатуре
+        onKeyPress(true, e);   
+    }
 
+    public void onKeyPress(boolean pressed, KeyEvent e) {
         if (key == KeyEvent.VK_W)
-            Player.up = true;
+            Player.up = pressed;
 
         if (key == KeyEvent.VK_S)
-            Player.down = true;
+            Player.down = pressed;
 
         if (key == KeyEvent.VK_A)
-            Player.left = true;
+            Player.left = pressed;
 
         if (key == KeyEvent.VK_D)
-            Player.right = true;
-        if (key == KeyEvent.VK_SPACE) {
-            Player.isFiring = true;
-        }
+            Player.right = pressed;
 
+        if (key == KeyEvent.VK_SPACE) {
+            Player.isFiring = pressed;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
-        int key = e.getKeyCode();// числовое значение клавиши нажатой на клавиатуре
-
-        if (key == KeyEvent.VK_W)
-            Player.up = false;
-
-        if (key == KeyEvent.VK_S)
-            Player.down = false;
-
-        if (key == KeyEvent.VK_A)
-            Player.left = false;
-
-        if (key == KeyEvent.VK_D)
-            Player.right = false;
-
-        if (key == KeyEvent.VK_SPACE) {
-            Player.isFiring = false;
-        }
-
+        onKeyPress(false, e);
     }
 
     @Override
