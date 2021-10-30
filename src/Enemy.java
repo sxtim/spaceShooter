@@ -4,7 +4,7 @@ import java.awt.*;
 public class Enemy {
 
     //Fields
-    private static Image enemyImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/meteorite3.png").getImage();
+    private static Image enemyImage = new ImageIcon("Image/Meteor_01_1.png").getImage();
     private double x;
     private double y;
     private double dx;//сдвиг при движении
@@ -28,7 +28,7 @@ public class Enemy {
                     case (1):
                         x = Math.random() * GamePanel.WIDTH;
                         y = 0;
-                        r = 20;
+                        r = 15;
 
                         speed = 2;
                         health = 10;
@@ -61,8 +61,7 @@ public class Enemy {
 
 
     public void draw(Graphics2D g) {
-
-        g.drawImage(enemyImage, (int)x - r, (int)y - r, null);
+        g.drawImage(enemyImage, (int)x, (int)y, null);
 
 //        g.setColor(color);
 //        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
