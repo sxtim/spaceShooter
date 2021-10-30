@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Player {
     //Fields
-    private static Image imageShip = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/playership5.png").getImage();
+    private static Image imageShip = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/playership6.png").getImage();
     private double x;
     private double y;
     private double dx; //коифициент смещения по диагонали

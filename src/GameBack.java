@@ -3,13 +3,13 @@ import java.awt.*;
 
 public class GameBack {
     //Fields
-    private static Image backImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/background1.png").getImage();
+    private static Image backImage = new ImageIcon("/home/sxtim/IdeaProjects/gameBubbleShooter/Image/stars.png").getImage();
     private Color color;
 
 
     //Constructor
     public GameBack() {
-        color = Color.ORANGE;
+        color = Color.BLACK;
     }
 
 
