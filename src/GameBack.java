@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class GameBack {
     //Fields
-    private static Image backImage = new ImageIcon("Image/background1.png").getImage();
+    private static Image backImage = new ImageIcon("Image/stars.png").getImage();
     private Color color;
 
 

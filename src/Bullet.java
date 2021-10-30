@@ -15,7 +15,7 @@ public class Bullet {
     public Bullet(){
         x = (int)GamePanel.player.getX();
         y = (int)GamePanel.player.getY();
-        r = 5;
+        r = 2;
         speed = 15;
         color = Color.GRAY;
     }
@@ -33,7 +33,7 @@ public class Bullet {
 
     public void draw(Graphics2D g){
         g.setColor(color);
-        g.fillOval((int)x + 20,(int)y,r,5 * r);
+        g.fillOval((int)x + 29,(int)y,r,5 * r);
         //ищем в каком классе переопределяется метод drawOval
 //        String name = g.getClass().getName();
 //        System.out.println(name);
