@@ -69,25 +69,25 @@ public class GameBack {
         YStartBack3_2 += speedBack3;
 
         //проверка фона 1
-        if (YStartBack1_1 == 1800) {
+        if (YStartBack1_1 > 1800) {
             YStartBack1_2 = 0;
         }
-        if(YStartBack2_1 == 0) {
+        if(YStartBack2_1 > 0) {
             YStartBack2_2 = -1800;
         }
 
         //проверка фона 2
-        if (YStartBack2_1 == 1800) {
+        if (YStartBack2_1 > 1800) {
             YStartBack2_1 = 0;
         }
-        if(YStartBack2_2 == 0) {
+        if(YStartBack2_2 > 0) {
             YStartBack2_2 = -1800;
         }
         //проверка фона 3
-        if (YStartBack3_1 == 1800) {
+        if (YStartBack3_1 > 1800) {
             YStartBack3_1 = 0;
         }
-        if(YStartBack3_2 == 0) {
+        if(YStartBack3_2 > 0) {
             YStartBack3_2 = -1800;
         }
 
