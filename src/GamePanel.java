@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Field
-    public static int WIDTH = 745;
-    public static int HEIGHT = 1024;
+    public static int WIDTH = 1800;
+    public static int HEIGHT = 980;
 
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        FPS = 65;
+        FPS = 59;
         millisPerFrame =  1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
         sleepTime = 0;
 

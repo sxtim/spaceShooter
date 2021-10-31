@@ -40,17 +40,28 @@ public class Player {
     //Functions
 
     //Move player
+    public boolean upMove(){
+        return up && y > r;
+    }
+    public boolean downMove(){
+        return down && y < GamePanel.HEIGHT - r;
+    }public boolean leftMove(){
+        return left && x > 0;
+    }public boolean rightMove(){
+        return right && x < GamePanel.WIDTH - r;
+    }
+
     public void update() {
-        if(up && y > r){
+        if(upMove()){
             dy = - speed;
         }
-        if(down && y < GamePanel.HEIGHT - r){
+        if(downMove()){
             dy = speed;
         }
-        if(left && x > 0){
+        if(leftMove()){
             dx = -speed;
         }
-        if(right && x < GamePanel.WIDTH - r){
+        if(rightMove()){
             dx = speed;
         }
         if(up && left || up && right || down && left || down && right){
