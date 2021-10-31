@@ -17,7 +17,7 @@ public class Bullet {
         y = (int)GamePanel.player.getY();
         r = 2;
         speed = 15;
-        color = Color.GRAY;
+        color = Color.YELLOW;
     }
 
     //Functions
