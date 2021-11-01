@@ -50,8 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        FPS = 59;
-        millisPerFrame =  1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
+        FPS = 120;
+        millisPerFrame = (float) 1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
         sleepTime = 0;
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);//способ обработки цвета холста
@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
             timerFPS = (System.nanoTime() - timerFPS) / 1000000;
             if(millisPerFrame > timerFPS) {
                 sleepTime = (int) (millisPerFrame - timerFPS);
-            } else sleepTime = 1;
+            } else sleepTime = 0;
                 try {
                 Thread.sleep(sleepTime); //TODO FPS
                     System.out.println(FPS);
@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
                 e.printStackTrace();
             }
                 timerFPS = 0;
-                sleepTime = 1;
+                sleepTime = 0;
         }
     }
 
