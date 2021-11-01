@@ -1,10 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Enemy {
 
     //Fields
-    private static Image enemyImage = new ImageIcon("Image/Meteor_01_1.png").getImage();
+    private static List<Image> enemyImages = new ArrayList<>();
+
+    static {
+        enemyImages.add(new ImageIcon("Image/Stones2Filled_01.png").getImage());
+//        enemyImages.add(new ImageIcon("Image/Stones2Filled_02.png").getImage());
+    }
+
     private double x;
     private double y;
     private double dx;//сдвиг при движении
@@ -16,14 +24,19 @@ public class Enemy {
     private int health;
     private int type;
     private int rank;
+    private int animFrame;
+     int hitCooldown;
 
     //Constructor
     public Enemy(int type, int rank) {
+
+
         this.type = type;
         this.rank = rank;
 
         switch (type) {
-            case (1): color = Color.GREEN;
+            case (1):
+                color = Color.GREEN;
                 switch (rank) {
                     case (1):
                         x = Math.random() * GamePanel.WIDTH;
@@ -38,31 +51,43 @@ public class Enemy {
                 }
         }
     }
+
     //Functions
-    public boolean remove(){
-       return health <= 0;
+    public boolean remove() {
+        return health <= 0;
     }
 
     public void update() {
-    x += dx;
-    y += dy;
-    //проверка выхода за пределы поля
-    //еесли враг вышел за пределы поля, то возвращаем его
-    if(x < 0 && dx < 0) dx = -dx;
-    if(x > GamePanel.WIDTH && dx > 0) dx = -dx;
-    if(y < 0 && dy < 0) dy = -dy;
-    if(y > GamePanel.HEIGHT && dy > 0) dy = -dy;
+        x += dx;
+        y += dy;
+        //проверка выхода за пределы поля
+        //еесли враг вышел за пределы поля, то возвращаем его
+        if (x < 0 && dx < 0) dx = -dx;
+        if (x > GamePanel.WIDTH && dx > 0) dx = -dx;
+        if (y < 0 && dy < 0) dy = -dy;
+        if (y > GamePanel.HEIGHT && dy > 0) dy = -dy;
+
+        animFrame++;
+        if (hitCooldown > 0) {
+            hitCooldown--;
+        }
     }
 
-    public void hit(){//при попадании уменьшаем здоровье
+    public void hit(boolean ignoreCooldown) {//при попадании уменьшаем здоровье
+        if (!ignoreCooldown && hitCooldown > 0) {
+
+            return;
+        }
+        hitCooldown = 60;
         health--;
         System.out.println(health);
     }
 
 
     public void draw(Graphics2D g) {
-        g.drawImage(enemyImage, (int)x, (int)y, null);
-
+        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);
+        g.setColor(Color.CYAN);
+        g.drawOval((int)(x - r), (int)(y - r), r * 2, r * 2);
 //        g.setColor(color);
 //        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
 //        g.setStroke(new BasicStroke(3));
@@ -76,6 +101,7 @@ public class Enemy {
     public double getX() {
         return x;
     }
+
     public double getY() {
         return y;
     }

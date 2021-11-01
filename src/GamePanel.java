@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -62,8 +60,8 @@ public class GamePanel extends JPanel implements Runnable {
         enemies = new ArrayList<>();
         wave = new Wave();
 
-        backGround = new GameBack();//инициализируем задний фон
         player = new Player();// инициализируем плеера
+        backGround = new GameBack(player);//инициализируем задний фон
 
         while (true) {// TODO States
             if(state.equals(STATES.MENU)){
@@ -86,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
             } else sleepTime = 0;
                 try {
                 Thread.sleep(sleepTime); //TODO FPS
-                    System.out.println(FPS);
+//                    System.out.println(FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -130,7 +128,8 @@ public class GamePanel extends JPanel implements Runnable {
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
-                    e.hit();                          //чем сумма радиусов врага и пули, то есть попадание
+                    System.out.println("register hit of meteor");
+                    e.hit(true);                          //чем сумма радиусов врага и пули, то есть попадание
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
                     if (remove) {                 //если
@@ -156,8 +155,10 @@ public class GamePanel extends JPanel implements Runnable {
             double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
             if ((int) distance <= e.getR() + player.getR()) {
-                e.hit();
-                player.hit();
+                if (e.hitCooldown == 0) {
+                    player.hit();
+                }
+                e.hit(false);
                 boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
                 if (remove) {
                     enemies.remove(i);

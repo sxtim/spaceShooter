@@ -1,9 +1,5 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 public class Player {
     //Fields
@@ -30,7 +26,7 @@ public class Player {
         y = (double) GamePanel.HEIGHT / 1.3;
         dx = 0;
         dy = 0;
-        r = 50;
+        r = 25;
         speed = 5;
 
         color1 = Color.WHITE;
@@ -83,7 +79,8 @@ public class Player {
 
         //Shoot player
         if(isFiring){
-            GamePanel.bullets.add(new Bullet());
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX() - 20, (int) GamePanel.player.getY()));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX() + 20, (int) GamePanel.player.getY()));
             isFiring = false;
         }
 
@@ -104,7 +101,9 @@ public class Player {
 //        g.drawImage(imageShip, (int) x, (int) y, null);//рисуем картинку
 //        g.setTransform(origForm);//возвращаем старое значение
 
-        g.drawImage(imageShip, (int)x, (int)y, null);
+        g.drawImage(imageShip, (int)x - 61/2, (int)y - 42/2, null);
+        g.setColor(Color.CYAN);
+        g.drawOval((int)(x - r), (int)(y - r), r * 2, r * 2);
 
         //Player в виде точки
 //        g.setColor(color1);
@@ -132,4 +131,7 @@ public class Player {
     }
 
 
+    public Point2D getPos() {
+        return new Point2D((int)x, (int)y);
+    }
 }

@@ -12,11 +12,11 @@ public class Bullet {
 
 
     //Constructor
-    public Bullet(){
-        x = (int)GamePanel.player.getX();
-        y = (int)GamePanel.player.getY();
+    public Bullet(int x, int y){
+        this.x = x;
+        this.y = y;
         r = 2;
-        speed = 15;
+        speed = 8;
         color = Color.YELLOW;
     }
 
@@ -33,7 +33,7 @@ public class Bullet {
 
     public void draw(Graphics2D g){
         g.setColor(color);
-        g.fillOval((int)x + 29,(int)y,r,5 * r);
+        g.fillOval((int)x,(int)y,r,5 * r);
         //ищем в каком классе переопределяется метод drawOval
 //        String name = g.getClass().getName();
 //        System.out.println(name);

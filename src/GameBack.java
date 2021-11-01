@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
+import static java.awt.image.ImageObserver.HEIGHT;
+import static java.awt.image.ImageObserver.WIDTH;
+
 public class GameBack {
     //Fields
     private static Image imageBack0 = new ImageIcon("Image/background/bkgd_0.png").getImage();
@@ -19,19 +22,23 @@ public class GameBack {
     public static double YStartBack3_1;
     public static double YStartBack3_2 = -1800;
 
-    private static final float speedBackFactor = 0.5f;
+    private static final float speedBackFactor = 0.2f;
     public static double speedBack1 = 1 * speedBackFactor;
-    public static double speedBack2 = 2 * speedBackFactor;
-    public static double speedBack3 = 3 * speedBackFactor;
+    public static double speedBack2 = 3 * speedBackFactor;
+    public static double speedBack3 = 4 * speedBackFactor;
 
     Image backGroundImage[] = {imageBack0, imageBack1_1, imageBack1_2, imageBack2_1, imageBack2_2, imageBack3_1, imageBack3_2};
 
     private Color color;
 
+    private Point2D center = new Point2D(GamePanel.WIDTH, GamePanel.HEIGHT);
+    private Player player;
 
     //Constructor
-    public GameBack() {
+    public GameBack(Player player) {
+        this.player = player;
         color = Color.ORANGE;
+
 
     }
 
@@ -46,24 +53,24 @@ public class GameBack {
         YStartBack3_1 += speedBack3;
         YStartBack3_2 += speedBack3;
 
-        if (YStartBack1_1 == 1800) {
+        if (YStartBack1_1 > 1800) {
             YStartBack1_1 = 0;
         }
-        if (YStartBack1_2 == 0) {
+        if (YStartBack1_2 > 0) {
             YStartBack1_2 = -1800;
         }
 
-        if (YStartBack2_1 == 1800) {
+        if (YStartBack2_1 > 1800) {
             YStartBack2_1 = 0;
         }
-        if (YStartBack2_2 == 0) {
+        if (YStartBack2_2 > 0) {
             YStartBack2_2 = -1800;
         }
 
-        if (YStartBack3_1 == 1800) {
+        if (YStartBack3_1 > 1800) {
             YStartBack3_1 = 0;
         }
-        if (YStartBack3_2 == 0) {
+        if (YStartBack3_2 > 0) {
             YStartBack3_2 = -1800;
         }
 
