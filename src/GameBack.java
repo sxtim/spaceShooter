@@ -24,7 +24,7 @@ public class GameBack {
     public static double speedBack2 = 2 * speedBackFactor;
     public static double speedBack3 = 3 * speedBackFactor;
 
-    Image backGroundImage[] = {imageBack0, imageBack1_1, imageBack1_2, imageBack2_1,  imageBack2_2, imageBack3_1,   imageBack3_2};
+    Image backGroundImage[] = {imageBack0, imageBack1_1, imageBack1_2, imageBack2_1, imageBack2_2, imageBack3_1, imageBack3_2};
 
     private Color color;
 
@@ -39,28 +39,6 @@ public class GameBack {
     //Functions
     public void update() {
         YStartBack0 = 0;
-
-//        if(Player.up) {
-//            YStartBack1_1 += speedBack1;
-//            YStartBack1_2 += speedBack1;
-//            if (YStartBack1_1 == 1800) {
-//                YStartBack1_1 = 0;
-//            }
-//            if(YStartBack1_2 == 0) {
-//                YStartBack1_2 = -1800;
-//            }
-//        }
-//        if(Player.down) {
-//
-//            YStartBack1_1 -= speedBack1;
-//            YStartBack1_2 -= speedBack1;
-//            if (YStartBack1_1 == -1800) {
-//                YStartBack1_1 = 0;
-//            }
-//            if (YStartBack1_2 == 1) {
-//                YStartBack1_2 = 1800;
-//            }
-//        }
         YStartBack1_1 += speedBack1;
         YStartBack1_2 += speedBack1;
         YStartBack2_1 += speedBack2;
@@ -68,26 +46,24 @@ public class GameBack {
         YStartBack3_1 += speedBack3;
         YStartBack3_2 += speedBack3;
 
-        //проверка фона 1
-        if (YStartBack1_1 > 1800) {
-            YStartBack1_2 = 0;
+        if (YStartBack1_1 == 1800) {
+            YStartBack1_1 = 0;
         }
-        if(YStartBack2_1 > 0) {
+        if (YStartBack1_2 == 0) {
+            YStartBack1_2 = -1800;
+        }
+
+        if (YStartBack2_1 == 1800) {
+            YStartBack2_1 = 0;
+        }
+        if (YStartBack2_2 == 0) {
             YStartBack2_2 = -1800;
         }
 
-        //проверка фона 2
-        if (YStartBack2_1 > 1800) {
-            YStartBack2_1 = 0;
-        }
-        if(YStartBack2_2 > 0) {
-            YStartBack2_2 = -1800;
-        }
-        //проверка фона 3
-        if (YStartBack3_1 > 1800) {
+        if (YStartBack3_1 == 1800) {
             YStartBack3_1 = 0;
         }
-        if(YStartBack3_2 > 0) {
+        if (YStartBack3_2 == 0) {
             YStartBack3_2 = -1800;
         }
 
@@ -95,13 +71,13 @@ public class GameBack {
 
     public void draw(Graphics2D g) {
 
-        g.drawImage(backGroundImage[0], 0, (int)Math.round(YStartBack0  ), null);
-        g.drawImage(backGroundImage[1], 0, (int)Math.round(YStartBack1_1), null);
-        g.drawImage(backGroundImage[2], 0, (int)Math.round(YStartBack1_2), null);
-        g.drawImage(backGroundImage[3], 0, (int)Math.round(YStartBack2_1), null);
-        g.drawImage(backGroundImage[4], 0, (int)Math.round(YStartBack2_2), null);
-        g.drawImage(backGroundImage[5], 0, (int)Math.round(YStartBack3_1), null);
-        g.drawImage(backGroundImage[6], 0, (int)Math.round(YStartBack3_2), null);
+        g.drawImage(backGroundImage[0], 0, (int) (YStartBack0), null);
+        g.drawImage(backGroundImage[1], 0, (int) (YStartBack1_1), null);
+        g.drawImage(backGroundImage[2], 0, (int) (YStartBack1_2), null);
+        g.drawImage(backGroundImage[3], 0, (int) (YStartBack2_1), null);
+        g.drawImage(backGroundImage[4], 0, (int) (YStartBack2_2), null);
+        g.drawImage(backGroundImage[5], 0, (int) (YStartBack3_1), null);
+        g.drawImage(backGroundImage[6], 0, (int) (YStartBack3_2), null);
 
 //        g.setColor(color);
 //        g.fillRect(0,0, GamePanel.WIDTH, GamePanel.HEIGHT);//рисуем прямоугольник желтый
