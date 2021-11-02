@@ -9,8 +9,7 @@ public class Enemy {
     private static List<Image> enemyImages = new ArrayList<>();
 
     static {
-        enemyImages.add(new ImageIcon("Image/Stones2Filled_01.png").getImage());
-//        enemyImages.add(new ImageIcon("Image/Stones2Filled_02.png").getImage());
+        enemyImages.add(new ImageIcon("Image/explosion1_0001.png").getImage());
     }
 
     private double x;

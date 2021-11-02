@@ -1,8 +1,10 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Bullet {
 
     //Fields
+    private static Image imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
     private double x;
     private double y;
     private int r;
@@ -32,8 +34,9 @@ public class Bullet {
 
 
     public void draw(Graphics2D g){
-        g.setColor(color);
-        g.fillOval((int)x,(int)y,r,5 * r);
+        g.drawImage(imgBullet, (int)x - 10,(int)y, null );
+//        g.setColor(color);
+//        g.fillOval((int)x,(int)y,r,5 * r);
         //ищем в каком классе переопределяется метод drawOval
 //        String name = g.getClass().getName();
 //        System.out.println(name);
