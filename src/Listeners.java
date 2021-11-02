@@ -1,6 +1,6 @@
 import java.awt.event.*;
 
-public class Listeners extends MouseAdapter implements KeyListener, MouseListener {
+public class Listeners extends MouseAdapter implements KeyListener, MouseListener,  MouseMotionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -32,6 +32,26 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
     }
 
     @Override
+    public void mouseClicked(MouseEvent e) {
+        Player.isFiring = true;
+    }
+
+    public void mouseMoved(MouseEvent e) {//если двигаем
+        //получаем координаты мыши
+        GamePanel.mouseX = e.getX();
+        GamePanel.mouseY = e.getY();
+    }
+
+
+    @Override
+    public void mouseDragged(MouseEvent e){//если что то тащим
+        //получаем координаты мыши
+        GamePanel.mouseX = e.getX();
+        GamePanel.mouseY = e.getY();
+    }
+
+
+    @Override
     public void mousePressed(MouseEvent e){}
 
     @Override
@@ -45,10 +65,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-            Player.isFiring = true;
-    }
+
 
     @Override
     public void mouseEntered(MouseEvent e) {

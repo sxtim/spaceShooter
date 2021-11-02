@@ -8,6 +8,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static int WIDTH = 1800;
     public static int HEIGHT = 980;
 
+    public static int mouseX;//координаты мыши
+    public static int mouseY;
+
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
     private Graphics2D g; //переменная кисточка
@@ -39,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
         requestFocus();
         addKeyListener(new Listeners());//добавляем в конструктор панели слушателя клавиатуры
         addMouseListener(new Listeners());//добавляем в конструктор панели слушателя мыши
+        addMouseMotionListener(new Listeners());//добавляем слушателя движения мыши
     }
 
     //Functions
@@ -72,8 +76,11 @@ public class GamePanel extends JPanel implements Runnable {
             if (state.equals(STATES.MENU)) {//если мы в состоянии меню
                 backGround.update();
                 backGround.draw(g);
+                menu.update();
                 menu.draw(g);
                 gameDraw();
+                System.out.println(mouseX);
+                System.out.println(mouseY);
             }
             if (state.equals(STATES.PLAY)) {
                 gameUpdate();
