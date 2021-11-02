@@ -24,8 +24,8 @@ public class GameBack {
 
     private static final float speedBackFactor = 0.2f;
     public static double speedBack1 = 1 * speedBackFactor;
-    public static double speedBack2 = 3 * speedBackFactor;
-    public static double speedBack3 = 4 * speedBackFactor;
+    public static double speedBack2 = 2 * speedBackFactor;
+    public static double speedBack3 = 3 * speedBackFactor;
 
     Image backGroundImage[] = {imageBack0, imageBack1_1, imageBack1_2, imageBack2_1, imageBack2_2, imageBack3_1, imageBack3_2};
 

@@ -16,8 +16,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Bullet> bullets;
     public static ArrayList<Enemy> enemies;
     public static Wave wave;
+    public static Menu menu;
 
-    private enum STATES{
+    private enum STATES {
         MENU,
         PLAY
     }
@@ -59,37 +60,48 @@ public class GamePanel extends JPanel implements Runnable {
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
         wave = new Wave();
+        menu = new Menu();
 
         player = new Player();// инициализируем плеера
         backGround = new GameBack(player);//инициализируем задний фон
 
         while (true) {// TODO States
-            if(state.equals(STATES.MENU)){
-
-
-            }
-
-            //инициализация таймера ФПС
+            // инициализация таймера ФПС
             timerFPS = System.nanoTime();
 
-            gameUpdate();
-            gameRender();
-            gameDraw();
+            if (state.equals(STATES.MENU)) {//если мы в состоянии меню
+                backGround.update();
+                backGround.draw(g);
+                menu.draw(g);
+                gameDraw();
+            }
+            if (state.equals(STATES.PLAY)) {
+                gameUpdate();
+                gameRender();
+                gameDraw();
+            }
+
+//            //инициализация таймера ФПС
+//            timerFPS = System.nanoTime();
+
+//            gameUpdate();
+//            gameRender();
+//            gameDraw();
 
 
             //таймеры чтобы не зависимо от длительности цикла всегда получалось 60 фпс
             timerFPS = (System.nanoTime() - timerFPS) / 1000000;
-            if(millisPerFrame > timerFPS) {
+            if (millisPerFrame > timerFPS) {
                 sleepTime = (int) (millisPerFrame - timerFPS);
             } else sleepTime = 0;
-                try {
+            try {
                 Thread.sleep(sleepTime); //TODO FPS
 //                    System.out.println(FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-                timerFPS = 0;
-                sleepTime = 0;
+            timerFPS = 0;
+            sleepTime = 0;
         }
     }
 
@@ -184,8 +196,8 @@ public class GamePanel extends JPanel implements Runnable {
             enemy.draw(g);
         }
         //Draw wave
-        if(wave.showWave())//если надо показывать то пишем на экране текст
-        wave.draw(g);
+        if (wave.showWave())//если надо показывать то пишем на экране текст
+            wave.draw(g);
     }
 
     private void gameDraw() { // передаем изображение в нашу компоненту
