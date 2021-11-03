@@ -29,7 +29,7 @@ public class Bullet {
 
     //проверка не улетела ли пуля за экран
     public boolean remove(){
-        return y < 0;
+        return y < 0 || y > GamePanel.HEIGHT || x < 0 || x > GamePanel.WIDTH;
     }
 
 

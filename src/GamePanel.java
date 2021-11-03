@@ -10,6 +10,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int mouseX;//координаты мыши
     public static int mouseY;
+    public static boolean leftMouse;
 
     private Thread thread;
     private BufferedImage image; //переменная нашего холста на котором будем рисловать
@@ -21,12 +22,12 @@ public class GamePanel extends JPanel implements Runnable {
     public static Wave wave;
     public static Menu menu;
 
-    private enum STATES {
+    public static enum STATES {
         MENU,
         PLAY
     }
 
-    private STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
+    public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
 
     private int FPS;
     private double millisPerFrame;//миллисеккунд чтобы получить фпс
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
         FPS = 120;
         millisPerFrame = (float) 1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
         sleepTime = 0;
+        leftMouse = false;
 
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);//способ обработки цвета холста
         g = (Graphics2D) image.getGraphics(); //привязываем к кисточке холст; g наследник Graphics2D

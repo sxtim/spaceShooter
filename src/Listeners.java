@@ -4,7 +4,9 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        onKeyPress(true, e);   
+        int key = e.getKeyCode();
+        onKeyPress(true, e);
+
     }
 
     public void onKeyPress(boolean pressed, KeyEvent e) {
@@ -24,6 +26,12 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
         if (key == KeyEvent.VK_SPACE) {
             Player.isFiring = pressed;
         }
+        if (key == KeyEvent.VK_ESCAPE) {
+            GamePanel.state = GamePanel.STATES.MENU;
+        }
+
+
+
     }
 
     @Override
@@ -33,6 +41,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         Player.isFiring = true;
     }
 
@@ -52,10 +61,13 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
 
     @Override
-    public void mousePressed(MouseEvent e){}
+    public void mousePressed(MouseEvent e){
+        GamePanel.leftMouse = true;
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        GamePanel.leftMouse = false;
 
     }
 

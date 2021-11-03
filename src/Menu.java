@@ -28,6 +28,10 @@ public class Menu {
                 //по нижнему краю
                 GamePanel.mouseY < GamePanel.HEIGHT / 2 + buttonHeight / 2) {
                 transp = 60;
+                if(GamePanel.leftMouse){
+                    GamePanel.state = GamePanel.STATES.PLAY;
+                    GamePanel.leftMouse = false;
+                }
         }else{
             transp = 0;
         }
