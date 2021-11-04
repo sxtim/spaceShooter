@@ -90,7 +90,6 @@ public class Player {
             GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), GamePanel.player.angle));
             isFiring = false;
         }
-
     }
 
     public void hit() {

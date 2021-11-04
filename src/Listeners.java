@@ -25,6 +25,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
         if (key == KeyEvent.VK_SPACE) {
             Player.isFiring = pressed;
+
         }
         if (key == KeyEvent.VK_ESCAPE) {
             GamePanel.state = GamePanel.STATES.MENU;
@@ -42,7 +43,9 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        Player.isFiring = true;
+        System.out.println("кнопка нажата ");
+        System.out.println("=========================");
+
     }
 
     public void mouseMoved(MouseEvent e) {//если двигаем
@@ -59,6 +62,7 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void mousePressed(MouseEvent e){
+        Player.isFiring = true;
         GamePanel.leftMouse = true;
     }
 

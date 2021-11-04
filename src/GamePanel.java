@@ -26,6 +26,8 @@ public class GamePanel extends JPanel implements Runnable {
         PLAY
     }
 
+
+
     public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
 
     private int FPS;
@@ -66,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable {
         enemies = new ArrayList<>();
         wave = new Wave();
         menu = new Menu();
+
+
+
 
         player = new Player();// инициализируем плеера
         backGround = new GameBack(player);//инициализируем задний фон

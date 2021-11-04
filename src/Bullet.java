@@ -16,8 +16,8 @@ public class Bullet {
     public Bullet(int x, int y, double angle){
         this.pos.set(x, y);
         r = 2;
-        deltaPos = new Point2D(8, 0).rotate(angle);
-        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
+        deltaPos = new Point2D(2, 0).rotate(angle);
+//        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
         color = Color.YELLOW;
     }
 
