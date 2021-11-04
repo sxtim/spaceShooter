@@ -1,15 +1,20 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Enemy {
 
     //Fields
+
     private static List<Image> enemyImages = new ArrayList<>();
 
-    static {
-        enemyImages.add(new ImageIcon("Image/explosion1_0001.png").getImage());
+        static {
+        enemyImages.add(new ImageIcon("Image/asteroids/meteor-01-xl.png").getImage());
     }
 
     private double x;
@@ -84,7 +89,10 @@ public class Enemy {
 
 
     public void draw(Graphics2D g) {
-        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);
+
+
+
+//        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);
         g.setColor(Color.CYAN);
         g.drawOval((int)(x - r), (int)(y - r), r * 2, r * 2);
 //        g.setColor(color);
