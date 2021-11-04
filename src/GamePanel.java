@@ -8,8 +8,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static int WIDTH = 1800;
     public static int HEIGHT = 980;
 
-    public static int mouseX;//координаты мыши
-    public static int mouseY;
+    public static Point2D mousePos = new Point2D(0, 0);//координаты мыши
     public static boolean leftMouse;
 
     private Thread thread;
@@ -81,8 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
                 menu.update();
                 menu.draw(g);
                 gameDraw();
-                System.out.println(mouseX);
-                System.out.println(mouseY);
+                System.out.println("mouse=" + mousePos);
             }
             if (state.equals(STATES.PLAY)) {
                 gameUpdate();

@@ -5,16 +5,11 @@ import java.awt.geom.AffineTransform;
 public class Player {
     //Fields
     private static Image imageShip = new ImageIcon("Image/playership7.png").getImage();
-    private double x;
-    private double y;
+    private Point2D pos = new Point2D(0, 0);
     private double dx; //коифициент смещения по диагонали
     private double dy; //коифициент смещения по диагонали
     private int r; // радиус
     private double angle;//угол поворота
-    private double distX;//разница по х от мышки
-    private double distY;
-    private double dist;//расстояние от мышки
-
 
     private Color color1;
     private Color color2;
@@ -29,8 +24,7 @@ public class Player {
     public Player() {
 
         health = 3;
-        x = (double) GamePanel.WIDTH / 2;
-        y = (double) GamePanel.HEIGHT / 1.3;
+        pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
         dx = 0;
         dy = 0;
         r = 35;
@@ -44,30 +38,24 @@ public class Player {
 
     //Move player
     public boolean upMove() {
-        return up && y > r;
+        return up && pos.y > r;
     }
 
     public boolean downMove() {
-        return down && y < GamePanel.HEIGHT - r;
+        return down && pos.y < GamePanel.HEIGHT - r;
     }
 
     public boolean leftMove() {
-        return left && x > 0;
+        return left && pos.x > 0;
     }
 
     public boolean rightMove() {
-        return right && x < GamePanel.WIDTH - r;
+        return right && pos.x < GamePanel.WIDTH - r;
     }
 
     public void update() {
-        distX = GamePanel.mouseX - x; //разница по х от мышки
-        distY = y - GamePanel.mouseY;
-        dist = (Math.sqrt(distX * distX + distY * distY));// по двум катетам находим значение гипотенузы
 
-        if (distX > 0)
-            angle = Math.acos(distY / (distX * distX + distY * distY));//если прицел справа от плеера считаем угол
-        if (distX < 0)
-            angle = -Math.acos(distY / (distX * distX + distY * distY));//если прицел слева от плеера считаем угол
+        angle = GamePanel.mousePos.copy().minus(pos).angle();
 
         if (upMove()) {
             dy = -speed;
@@ -87,8 +75,7 @@ public class Player {
             dy = dy * Math.sin(angle);
             dx = dx * Math.cos(angle);
         }
-        y += dy;
-        x += dx;
+        pos.add(dx, dy);
         //Отображение координат
 //        System.out.println("X: " + x);
 //        System.out.println("Y: " + y);
@@ -100,8 +87,7 @@ public class Player {
 
         //Shoot player
         if (isFiring) {
-            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX() - 20, (int) GamePanel.player.getY()));
-            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX() + 20, (int) GamePanel.player.getY()));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), GamePanel.player.angle));
             isFiring = false;
         }
 
@@ -115,17 +101,21 @@ public class Player {
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
         //TODO
+        g.setColor(Color.WHITE);
+        g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
+        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
+
         AffineTransform origForm; //создаем объект класса AffineTransform
         origForm = g.getTransform();//получаем текущее значение
-        AffineTransform newForm = (AffineTransform)(origForm.clone());//клонируем текущее значение
-        newForm.rotate(angle, x , y  );//вертим полученное изображение относительно X и Y
+        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+        newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
         g.setTransform(newForm);//ставим трансформированное изображение
-        g.drawImage(imageShip, (int) x - 70 / 2, (int) y - 72 / 2, null);//рисуем картинку
+        g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);//рисуем картинку
         g.setTransform(origForm);//возвращаем старое значение
 
 //        g.drawImage(imageShip, (int) x - 70 / 2, (int) y - 72 / 2, null);
         g.setColor(Color.CYAN);
-        g.drawOval((int) (x - r), (int) (y - r), r * 2, r * 2);
+        g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 
         //Player в виде точки
 //        g.setColor(color1);
@@ -144,16 +134,16 @@ public class Player {
     }
 
     public double getX() {
-        return x;
+        return pos.x;
     }
 
 
     public double getY() {
-        return y;
+        return pos.y;
     }
 
 
     public Point2D getPos() {
-        return new Point2D((int) x, (int) y);
+        return pos;
     }
 }
