@@ -5,36 +5,42 @@ public class Bullet {
 
     //Fields
     private static Image imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
-    private double x;
-    private double y;
+    private Point2D pos = new Point2D(0, 0);
     private int r;
-    private int speed;
+    private Point2D deltaPos;
 
     private Color color;
 
 
     //Constructor
-    public Bullet(int x, int y){
-        this.x = x;
-        this.y = y;
+    public Bullet(int x, int y, double angle){
+        this.pos.set(x, y);
         r = 2;
-        speed = 8;
+        deltaPos = new Point2D(8, 0).rotate(angle);
+        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
         color = Color.YELLOW;
     }
 
     //Functions
     public void update(){
-        y -= speed;
+        pos.add(deltaPos);
     }
 
     //проверка не улетела ли пуля за экран
     public boolean remove(){
-        return y < 0 || y > GamePanel.HEIGHT || x < 0 || x > GamePanel.WIDTH;
+        // TODO proper bounds checking
+        return pos.y < 0 || pos.y > GamePanel.HEIGHT || pos.x < 0 || pos.x > GamePanel.WIDTH;
     }
 
 
     public void draw(Graphics2D g){
-        g.drawImage(imgBullet, (int)x - 10,(int)y, null );
+        g.drawImage(imgBullet, (int) pos.x - 10,(int)pos.y, null );
+
+        g.setColor(Color.WHITE);
+        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
+        g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
+        g.drawString("angle=" + deltaPos.angle(), (int)pos.x, (int)pos.y);
+
 //        g.setColor(color);
 //        g.fillOval((int)x,(int)y,r,5 * r);
         //ищем в каком классе переопределяется метод drawOval
@@ -47,11 +53,11 @@ public class Bullet {
     }
     //Getters
     public double getX() {
-        return x;
+        return pos.x;
     }
 
     public double getY() {
-        return y;
+        return pos.y;
     }
 
     public int getR() {

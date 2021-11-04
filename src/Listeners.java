@@ -47,18 +47,15 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     public void mouseMoved(MouseEvent e) {//если двигаем
         //получаем координаты мыши
-        GamePanel.mouseX = e.getX();
-        GamePanel.mouseY = e.getY();
+        GamePanel.mousePos.set(e.getX(), e.getY());
     }
 
 
     @Override
     public void mouseDragged(MouseEvent e){//если что то тащим
         //получаем координаты мыши
-        GamePanel.mouseX = e.getX();
-        GamePanel.mouseY = e.getY();
+        GamePanel.mousePos.set(e.getX(), e.getY());
     }
-
 
     @Override
     public void mousePressed(MouseEvent e){
@@ -68,7 +65,6 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
     @Override
     public void mouseReleased(MouseEvent e) {
         GamePanel.leftMouse = false;
-
     }
 
 

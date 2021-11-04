@@ -20,13 +20,13 @@ public class Menu {
 
     //Functions
     public void update() {//по левому краю
-        if (GamePanel.mouseX > GamePanel.WIDTH / 2 - buttonWidth / 2 &&
+        if (GamePanel.mousePos.x > GamePanel.WIDTH / 2 - buttonWidth / 2 &&
                 //по правому краю
-                GamePanel.mouseX < GamePanel.WIDTH / 2 + buttonWidth / 2 &&
+                GamePanel.mousePos.x < GamePanel.WIDTH / 2 + buttonWidth / 2 &&
                 //по верхнему краю
-                GamePanel.mouseY > GamePanel.HEIGHT / 2 - buttonHeight / 2 &&
+                GamePanel.mousePos.y > GamePanel.HEIGHT / 2 - buttonHeight / 2 &&
                 //по нижнему краю
-                GamePanel.mouseY < GamePanel.HEIGHT / 2 + buttonHeight / 2) {
+                GamePanel.mousePos.y < GamePanel.HEIGHT / 2 + buttonHeight / 2) {
                 transp = 60;
                 if(GamePanel.leftMouse){
                     GamePanel.state = GamePanel.STATES.PLAY;
