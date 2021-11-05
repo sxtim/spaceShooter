@@ -4,7 +4,7 @@ import java.awt.geom.AffineTransform;
 
 public class Player {
     //Fields
-    private static Image imageShip = new ImageIcon("Image/playership7.png").getImage();
+    private static Image imageShip = new ImageIcon("Image/player/playership7.png").getImage();
     private Point2D pos = new Point2D(0, 0);
     private double dx; //коифициент смещения по диагонали
     private double dy; //коифициент смещения по диагонали
@@ -102,7 +102,7 @@ public class Player {
         //TODO
         g.setColor(Color.WHITE);
         g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
-        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
+//        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
 
         AffineTransform origForm; //создаем объект класса AffineTransform
         origForm = g.getTransform();//получаем текущее значение
@@ -112,7 +112,7 @@ public class Player {
         g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);//рисуем картинку
         g.setTransform(origForm);//возвращаем старое значение
 
-//        g.drawImage(imageShip, (int) x - 70 / 2, (int) y - 72 / 2, null);
+//        g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);
         g.setColor(Color.CYAN);
         g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 

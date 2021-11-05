@@ -31,7 +31,7 @@ public class Wave {
             while(enemyCount > 0) {//создаем врагов
                 int type = 1;
                 int rank = 1;
-                GamePanel.enemies.add(new Enemy (type, rank));
+                GamePanel.enemies.add(new EnemyMeteor(type, rank));
                 enemyCount -= type * rank;
             }
         }

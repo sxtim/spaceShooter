@@ -16,7 +16,7 @@ public class Bullet {
     public Bullet(int x, int y, double angle){
         this.pos.set(x, y);
         r = 2;
-        deltaPos = new Point2D(2, 0).rotate(angle);
+        deltaPos = new Point2D(10, 0).rotate(angle);
 //        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
         color = Color.YELLOW;
     }
@@ -39,7 +39,7 @@ public class Bullet {
         g.setColor(Color.WHITE);
         Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
         g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
-        g.drawString("angle=" + deltaPos.angle(), (int)pos.x, (int)pos.y);
+//        g.drawString("angle=" + deltaPos.angle(), (int)pos.x, (int)pos.y);
 
 //        g.setColor(color);
 //        g.fillOval((int)x,(int)y,r,5 * r);

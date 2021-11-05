@@ -1,29 +1,33 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Enemy {
+public class EnemyMeteor {
 
     //Fields
+    Image asteroidXL = new ImageIcon ("Image/meteors/meteor-01-xl.png").getImage();
+    Image asteroidL = new ImageIcon ("Image/meteors/meteor-01-l.png").getImage();
+
+
 
     private static List<Image> enemyImages = new ArrayList<>();
 
         static {
-        enemyImages.add(new ImageIcon("Image/asteroids/meteor-01-xl.png").getImage());
+        enemyImages.add(new ImageIcon("Image/enemy/figther1.png").getImage());
     }
 
     private double x;
     private double y;
     private double dx;//сдвиг при движении
     private double dy;
+    private Point2D pos = new Point2D(0, 0);
+    private double angle = 1;
     private int r;
     Color color;
     private double speed;
+
 
     private int health;
     private int type;
@@ -31,8 +35,9 @@ public class Enemy {
     private int animFrame;
      int hitCooldown;
 
+
     //Constructor
-    public Enemy(int type, int rank) {
+    public EnemyMeteor(int type, int rank) {
 
 
         this.type = type;
@@ -45,7 +50,7 @@ public class Enemy {
                     case (1):
                         x = Math.random() * GamePanel.WIDTH;
                         y = 0;
-                        r = 15;
+                        r = 25;
 
                         speed = 2;
                         health = 10;
@@ -89,12 +94,22 @@ public class Enemy {
 
 
     public void draw(Graphics2D g) {
+//        g.drawImage(asteroidXL, (int) (x - 54/2),(int) (y - 54/2),null);
 
+        AffineTransform origForm; //создаем объект класса AffineTransform
+        origForm = g.getTransform();//получаем текущее значение
+        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+        newForm.rotate(angle + Math.PI / 2, x, y);//вертим полученное изображение относительно X и Y
+        g.setTransform(newForm);//ставим трансформированное изображение
+        g.drawImage(asteroidXL, (int) x - 54 / 2, (int) y - 54 / 2, null);//рисуем картинку
+        g.setTransform(origForm);//возвращаем старое значение
 
+//       if (dx < 0) g.drawImage(asteroidXL, (int) (x - 50/2),(int) (y - 40/2),null);//разные типы
+//       if (dx > 0) g.drawImage(asteroidL, (int) (x - 50/2),(int) (y - 40/2),null);
 
-//        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);
+//        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);//анимация
         g.setColor(Color.CYAN);
-        g.drawOval((int)(x - r), (int)(y - r), r * 2, r * 2);
+        g.drawOval((int)(x - r), (int)(y - r), r * 2 , r * 2 );
 //        g.setColor(color);
 //        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
 //        g.setStroke(new BasicStroke(3));

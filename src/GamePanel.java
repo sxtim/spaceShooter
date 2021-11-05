@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GameBack backGround;
     public static Player player;
     public static ArrayList<Bullet> bullets;
-    public static ArrayList<Enemy> enemies;
+    public static ArrayList<EnemyMeteor> enemies;
     public static Wave wave;
     public static Menu menu;
 
@@ -26,7 +26,14 @@ public class GamePanel extends JPanel implements Runnable {
         PLAY
     }
 
+    public void customCursor(){
 
+        Toolkit t = Toolkit.getDefaultToolkit();
+        Image img = t.getImage("Image/crosshair2.png");
+        Point p = new Point(15,15);
+        Cursor c = t.createCustomCursor(img, p, "Image/crosshair2.png");
+        setCursor(c);
+    }
 
     public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
 
@@ -132,12 +139,12 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Enemies update
-        for (Enemy enemy : enemies) {
-            enemy.update();
+        for (EnemyMeteor enemyMeteor : enemies) {
+            enemyMeteor.update();
         }
         //Bullets-enemies collides
         for (int i = 0; i < enemies.size(); i++) {
-            Enemy e = enemies.get(i);
+            EnemyMeteor e = enemies.get(i);
             double ex = e.getX();//получаем координаты врага по икс
             double ey = e.getY();//получаем координаты по Y
 
@@ -166,7 +173,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //Player-enemy collides
         for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
-            Enemy e = enemies.get(i);
+            EnemyMeteor e = enemies.get(i);
             double eX = e.getX();
             double eY = e.getY();
 
@@ -195,6 +202,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void gameRender() { // обновляет картинку
+        customCursor();
         //BackGround draw
         backGround.draw(g);
         //Player draw
@@ -204,8 +212,8 @@ public class GamePanel extends JPanel implements Runnable {
             bullet.draw(g);
         }
         //Draw enemies
-        for (Enemy enemy : enemies) {
-            enemy.draw(g);
+        for (EnemyMeteor enemyMeteor : enemies) {
+            enemyMeteor.draw(g);
         }
         //Draw wave
         if (wave.showWave())//если надо показывать то пишем на экране текст
