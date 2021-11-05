@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,13 +97,29 @@ public class EnemyMeteor {
     public void draw(Graphics2D g) {
 //        g.drawImage(asteroidXL, (int) (x - 54/2),(int) (y - 54/2),null);
 
-        AffineTransform origForm; //создаем объект класса AffineTransform
-        origForm = g.getTransform();//получаем текущее значение
-        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-        newForm.rotate(angle + Math.PI / 2, x, y);//вертим полученное изображение относительно X и Y
-        g.setTransform(newForm);//ставим трансформированное изображение
-        g.drawImage(asteroidXL, (int) x - 54 / 2, (int) y - 54 / 2, null);//рисуем картинку
-        g.setTransform(origForm);//возвращаем старое значение
+// The required drawing location
+        int drawLocationX = 300;
+        int drawLocationY = 300;
+
+// Rotation information
+
+        double rotationRequired = Math.toRadians (45);
+        double locationX = 54 / 2f;
+        double locationY = 54 / 2f;
+        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+//        g.drawImage(asteroidXL, tx, ImageObserver);
+// Drawing the rotated image at the required drawing locations
+
+
+
+//        AffineTransform origForm; //создаем объект класса AffineTransform
+//        origForm = g.getTransform();//получаем текущее значение
+//        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+//        newForm.rotate(angle + Math.PI / 2, x, y);//вертим полученное изображение относительно X и Y
+//        g.setTransform(newForm);//ставим трансформированное изображение
+//        g.drawImage(asteroidXL, (int) x - 54 / 2, (int) y - 54 / 2, null);//рисуем картинку
+//        g.setTransform(origForm);//возвращаем старое значение
 
 //       if (dx < 0) g.drawImage(asteroidXL, (int) (x - 50/2),(int) (y - 40/2),null);//разные типы
 //       if (dx > 0) g.drawImage(asteroidL, (int) (x - 50/2),(int) (y - 40/2),null);

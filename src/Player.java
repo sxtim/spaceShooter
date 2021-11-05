@@ -69,10 +69,10 @@ public class Player {
         if (rightMove()) {
             acceleration.add(Point2D.RIGHT);
         }
-        if (acceleration.length() > 0.1) {
-            acceleration.length(1.3);
+        if (acceleration.length() > 0.9) {
+            acceleration.length(0.4);
         }
-        velocity.multiple(0.94); // затухание скорости
+        velocity.multiple(1); // затухание скорости
         velocity.add(acceleration);
         velocity.clamp(MAX_SPEED);
         pos.add(velocity);
