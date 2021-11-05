@@ -3,11 +3,12 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class Player {
+    private static final int MAX_SPEED = 13;
     //Fields
     private static Image imageShip = new ImageIcon("Image/player/playership7.png").getImage();
     private Point2D pos = new Point2D(0, 0);
-    private double dx; //коифициент смещения по диагонали
-    private double dy; //коифициент смещения по диагонали
+    private Point2D velocity = new Point2D(0, 0);
+    private Point2D acceleration = new Point2D(0, 0);
     private int r; // радиус
     private double angle;//угол поворота
 
@@ -25,8 +26,6 @@ public class Player {
 
         health = 3;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
-        dx = 0;
-        dy = 0;
         r = 35;
         speed = 5;
 
@@ -57,33 +56,26 @@ public class Player {
 
         angle = GamePanel.mousePos.copy().minus(pos).angle();
 
+        acceleration.set(0, 0);
         if (upMove()) {
-            dy = -speed;
+            acceleration.add(Point2D.UP);
         }
         if (downMove()) {
-            dy = speed;
+            acceleration.add(Point2D.DOWN);
         }
         if (leftMove()) {
-            dx = -speed;
+            acceleration.add(Point2D.LEFT);
         }
         if (rightMove()) {
-            dx = speed;
+            acceleration.add(Point2D.RIGHT);
         }
-        if (up && left || up && right || down && left || down && right) {
-
-            double angle = Math.toRadians(45);//корректировка угла движения(переводим градусы в радианы)
-            dy = dy * Math.sin(angle);
-            dx = dx * Math.cos(angle);
+        if (acceleration.length() > 0.1) {
+            acceleration.length(1.3);
         }
-        pos.add(dx, dy);
-        //Отображение координат
-//        System.out.println("X: " + x);
-//        System.out.println("Y: " + y);
-//        System.out.println("DX: " + dx);
-//        System.out.println("DY: " + dy);
-        dy = 0;
-        dx = 0;
-
+        velocity.multiple(0.94); // затухание скорости
+        velocity.add(acceleration);
+        velocity.clamp(MAX_SPEED);
+        pos.add(velocity);
 
         //Shoot player
         if (isFiring) {

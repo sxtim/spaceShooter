@@ -1,5 +1,9 @@
 //For future
 public class Point2D {
+    public static final Point2D UP = new Point2D(0, -1);
+    public static final Point2D DOWN = new Point2D(0, 1);
+    public static final Point2D LEFT = new Point2D(-1, 0);
+    public static final Point2D RIGHT = new Point2D(1, 0);
     public double x;
     public double y;
 
@@ -55,11 +59,52 @@ public class Point2D {
         return this;
     }
 
-    public Point2D rotate(double angle){
+    public Point2D rotate(double angle) {
         double x = (this.x * Math.cos(angle) - this.y * Math.sin(angle));
         double y = (this.x * Math.sin(angle) + this.y * Math.cos(angle));
         this.x = x;
         this.y = y;
+        return this;
+    }
+
+    public double length() {
+        return Math.hypot(x, y);
+    }
+
+    public Point2D length(double length) {
+        double curLength = length();
+        if (curLength == 0.0) {
+            return this;
+        } else {
+            return multiple(length / curLength);
+        }
+    }
+
+
+
+    public Point2D normalize(double length) {
+        double curLength = length();
+        if (curLength == 0.0) {
+            return this;
+        } else {
+            return divide(length);
+        }
+    }
+
+    private Point2D divide(double divider) {
+        this.x /= divider;
+        this.y /= divider;
+
+        return this;
+    }
+
+    /**
+     * возвращает вектор дилнной не больше maxLength
+     */
+    public Point2D clamp(double maxLength) {
+        if (length() > maxLength) {
+            return length(maxLength);
+        }
         return this;
     }
 }
