@@ -72,16 +72,20 @@ public class Player {
         if (acceleration.length() > 0.1) {
             acceleration.length(1.3);
         }
+        acceleration.rotate(angle + (Math.PI / 4) * 2);
+
+        //Shoot player
+        if (isFiring) {
+            acceleration.minus(new Point2D(1, 0).rotate(angle));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+            isFiring = false;
+        }
+
         velocity.multiple(0.94); // затухание скорости
         velocity.add(acceleration);
         velocity.clamp(MAX_SPEED);
         pos.add(velocity);
 
-        //Shoot player
-        if (isFiring) {
-            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), GamePanel.player.angle));
-            isFiring = false;
-        }
     }
 
     public void hit() {
