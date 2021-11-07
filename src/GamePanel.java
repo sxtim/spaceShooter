@@ -29,9 +29,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void customCursor(){
 
         Toolkit t = Toolkit.getDefaultToolkit();
-        Image img = t.getImage("Image/crosshair2.png");
-        Point p = new Point(15,15);
-        Cursor c = t.createCustomCursor(img, p, "Image/crosshair2.png");
+        Image img = t.getImage("Image/crosshairs/crosshair1.png");
+        Point p = new Point(11,11);
+        Cursor c = t.createCustomCursor(img, p, "Image/crosshairs/crosshair1.png");
         setCursor(c);
     }
 
@@ -159,8 +159,8 @@ public class GamePanel extends JPanel implements Runnable {
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
-                    System.out.println("register hit of meteor");
-                    e.hit(true, null);                          //чем сумма радиусов врага и пули, то есть попадание
+                    System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
+                    e.hit(true, null);
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
                     if (remove) {                 //если
