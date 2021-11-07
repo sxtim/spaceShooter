@@ -160,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
                     System.out.println("register hit of meteor");
-                    e.hit(true);                          //чем сумма радиусов врага и пули, то есть попадание
+                    e.hit(true, null);                          //чем сумма радиусов врага и пули, то есть попадание
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
                     if (remove) {                 //если
@@ -189,7 +189,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (e.hitCooldown == 0) {
                     player.hit();
                 }
-                e.hit(false);
+                e.hit(false, player);
                 boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
                 if (remove) {
                     enemies.remove(i);

@@ -32,6 +32,9 @@ public class Wave {
                 int type = 1;
                 int rank = 1;
                 GamePanel.enemies.add(new EnemyMeteor(type, rank));
+
+                System.out.println(" create meteor ");
+
                 enemyCount -= type * rank;
             }
         }

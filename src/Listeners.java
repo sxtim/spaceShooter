@@ -42,10 +42,6 @@ public class Listeners extends MouseAdapter implements KeyListener, MouseListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-        System.out.println("кнопка нажата ");
-        System.out.println("=========================");
-
     }
 
     public void mouseMoved(MouseEvent e) {//если двигаем

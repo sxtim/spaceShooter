@@ -6,8 +6,8 @@ public class Player {
     private static final int MAX_SPEED = 13;
     //Fields
     private static Image imageShip = new ImageIcon("Image/player/playership7.png").getImage();
-    private Point2D pos = new Point2D(0, 0);
-    private Point2D velocity = new Point2D(0, 0);
+    public Point2D pos = new Point2D(0, 0);
+    public Point2D velocity = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
     private int r; // радиус
     private double angle;//угол поворота
@@ -27,7 +27,7 @@ public class Player {
         health = 3;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
         r = 35;
-        speed = 5;
+        speed = 5; //не используется?
 
         color1 = Color.WHITE;
 
@@ -37,19 +37,19 @@ public class Player {
 
     //Move player
     public boolean upMove() {
-        return up && pos.y > r;
+        return up;
     }
 
     public boolean downMove() {
-        return down && pos.y < GamePanel.HEIGHT - r;
+        return down;
     }
 
     public boolean leftMove() {
-        return left && pos.x > 0;
+        return left;
     }
 
     public boolean rightMove() {
-        return right && pos.x < GamePanel.WIDTH - r;
+        return right;
     }
 
     public void update() {
@@ -57,6 +57,9 @@ public class Player {
         angle = GamePanel.mousePos.copy().minus(pos).angle();
 
         acceleration.set(0, 0);
+
+      //  System.out.println("движение вверх " + upMove());
+      //  System.out.println("кнопка вверх нажата " + up);
         if (upMove()) {
             acceleration.add(Point2D.UP);
         }
@@ -70,9 +73,11 @@ public class Player {
             acceleration.add(Point2D.RIGHT);
         }
         if (acceleration.length() > 0.1) {
-            acceleration.length(1.3);
+            acceleration.length(0.5);
         }
-        acceleration.rotate(angle + (Math.PI / 4) * 2);
+
+
+//        acceleration.rotate(angle + (Math.PI / 4) * 2); //поворот векторов тяги на угол корабля текущий
 
         //Shoot player
         if (isFiring) {
@@ -81,10 +86,24 @@ public class Player {
             isFiring = false;
         }
 
-        velocity.multiple(0.94); // затухание скорости
+        velocity.multiple(0.99); // затухание скорости
         velocity.add(acceleration);
-        velocity.clamp(MAX_SPEED);
+        velocity.clamp(3);
         pos.add(velocity);
+
+
+        if (pos.y < -r) {
+            pos.y = GamePanel.HEIGHT;
+        } else if (pos.y > GamePanel.HEIGHT) {
+            pos.y = -r;
+        } else if (pos.x < -r) {
+            pos.x = GamePanel.WIDTH;
+        } else if (pos.x > GamePanel.WIDTH) {
+            pos.x = -r;
+        }
+
+//        System.out.println("position = " + pos +  " volocity=" + velocity + " acceleration=" + acceleration );
+
 
     }
 
@@ -137,8 +156,4 @@ public class Player {
         return pos.y;
     }
 
-
-    public Point2D getPos() {
-        return pos;
-    }
 }

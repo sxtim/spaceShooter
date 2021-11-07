@@ -1,29 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyMeteor {
 
-    //Fields
-    Image asteroidXL = new ImageIcon ("Image/meteors/meteor-01-xl.png").getImage();
-    Image asteroidL = new ImageIcon ("Image/meteors/meteor-01-l.png").getImage();
-
-
-
     private static List<Image> enemyImages = new ArrayList<>();
 
-        static {
-        enemyImages.add(new ImageIcon("Image/enemy/figther1.png").getImage());
+    static {
+        enemyImages.add(new ImageIcon("Image/meteors/meteor-01-xl.png").getImage());
     }
 
-    private double x;
-    private double y;
-    private double dx;//сдвиг при движении
-    private double dy;
     private Point2D pos = new Point2D(0, 0);
+    private Point2D acceleration = new Point2D(0, 0);
+    private Point2D velocity = new Point2D(0, 0);
     private double angle = 1;
     private int r;
     Color color;
@@ -39,7 +30,7 @@ public class EnemyMeteor {
 
     //Constructor
     public EnemyMeteor(int type, int rank) {
-
+        System.out.println("meteor created");
 
         this.type = type;
         this.rank = rank;
@@ -49,15 +40,15 @@ public class EnemyMeteor {
                 color = Color.GREEN;
                 switch (rank) {
                     case (1):
-                        x = Math.random() * GamePanel.WIDTH;
-                        y = 0;
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
                         r = 25;
 
-                        speed = 2;
+                        speed = 1;
                         health = 10;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
-                        dx = Math.sin(angle) * speed; //смещение шариков
-                        dy = Math.cos(angle) * speed;
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
                 }
         }
     }
@@ -68,81 +59,74 @@ public class EnemyMeteor {
     }
 
     public void update() {
-        x += dx;
-        y += dy;
+        velocity.multiple(0.9);
+
+        velocity.add(acceleration);
+
+        velocity.clamp(3);
+
+
+        pos.add(velocity);
         //проверка выхода за пределы поля
         //еесли враг вышел за пределы поля, то возвращаем его
-        if (x < 0 && dx < 0) dx = -dx;
-        if (x > GamePanel.WIDTH && dx > 0) dx = -dx;
-        if (y < 0 && dy < 0) dy = -dy;
-        if (y > GamePanel.HEIGHT && dy > 0) dy = -dy;
+        if (pos.x < 0 && acceleration.x < 0) acceleration.x = -acceleration.x;
+        if (pos.x > GamePanel.WIDTH && acceleration.x > 0) acceleration.x = -acceleration.x;
+        if (pos.y < 0 && acceleration.y < 0) acceleration.y = -acceleration.y;
+        if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
         animFrame++;
         if (hitCooldown > 0) {
             hitCooldown--;
         }
+        angle += Math.PI / 360;
     }
 
-    public void hit(boolean ignoreCooldown) {//при попадании уменьшаем здоровье
+    public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
         if (!ignoreCooldown && hitCooldown > 0) {
 
             return;
         }
+
         hitCooldown = 60;
         health--;
-        System.out.println(health);
+
+        if (player != null) {
+
+            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
+
+            acceleration.set(speed, 0)  // tmp acceleration
+                    .rotate(delta.multiple(-1).angle());
+
+            player.velocity.set(delta.multiple(-1));
+
+            return;
+        }
     }
 
 
     public void draw(Graphics2D g) {
-//        g.drawImage(asteroidXL, (int) (x - 54/2),(int) (y - 54/2),null);
 
-// The required drawing location
-        int drawLocationX = 300;
-        int drawLocationY = 300;
+        AffineTransform origForm; //создаем объект класса AffineTransform
+        origForm = g.getTransform();//получаем текущее значение
+        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+        newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+        g.setTransform(newForm);//
 
-// Rotation information
+        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
+      //  g.setColor(Color.CYAN);
+       // g.drawOval((int)(x - r), (int)(y - r), r * 2 , r * 2 );
 
-        double rotationRequired = Math.toRadians (45);
-        double locationX = 54 / 2f;
-        double locationY = 54 / 2f;
-        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-//        g.drawImage(asteroidXL, tx, ImageObserver);
-// Drawing the rotated image at the required drawing locations
-
-
-
-//        AffineTransform origForm; //создаем объект класса AffineTransform
-//        origForm = g.getTransform();//получаем текущее значение
-//        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-//        newForm.rotate(angle + Math.PI / 2, x, y);//вертим полученное изображение относительно X и Y
-//        g.setTransform(newForm);//ставим трансформированное изображение
-//        g.drawImage(asteroidXL, (int) x - 54 / 2, (int) y - 54 / 2, null);//рисуем картинку
-//        g.setTransform(origForm);//возвращаем старое значение
-
-//       if (dx < 0) g.drawImage(asteroidXL, (int) (x - 50/2),(int) (y - 40/2),null);//разные типы
-//       if (dx > 0) g.drawImage(asteroidL, (int) (x - 50/2),(int) (y - 40/2),null);
-
-//        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) x, (int) y, null);//анимация
-        g.setColor(Color.CYAN);
-        g.drawOval((int)(x - r), (int)(y - r), r * 2 , r * 2 );
-//        g.setColor(color);
-//        g.fillOval((int)x - r, (int)y -r, 2 * r, 2 * r); //рисуем с середины экрана
-//        g.setStroke(new BasicStroke(3));
-//        g.setColor(color.darker());
-//        g.drawOval((int)x - r, (int)y -r, 2 * r, 2 * r);
-//        g.setStroke(new BasicStroke(1));
+        g.setTransform(origForm);
     }
 
     //Getters
 
     public double getX() {
-        return x;
+        return pos.x;
     }
 
     public double getY() {
-        return y;
+        return pos.y;
     }
 
     public int getR() {

@@ -34,9 +34,10 @@ public class Point2D {
                 '}';
     }
 
-    public void set(double x, double y) {
+    public Point2D set(double x, double y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
     public double angle() {
@@ -105,6 +106,12 @@ public class Point2D {
         if (length() > maxLength) {
             return length(maxLength);
         }
+        return this;
+    }
+
+    public Point2D set(Point2D other) {
+        this.x = other.x;
+        this.y = other.y;
         return this;
     }
 }
