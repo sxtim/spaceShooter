@@ -5,19 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyMeteor {
-    private static List<Image> sparksImages = new ArrayList<>();
-    private static List<Image> enemyImages = new ArrayList<>();
-    static {
-        sparksImages.add(new ImageIcon("Image/explosions/sparks0.png").getImage());
-        sparksImages.add(new ImageIcon("Image/explosions/sparks1.png").getImage());
-        sparksImages.add(new ImageIcon("Image/explosions/sparks2.png").getImage());
-        sparksImages.add(new ImageIcon("Image/explosions/sparks3.png").getImage());
-    }
-
-    static {
-        enemyImages.add(new ImageIcon("Image/meteors/meteor-01-xl.png").getImage());
-
-    }
+    private static Image meteorXlImage;
+    private static Image meteorLImage;
+//    private static List<Image> enemyImages = new ArrayList<>();
+//
+//    static {
+//        enemyImages.add(new ImageIcon("Image/meteors/meteor-01-xl.png").getImage());
+//    }
 
     private Point2D pos = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
@@ -47,13 +41,27 @@ public class EnemyMeteor {
                 color = Color.GREEN;
                 switch (rank) {
                     case (1):
+                        System.out.println("изменяется картинка у первого типа");
+                        meteorXlImage = new ImageIcon("Image/meteors/meteor-01-xl.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
-                        r = 25;
-
-                        speed = 1;
+                        r = 27;
+                        speed = 0.1;
                         health = 10;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                }
+                switch (rank) {
+                    case (2):
+                        System.out.println("создаем второй тип метеора");
+                        meteorLImage = new ImageIcon("Image/meteors/meteor-01-l.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 20;
+                        speed = 1;
+                        health = 5;
+                        double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
                 }
@@ -85,11 +93,10 @@ public class EnemyMeteor {
         if (hitCooldown > 0) {
             hitCooldown--;
         }
-        angle += Math.PI / 40;
+        angle += Math.PI / 360;
     }
 
     public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
-
         if (!ignoreCooldown && hitCooldown > 0) {
 
             return;
@@ -107,40 +114,56 @@ public class EnemyMeteor {
 
             player.velocity.set(delta.multiple(-1));
 
-
             return;
+        }
+    }
+
+    public void explode() {
+        if (rank == 1) {
+            int amount = 0;
+            if (type == 1) {
+                amount = 3;
+            }
+            for (int i = 0; i < amount; i++) {
+                EnemyMeteor e = new EnemyMeteor(1, 2);
+                e.pos.x = this.pos.x;
+                e.pos.y = this.pos.y;
+                GamePanel.enemies.add(e);
+            }
         }
     }
 
 
     public void draw(Graphics2D g) {
 
+        if (!dead) {
+            System.out.println("исуем первый тип");
+            AffineTransform origForm; //создаем объект класса AffineTransform
+            origForm = g.getTransform();//получаем текущее значение
+            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+            newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm);//
+            g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
+            g.setTransform(origForm);
+        } else {
+            System.out.println("рисуем второй тип");
+            AffineTransform origForm1; //создаем объект класса AffineTransform
+            origForm1 = g.getTransform();//получаем текущее значение
+            AffineTransform newForm = (AffineTransform) (origForm1.clone());//клонируем текущее значение
+            newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm);//
+            g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
+            g.setTransform(origForm1);
+        }
+//        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
+        //  g.setColor(Color.CYAN);
+        // g.drawOval((int)(x - r), (int)(y - r), r * 2 , r * 2 );
 //        g.drawImage(sparksImages.get((animFrame) % sparksImages.size()), (int) pos.x - 32, (int) pos.y - 30, null);//анимация
 
 //        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) pos.x, (int) pos.y - 30, null);
 
 
-
-//        AffineTransform origForm; //создаем объект класса AffineTransform
-//        origForm = g.getTransform();//получаем текущее значение
-//        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-//        newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-//        g.setTransform(newForm);//
-
-//        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
-        g.setColor(Color.CYAN);
-        g.drawOval((int)(pos.x - 27), (int)(pos.y - 27), r * 2 , r * 2 );
-//        g.setTransform(origForm);
-
-
-
-
-
-
-    }
-    public void drawEffects(Graphics2D g){
-        g.drawImage(sparksImages.get((animFrame / 30) % sparksImages.size()), (int) pos.x - 32, (int) pos.y - 30, null);//анимация
-        System.out.println("рисуем анимацию ");
+        g.setTransform(origForm);
     }
 
     //Getters
