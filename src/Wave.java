@@ -19,7 +19,7 @@ public class Wave {
         waveMultiplier = 3;
 
         waveTimer = 0;
-        waveDelay = 5000;
+        waveDelay = 1000; //orig 5000
         waveTimerDiff = 0;
     }
 
@@ -27,7 +27,7 @@ public class Wave {
     //Functions
     public void createEnemies() {
         int enemyCount = waveNumber * waveMultiplier;
-        if (waveNumber < 4) {//до 4 волны создаем определенный алгоритм
+        if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
             while(enemyCount > 0) {//создаем врагов
                 int type = 1;
                 int rank = 1;

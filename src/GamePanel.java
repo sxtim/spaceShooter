@@ -92,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
                 menu.update();
                 menu.draw(g);
                 gameDraw();
-                System.out.println("mouse=" + mousePos);
+//                System.out.println("mouse=" + mousePos);
             }
             if (state.equals(STATES.PLAY)) {
                 gameUpdate();
@@ -162,10 +162,11 @@ public class GamePanel extends JPanel implements Runnable {
                     System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
                     e.hit(true, null);
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
-                    boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+                    boolean remove = e.isDead();//проверяем врага, если health =< 0, то удаляем
                     if (remove) {                 //если
                         enemies.remove(i);
                         i--;
+                        e.explode();
                     }
                     break;
                 }
@@ -190,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
                     player.hit();
                 }
                 e.hit(false, player);
-                boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
+                boolean remove = e.isDead();//проверяем врага, если health =< 0, то удаляем
                 if (remove) {
                     enemies.remove(i);
                     i--;
