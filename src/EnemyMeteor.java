@@ -5,11 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyMeteor {
-
+    private static List<Image> sparksImages = new ArrayList<>();
     private static List<Image> enemyImages = new ArrayList<>();
+    static {
+        sparksImages.add(new ImageIcon("Image/explosions/sparks0.png").getImage());
+        sparksImages.add(new ImageIcon("Image/explosions/sparks1.png").getImage());
+        sparksImages.add(new ImageIcon("Image/explosions/sparks2.png").getImage());
+        sparksImages.add(new ImageIcon("Image/explosions/sparks3.png").getImage());
+    }
 
     static {
         enemyImages.add(new ImageIcon("Image/meteors/meteor-01-xl.png").getImage());
+
     }
 
     private Point2D pos = new Point2D(0, 0);
@@ -78,10 +85,11 @@ public class EnemyMeteor {
         if (hitCooldown > 0) {
             hitCooldown--;
         }
-        angle += Math.PI / 360;
+        angle += Math.PI / 40;
     }
 
     public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
+
         if (!ignoreCooldown && hitCooldown > 0) {
 
             return;
@@ -99,6 +107,7 @@ public class EnemyMeteor {
 
             player.velocity.set(delta.multiple(-1));
 
+
             return;
         }
     }
@@ -106,17 +115,32 @@ public class EnemyMeteor {
 
     public void draw(Graphics2D g) {
 
-        AffineTransform origForm; //создаем объект класса AffineTransform
-        origForm = g.getTransform();//получаем текущее значение
-        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-        newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-        g.setTransform(newForm);//
+//        g.drawImage(sparksImages.get((animFrame) % sparksImages.size()), (int) pos.x - 32, (int) pos.y - 30, null);//анимация
 
-        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
-      //  g.setColor(Color.CYAN);
-       // g.drawOval((int)(x - r), (int)(y - r), r * 2 , r * 2 );
+//        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) pos.x, (int) pos.y - 30, null);
 
-        g.setTransform(origForm);
+
+
+//        AffineTransform origForm; //создаем объект класса AffineTransform
+//        origForm = g.getTransform();//получаем текущее значение
+//        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+//        newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+//        g.setTransform(newForm);//
+
+//        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
+        g.setColor(Color.CYAN);
+        g.drawOval((int)(pos.x - 27), (int)(pos.y - 27), r * 2 , r * 2 );
+//        g.setTransform(origForm);
+
+
+
+
+
+
+    }
+    public void drawEffects(Graphics2D g){
+        g.drawImage(sparksImages.get((animFrame / 30) % sparksImages.size()), (int) pos.x - 32, (int) pos.y - 30, null);//анимация
+        System.out.println("рисуем анимацию ");
     }
 
     //Getters

@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<EnemyMeteor> enemies;
     public static Wave wave;
     public static Menu menu;
+    public boolean popadanie;
 
     public static enum STATES {
         MENU,
@@ -129,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
         backGround.update();
         //Player update
         player.update();
-        //Bullets update
+        //Bullets update проверка выхода за пределы экрана
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update();
             boolean remove = bullets.get(i).remove();
@@ -159,11 +160,14 @@ public class GamePanel extends JPanel implements Runnable {
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
-                    System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
+                    popadanie = true;//чем сумма радиусов врага и пули, то есть попадание
+                    System.out.println("register hit of meteor");
+                    e.drawEffects(g);
+
                     e.hit(true, null);
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
-                    if (remove) {                 //если
+                    if (remove) {
                         enemies.remove(i);
                         i--;
                     }
@@ -214,6 +218,10 @@ public class GamePanel extends JPanel implements Runnable {
         //Draw enemies
         for (EnemyMeteor enemyMeteor : enemies) {
             enemyMeteor.draw(g);
+            if (enemyMeteor.remove())
+            enemyMeteor.drawEffects(g);
+
+
         }
         //Draw wave
         if (wave.showWave())//если надо показывать то пишем на экране текст
