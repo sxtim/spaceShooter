@@ -20,6 +20,7 @@ public class EnemyMeteor {
     private int r;
     Color color;
     private double speed;
+    private boolean type2;
 
 
     private int health;
@@ -46,20 +47,21 @@ public class EnemyMeteor {
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 27;
-                        speed = 0.1;
-                        health = 10;
+                        speed = 0.2;
+                        health = 3;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
                 }
                 switch (rank) {
                     case (2):
+                        type2 = true;
                         System.out.println("создаем второй тип метеора");
                         meteorLImage = new ImageIcon("Image/meteors/meteor-01-l.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 20;
-                        speed = 1;
+                        speed = 0.3;
                         health = 5;
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
@@ -69,7 +71,7 @@ public class EnemyMeteor {
     }
 
     //Functions
-    public boolean remove() {
+    public boolean isDead() {
         return health <= 0;
     }
 
@@ -136,24 +138,28 @@ public class EnemyMeteor {
 
     public void draw(Graphics2D g) {
 
-        if (!dead) {
-            System.out.println("исуем первый тип");
-            AffineTransform origForm; //создаем объект класса AffineTransform
-            origForm = g.getTransform();//получаем текущее значение
-            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-            newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-            g.setTransform(newForm);//
-            g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
-            g.setTransform(origForm);
-        } else {
-            System.out.println("рисуем второй тип");
-            AffineTransform origForm1; //создаем объект класса AffineTransform
-            origForm1 = g.getTransform();//получаем текущее значение
-            AffineTransform newForm = (AffineTransform) (origForm1.clone());//клонируем текущее значение
-            newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-            g.setTransform(newForm);//
-            g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
-            g.setTransform(origForm1);
+
+
+            if(type2) {
+                System.out.println("рисуем второй тип");
+                AffineTransform origForm1; //создаем объект класса AffineTransform
+                origForm1 = g.getTransform();//получаем текущее значение
+                AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
+                newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+                g.setTransform(newForm1);//
+                g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
+                g.setTransform(origForm1);
+            }else {
+                System.out.println("исуем первый тип");
+                AffineTransform origForm; //создаем объект класса AffineTransform
+                origForm = g.getTransform();//получаем текущее значение
+                AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+                newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+                g.setTransform(newForm);//
+                g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
+                g.setTransform(origForm);
+
+            }
         }
 //        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
         //  g.setColor(Color.CYAN);
@@ -162,9 +168,6 @@ public class EnemyMeteor {
 
 //        g.drawImage(enemyImages.get((animFrame / 30) % enemyImages.size()), (int) pos.x, (int) pos.y - 30, null);
 
-
-        g.setTransform(origForm);
-    }
 
     //Getters
 

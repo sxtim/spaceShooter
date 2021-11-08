@@ -162,8 +162,8 @@ public class GamePanel extends JPanel implements Runnable {
                     System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
                     e.hit(true, null);
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
-                    boolean remove = e.remove();//проверяем врага, если health =< 0, то удаляем
-                    if (remove) {                 //если
+                    boolean remove = e.isDead();//проверяем врага, если health =< 0, то удаляем
+                    if (remove) {
                         enemies.remove(i);
                         i--;
                         e.explode();
