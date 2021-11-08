@@ -195,6 +195,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (remove) {
                     enemies.remove(i);
                     i--;
+                    e.explode();
                 }
             }
         }
