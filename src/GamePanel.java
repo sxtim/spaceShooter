@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Bullet> bullets;
     public static ArrayList<EnemyMeteor> enemies;
     public static ArrayList<Explosion> explosions;
+    public static ArrayList<ExplosionHit> explosionHits;
     public static Wave wave;
     public static Menu menu;
 
@@ -75,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
         explosions = new ArrayList<>();
+        explosionHits = new ArrayList<>();
         wave = new Wave();
         menu = new Menu();
 
@@ -162,13 +164,14 @@ public class GamePanel extends JPanel implements Runnable {
 
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
                     System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
+                    explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                     e.hit(true, null);
                     bullets.remove(j);                  //удаляем пулю и выходим из цикла
                     boolean remove = e.isDead();//проверяем врага, если health =< 0, то удаляем
                     if (remove) {
                         enemies.remove(i);
                         i--;
-                        e.explode();
+                        e.explode();//деление метеоритов
                         explosions.add(new Explosion(e.getX(), e.getY()));
                     }
                     break;
@@ -190,6 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
             double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
             if ((int) distance <= e.getR() + player.getR()) {
+                explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                 if (e.hitCooldown == 0) {
                     player.hit();
                 }
@@ -210,6 +214,14 @@ public class GamePanel extends JPanel implements Runnable {
             boolean remove = explosions.get(i).update();
             if(remove){
                 explosions.remove(i);
+                i--;
+            }
+        }
+        //ExplosionSmall Update
+        for(int i = 0; i < explosionHits.size(); i++) {
+            boolean remove = explosionHits.get(i).update();
+            if(remove){
+                explosionHits.remove(i);
                 i--;
             }
         }
@@ -235,8 +247,12 @@ public class GamePanel extends JPanel implements Runnable {
         //Explosion draw
         for(int i = 0; i < explosions.size(); i++){
             explosions.get(i).draw(g);
-
         }
+        //SmallExplosion draw
+        for(int i = 0; i < explosionHits.size(); i++){
+            explosionHits.get(i).draw(g);
+        }
+
     }
 
     private void gameDraw() { // передаем изображение в нашу компоненту

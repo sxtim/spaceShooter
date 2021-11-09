@@ -9,10 +9,8 @@ public class Explosion {
     private double x;
     private double y;
     private int counterImageFrame;
-    private int maxRadius;
 
     //Constructor
-
     public Explosion(double x, double y) {
         explosionsBigImage = new ArrayList<>();
         explosionsBigImage.addAll(AnimationImageData.createExplosionBig());
@@ -32,7 +30,6 @@ public class Explosion {
     }
 
     public void draw(Graphics2D g) {
-        System.out.println("РИСУЕМ КРУГ");
         g.drawImage(explosionsBigImage.get((counterImageFrame)), (int) x - 124, (int) y - 124, null);
     }
 }
