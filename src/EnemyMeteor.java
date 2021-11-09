@@ -73,6 +73,8 @@ public class EnemyMeteor {
         sparksImages.add(new ImageIcon("Image/explosions/small/explosion62.png").getImage());
         sparksImages.add(new ImageIcon("Image/explosions/small/explosion63.png").getImage());
         sparksImages.add(new ImageIcon("Image/explosions/small/explosion64.png").getImage());
+        sparksImages.add(new ImageIcon("Image/explosions/small/explosion1.png").getImage());
+        sparksImages.add(new ImageIcon("Image/explosions/small/explosion1.png").getImage());
 
     }
 
@@ -116,7 +118,7 @@ public class EnemyMeteor {
                         pos.y = 0;
                         r = 27;
                         speed = 0.2;
-                        health = 3;
+                        health = 1;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -130,7 +132,7 @@ public class EnemyMeteor {
                         pos.y = 0;
                         r = 20;
                         speed = 0.3;
-                        health = 5;
+                        health = 1;
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -170,11 +172,14 @@ public class EnemyMeteor {
 
     public void update() {
         if (hit) {
-            long elapsed = (System.nanoTime() - hitTimer) / 1000000;
-            if (elapsed > 1000) {
+            long elapsed = (System.nanoTime() - hitTimer) / 1000000;//милисекунды время отрисовки анимации
+            if (elapsed > 820) {
                 hit = false;
                 hitTimer = 0;
             }
+            animFrame++;
+            if(animFrame >= sparksImages.size()) animFrame = 0;
+//            System.out.println(animFrame);
         }
 
         velocity.multiple(0.9);
@@ -190,10 +195,12 @@ public class EnemyMeteor {
         if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
 
-        animFrame++;
+
         if (hitCooldown > 0) {
             hitCooldown--;
         }
+
+//        System.out.println(hitCooldown);
         angle += Math.PI / 360;
     }
 
@@ -216,7 +223,7 @@ public class EnemyMeteor {
     public void draw(Graphics2D g) {
 
         if (drawMeteorL) {
-                System.out.println("рисуем тип 2");
+//                System.out.println("рисуем тип 2");
                 AffineTransform origForm1; //создаем объект класса AffineTransform
                 origForm1 = g.getTransform();//получаем текущее значение
                 AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
@@ -228,7 +235,7 @@ public class EnemyMeteor {
         } else {
             if(hit) {
 
-                System.out.println("рисуем тип 1");
+//                System.out.println("рисуем тип 1");
                 AffineTransform origForm; //создаем объект класса AffineTransform
                 origForm = g.getTransform();//получаем текущее значение
                 AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
@@ -236,7 +243,7 @@ public class EnemyMeteor {
                 g.setTransform(newForm);//
                 g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
                 g.setTransform(origForm);
-                g.drawImage(sparksImages.get((animFrame / 5) % sparksImages.size()), (int) pos.x - 124, (int) pos.y - 124, null);
+                g.drawImage(sparksImages.get((animFrame)), (int) pos.x - 124, (int) pos.y - 124, null);
             }else {
                 AffineTransform origForm; //создаем объект класса AffineTransform
                 origForm = g.getTransform();//получаем текущее значение

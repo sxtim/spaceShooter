@@ -7,6 +7,12 @@ public class GamePanel extends JPanel implements Runnable {
     //Field
     public static int WIDTH = 1800;
     public static int HEIGHT = 980;
+    public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
+
+    private int FPS;
+    private double millisPerFrame;//миллисеккунд чтобы получить фпс
+    private long timerFPS;
+    private int sleepTime;
 
     public static Point2D mousePos = new Point2D(0, 0);//координаты мыши
     public static boolean leftMouse;
@@ -18,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static Player player;
     public static ArrayList<Bullet> bullets;
     public static ArrayList<EnemyMeteor> enemies;
+    public static ArrayList<Explosion> explosions;
     public static Wave wave;
     public static Menu menu;
 
@@ -35,12 +42,6 @@ public class GamePanel extends JPanel implements Runnable {
         setCursor(c);
     }
 
-    public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
-
-    private int FPS;
-    private double millisPerFrame;//миллисеккунд чтобы получить фпс
-    private long timerFPS;
-    private int sleepTime;
 
     //Constructor
     public GamePanel() {
@@ -73,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
+        explosions = new ArrayList<>();
         wave = new Wave();
         menu = new Menu();
 
@@ -167,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                         enemies.remove(i);
                         i--;
                         e.explode();
+                        explosions.add(new Explosion(e.getX(), e.getY(), e.getR(), e.getR() + 60));
                     }
                     break;
                 }
@@ -196,11 +199,20 @@ public class GamePanel extends JPanel implements Runnable {
                     enemies.remove(i);
                     i--;
                     e.explode();
+                    explosions.add(new Explosion(e.getX(), e.getY(), e.getR(), e.getR() + 60));
                 }
             }
         }
         //Wave update
         wave.update();
+        //Explosion update
+        for(int i = 0; i < explosions.size(); i++) {
+            boolean remove = explosions.get(i).update();
+            if(remove){
+                explosions.remove(i);
+                i--;
+            }
+        }
     }
 
     public void gameRender() { // обновляет картинку
@@ -220,6 +232,11 @@ public class GamePanel extends JPanel implements Runnable {
         //Draw wave
         if (wave.showWave())//если надо показывать то пишем на экране текст
             wave.draw(g);
+        //Explosion draw
+        for(int i = 0; i < explosions.size(); i++){
+            explosions.get(i).draw(g);
+
+        }
     }
 
     private void gameDraw() { // передаем изображение в нашу компоненту
