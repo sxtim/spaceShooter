@@ -185,9 +185,10 @@ public class GamePanel extends JPanel implements Runnable {
             double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
             if ((int) distance <= e.getR() + player.getR()) {
-                explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
+
                 if (e.hitCooldown == 0) {
                     player.hit();
+                    explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                 }
                 e.hit(false, player);
                 boolean remove = e.isDead();//проверяем врага, если health =< 0, то удаляем

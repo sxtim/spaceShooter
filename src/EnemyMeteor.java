@@ -8,11 +8,6 @@ public class EnemyMeteor {
     private static Image meteorLImage;
     private static ArrayList<Image> sparksImages = new ArrayList<>();
 
-    static {
-
-
-    }
-
     private Point2D pos = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
     private Point2D velocity = new Point2D(0, 0);
@@ -23,12 +18,9 @@ public class EnemyMeteor {
     private boolean drawMeteorL;
     private boolean dead;
 
-
-
     private int health;
     private int type;
     private int rank;
-    private int animFrame;
     int hitCooldown;
 
 

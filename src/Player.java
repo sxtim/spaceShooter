@@ -109,7 +109,7 @@ public class Player {
 
     public void hit() {
         health--;
-        System.out.println(health);
+        System.out.println("========== " + health + " =============");
     }
 
 
