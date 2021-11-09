@@ -22,8 +22,7 @@ public class EnemyMeteor {
     private double speed;
     private boolean drawMeteorL;
     private boolean dead;
-    private boolean hit;
-    private long hitTimer;
+
 
 
     private int health;
@@ -36,8 +35,6 @@ public class EnemyMeteor {
     //Constructor
     public EnemyMeteor(int type, int rank) {
         System.out.println("meteor created");
-        hit = false;
-        hitTimer = 0;
 
         this.type = type;
         this.rank = rank;
@@ -93,8 +90,7 @@ public class EnemyMeteor {
         if (health <= 0) {
             dead = true;
         }
-        hit = true;
-        hitTimer = System.nanoTime();
+
 
         if (player != null) {
             Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
@@ -106,16 +102,7 @@ public class EnemyMeteor {
     }
 
     public void update() {
-//        if (hit) {
-//            long elapsed = (System.nanoTime() - hitTimer) / 1000000;//милисекунды время отрисовки анимации
-//            if (elapsed > 820) {
-//                hit = false;
-//                hitTimer = 0;
-//            }
-//            animFrame++;
-//            if(animFrame >= sparksImages.size()) animFrame = 0;
-////            System.out.println(animFrame);
-//        }
+
 
         velocity.multiple(0.9);
         velocity.add(acceleration);

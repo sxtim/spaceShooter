@@ -8,6 +8,7 @@ public class ExplosionHit {
     private double x;
     private double y;
     private int counterImageFrame;
+    private int hitCooldown;
 
 
     //Constructor
