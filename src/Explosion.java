@@ -1,28 +1,31 @@
+import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Explosion {
 
     //Fields
+    private ArrayList<Image> explosionsBigImage;
     private double x;
     private double y;
-    private int r;
+    private int counterImageFrame;
     private int maxRadius;
 
     //Constructor
 
-    public Explosion(double x, double y, int r, int maxRadius) {
+    public Explosion(double x, double y) {
+        explosionsBigImage = new ArrayList<>();
+        explosionsBigImage.addAll(AnimationImageData.createExplosionBig());
         this.x = x;
         this.y = y;
-        this.r = r;
-        this.maxRadius = maxRadius;
     }
 
 
     //Functions
 
     public boolean update() {
-        r++;
-        if (r >= maxRadius){
+        counterImageFrame++;
+        if (counterImageFrame >= explosionsBigImage.size()){
             return true;
         }
         return false;
@@ -30,8 +33,6 @@ public class Explosion {
 
     public void draw(Graphics2D g) {
         System.out.println("РИСУЕМ КРУГ");
-        g.setColor(new Color(255,255,255, 128));
-        g.drawOval((int) (x - r), (int) (y - r), 2 * r, 2 * r);
-
+        g.drawImage(explosionsBigImage.get((counterImageFrame)), (int) x - 124, (int) y - 124, null);
     }
 }

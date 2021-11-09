@@ -169,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                         enemies.remove(i);
                         i--;
                         e.explode();
-                        explosions.add(new Explosion(e.getX(), e.getY(), e.getR(), e.getR() + 60));
+                        explosions.add(new Explosion(e.getX(), e.getY()));
                     }
                     break;
                 }
@@ -184,8 +184,8 @@ public class GamePanel extends JPanel implements Runnable {
             double pX = player.getX();//координаты плеера
             double pY = player.getY();
 
-            double dX = eX - pX;//difference (разница медну врагом и пулей)
-            double dY = eY - pY;//difference (разница медну врагом и пулей)
+            double dX = eX - pX;//difference (разница между плеером и врагом)
+            double dY = eY - pY;//difference (разница между плеером и врагом)
 
             double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
@@ -199,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
                     enemies.remove(i);
                     i--;
                     e.explode();
-                    explosions.add(new Explosion(e.getX(), e.getY(), e.getR(), e.getR() + 60));
+                    explosions.add(new Explosion(e.getX(), e.getY()));
                 }
             }
         }
