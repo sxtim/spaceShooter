@@ -96,21 +96,13 @@ public class GamePanel extends JPanel implements Runnable {
                 menu.update();
                 menu.draw(g);
                 gameDraw();
-                System.out.println("mouse=" + mousePos);
+
             }
             if (state.equals(STATES.PLAY)) {
                 gameUpdate();
                 gameRender();
                 gameDraw();
             }
-
-//            //инициализация таймера ФПС
-//            timerFPS = System.nanoTime();
-
-//            gameUpdate();
-//            gameRender();
-//            gameDraw();
-
 
             //таймеры чтобы не зависимо от длительности цикла всегда получалось 60 фпс
             timerFPS = (System.nanoTime() - timerFPS) / 1000000;
@@ -119,7 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
             } else sleepTime = 0;
             try {
                 Thread.sleep(sleepTime); //TODO FPS
-//                    System.out.println(FPS);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
