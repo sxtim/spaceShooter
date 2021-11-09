@@ -221,9 +221,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void gameRender() { // обновляет картинку
+        //Custom cursor draw
         customCursor();
         //BackGround draw
         backGround.draw(g);
+        //Player lives draw
+
         //Player draw
         player.draw(g);
         //Bullets draw

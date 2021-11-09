@@ -20,11 +20,11 @@ public class Player {
     public static boolean right;
     private int speed;
     public static boolean isFiring;
-    private int health;
+    private int lives;
 
     public Player() {
 
-        health = 3;
+        lives = 3;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
         r = 35;
         speed = 5; //не используется?
@@ -108,8 +108,8 @@ public class Player {
     }
 
     public void hit() {
-        health--;
-        System.out.println("========== " + health + " =============");
+        lives--;
+        System.out.println("========== " + lives + " =============");
     }
 
 
@@ -126,6 +126,9 @@ public class Player {
         g.setTransform(newForm);//ставим трансформированное изображение
         g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);//рисуем картинку
         g.setTransform(origForm);//возвращаем старое значение
+
+        for(int i = 0; i < lives; i++)//рисуем жизни player
+            g.drawImage(imageShip, 10 + (70 * i), 10, null);
 
 //        g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);
         g.setColor(Color.CYAN);
@@ -151,9 +154,12 @@ public class Player {
         return pos.x;
     }
 
-
     public double getY() {
         return pos.y;
+    }
+
+    public int playerGetLives(){
+        return lives;
     }
 
 }
