@@ -149,8 +149,8 @@ public class GamePanel extends JPanel implements Runnable {
                 double bx = b.getX();///получаем координаты по икс
                 double by = b.getY();//получаем координаты по Y
 
-                double dx = ex - bx;//difference (разница медну врагом и пулей)
-                double dy = ey - by;//difference (разница медну врагом и пулей)
+                double dx = ex - bx;//difference (разница между врагом и пулей)
+                double dy = ey - by;//difference (разница между врагом и пулей)
 
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
 

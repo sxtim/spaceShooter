@@ -42,7 +42,7 @@ public class EnemyMeteor {
                         pos.y = 0;
                         r = 27;
                         speed = 0.2;
-                        health = 20;
+                        health = 3;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
