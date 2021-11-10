@@ -5,7 +5,7 @@ import java.awt.geom.AffineTransform;
 public class Player {
     private static final int MAX_SPEED = 13;
     //Fields
-    private static Image imageShip = new ImageIcon("Image/player/playership7.png").getImage();
+    private static Image imageShip = new ImageIcon("Image/player/playership8.png").getImage();
     public Point2D pos = new Point2D(0, 0);
     public Point2D velocity = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
@@ -26,7 +26,7 @@ public class Player {
 
         lives = 3;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
-        r = 35;
+        r = 30;
         speed = 5; //не используется?
 
         color1 = Color.WHITE;
@@ -83,6 +83,10 @@ public class Player {
         if (isFiring) {
             acceleration.minus(new Point2D(1, 0).rotate(angle));
             GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
+
             isFiring = false;
         }
 
@@ -102,14 +106,13 @@ public class Player {
             pos.x = -r;
         }
 
-//        System.out.println("position = " + pos +  " volocity=" + velocity + " acceleration=" + acceleration );
 
 
     }
 
     public void hit() {
         lives--;
-        System.out.println("========== " + lives + " =============");
+        System.out.println("========== LIVES " + lives + " LIVES =============");
     }
 
 
@@ -124,7 +127,7 @@ public class Player {
         AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
         newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
         g.setTransform(newForm);//ставим трансформированное изображение
-        g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);//рисуем картинку
+        g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
         g.setTransform(origForm);//возвращаем старое значение
 
         for(int i = 0; i < lives; i++)//рисуем жизни player

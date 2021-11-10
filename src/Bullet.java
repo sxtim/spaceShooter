@@ -4,7 +4,7 @@ import java.awt.*;
 public class Bullet {
 
     //Fields
-    private static Image imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
+    private static Image imgBullet = new ImageIcon("Image/bullets/bullet31.png").getImage();
     private Point2D pos = new Point2D(0, 0);
     private int r;
     private Point2D deltaPos;
@@ -16,7 +16,7 @@ public class Bullet {
     public Bullet(int x, int y, double angle){
         this.pos.set(x, y);
         r = 2;
-        deltaPos = new Point2D(10, 0).rotate(angle);
+        deltaPos = new Point2D(5, 0).rotate(angle);
 //        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
         color = Color.YELLOW;
     }
