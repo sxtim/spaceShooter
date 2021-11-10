@@ -11,8 +11,6 @@ public class Player {
     private int r; // радиус
     private double angle;//угол поворота
 
-    private Color color1;
-    private Color color2;
     public static boolean up;
     public static boolean down;
     public static boolean left;
@@ -28,7 +26,6 @@ public class Player {
         r = 30;
         speed = 5; //не используется?
 
-        color1 = Color.WHITE;
 
     }
 
