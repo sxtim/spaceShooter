@@ -55,7 +55,7 @@ public class Menu {
         g.setColor(color);
         g.setFont(new Font("Consolas", Font.BOLD, 60));
         long length = (int) g.getFontMetrics().getStringBounds(text, g).getWidth();//определяем длинну надписи, чтоб разместить ее по центру
-        g.drawString(text, (int) (GamePanel.WIDTH / 2 - length / 2), (int) GamePanel.HEIGHT / 2 + buttonHeight / 4);
+        g.drawString(text, (int) (GamePanel.WIDTH / 2 - length / 2), (int) GamePanel.HEIGHT / 2 + buttonHeight / 5);
 
     }
 

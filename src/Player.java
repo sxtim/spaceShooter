@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class Player {
-    private static final int MAX_SPEED = 13;
     //Fields
     private static Image imageShip = new ImageIcon("Image/player/playership8.png").getImage();
     public Point2D pos = new Point2D(0, 0);
@@ -83,8 +82,9 @@ public class Player {
         if (isFiring) {
             acceleration.minus(new Point2D(1, 0).rotate(angle));
             GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.05));
+            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.05));
             GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
-            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
             GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
 
             isFiring = false;
@@ -133,7 +133,7 @@ public class Player {
         for(int i = 0; i < lives; i++)//рисуем жизни player
             g.drawImage(imageShip, 10 + (70 * i), 10, null);
 
-//        g.drawImage(imageShip, (int) pos.x - 70 / 2, (int) pos.y - 72 / 2, null);
+
         g.setColor(Color.CYAN);
         g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 

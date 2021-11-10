@@ -6,14 +6,13 @@ import java.util.ArrayList;
 public class EnemyMeteor {
     private static Image meteorXlImage;
     private static Image meteorLImage;
-    private static ArrayList<Image> sparksImages = new ArrayList<>();
 
     private Point2D pos = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
     private Point2D velocity = new Point2D(0, 0);
-    private double angle = 1;
+    private double angle;
     private int r;
-    Color color;
+
     private double speed;
     private boolean drawMeteorL;
     private boolean dead;
@@ -33,7 +32,6 @@ public class EnemyMeteor {
 
         switch (type) {
             case (1):
-                color = Color.GREEN;
                 switch (rank) {
                     case (1):
 //                        System.out.println("изменяется картинка у первого типа");
@@ -60,8 +58,6 @@ public class EnemyMeteor {
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
-
-
                 }
         }
     }
@@ -94,8 +90,6 @@ public class EnemyMeteor {
     }
 
     public void update() {
-
-
         velocity.multiple(0.9);
         velocity.add(acceleration);
         velocity.clamp(3);
@@ -153,7 +147,7 @@ public class EnemyMeteor {
                 AffineTransform origForm; //создаем объект класса AffineTransform
                 origForm = g.getTransform();//получаем текущее значение
                 AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-                newForm.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+                newForm.rotate(-angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
                 g.setTransform(newForm);//
                 g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
                 g.setTransform(origForm);
@@ -174,11 +168,9 @@ public class EnemyMeteor {
     public double getX() {
         return pos.x;
     }
-
     public double getY() {
         return pos.y;
     }
-
     public int getR() {
         return r;
     }
