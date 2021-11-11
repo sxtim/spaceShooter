@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Field
+    public Font font = null;
     public static int WIDTH = 1800;
     public static int HEIGHT = 980;
     public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
@@ -275,17 +276,19 @@ public class GamePanel extends JPanel implements Runnable {
                         bullet.draw(g);
                     }
                     //Bullets counter draw
-                    g.drawString("Bullets counter = " + bullets.size(), 1560, 30);
+                    g.setFont(new Font("Consolas", Font.PLAIN, 18));
+                    g.drawString("Bullets counter = " + bullets.size(), 1560, 900);
                     //Draw Meteor enemies
                     for (EnemyMeteor enemyMeteor : enemyMeteors) {
                         enemyMeteor.draw(g);
                     }
                     //Meteors counter
-                    g.drawString("Meteors counter = " + enemyMeteors.size(), 1560, 50);
+                    g.setFont(new Font("Consolas", Font.PLAIN, 18));
+                    g.drawString("Meteors counter = " + enemyMeteors.size(), 1560, 920);
                     //Meteor health counter
                     for (EnemyMeteor enemyMeteor : enemyMeteors) {
-
-                        g.drawString("Health of meteor = " + enemyMeteor.getHeath(), 1560, 70);
+                        g.setFont(new Font("Consolas", Font.PLAIN, 18));
+                        g.drawString("Health of meteor = " + enemyMeteor.getHeath(), 1560, 940);
                     }
 
                     //Draw wave

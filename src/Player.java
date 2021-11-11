@@ -23,6 +23,7 @@ public class Player {
     private long recoveryTimer;
     public static boolean isFiring;
     private int lives;
+    private int score;
 
     public Player() {
         color = Color.RED;
@@ -33,15 +34,20 @@ public class Player {
 
         recovering = false;
         recoveryTimer = 0;
+        score = 0;
     }
 
     //=====Functions======
     public boolean isRecovering(){return recovering;}
     public void loseLife(){
         lives--;
+        // состояние восстановления - true
         recovering = true;
-        //Таймер инициализируем текущим временем
+        //Таймер состояния восстановления инициализируем текущим временем
         recoveryTimer = System.nanoTime();
+    }
+    public void addScore(int i){
+        score += i;
     }
 
     //Move player
@@ -142,6 +148,7 @@ public class Player {
 
         g.setColor(Color.WHITE);
         g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
+
 //        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
 if(recovering) {
     AffineTransform origForm; //создаем объект класса AffineTransform
@@ -164,11 +171,10 @@ if(recovering) {
     g.setTransform(newForm);//ставим трансформированное изображение
     g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
     g.setTransform(origForm);//возвращаем старое значение
-
-
-
 }
-
+        //Draw player score
+        g.setFont(AddFont.createFontSpaceHorizon(16));
+        g.drawString("Score: " + score, 1600, 30);
 
 
         for(int i = 0; i < lives; i++)//рисуем жизни player
