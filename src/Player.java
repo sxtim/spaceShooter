@@ -28,7 +28,7 @@ public class Player {
     private int powerLevel;
     private int power;
     private int[] requiredPower = {
-            1, 2, 3, 4, 5
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     };
 
     public Player() {
@@ -54,7 +54,7 @@ public class Player {
 
     public void increasePower(int i) {
         power += i;
-        if(powerLevel == 4){
+        if(powerLevel == 9){
             if (power > requiredPower[powerLevel]) {
                 power = requiredPower[powerLevel];
             }

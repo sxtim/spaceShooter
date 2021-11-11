@@ -40,7 +40,6 @@ public class PowerUp {
     public boolean update() {
         y += 2;
         return y > GamePanel.HEIGHT + r;
-
     }
 
 
