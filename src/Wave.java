@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE - ";
         waveNumber = 1;
-        waveMultiplier = 30;
+        waveMultiplier = 1;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000
@@ -31,7 +31,7 @@ public class Wave {
             while(enemyCount > 0) {//создаем врагов
                 int type = 1;
                 int rank = 1;
-                GamePanel.enemies.add(new EnemyMeteor(type, rank));
+                GamePanel.enemyMeteors.add(new EnemyMeteor(type, rank));
 
                 System.out.println(" create meteor ");
 
@@ -43,7 +43,7 @@ public class Wave {
 
 
     public void update() {//необходимо узнать нужно лди запускать волну
-        if (GamePanel.enemies.size() == 0 && waveTimer == 0)//если список врагов пуст и таймер волны равен 0
+        if (GamePanel.enemyMeteors.size() == 0 && waveTimer == 0)//если список врагов пуст и таймер волны равен 0
             waveTimer = System.nanoTime();//устанавливаем таймер волны в соответствии с текущем временем
 
         if (waveTimer > 0) {//если таймер запущен

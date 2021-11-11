@@ -10,26 +10,39 @@ public class Player {
     private Point2D acceleration = new Point2D(0, 0);
     private int r; // радиус
     private double angle;//угол поворота
+    private int speed;
+    private Color color;
 
     public static boolean up;
     public static boolean down;
     public static boolean left;
     public static boolean right;
-    private int speed;
+
+
+    public boolean recovering;
+    private long recoveryTimer;
     public static boolean isFiring;
     private int lives;
 
     public Player() {
-
-        lives = 3;
+        color = Color.RED;
+        lives = 10;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
         r = 30;
         speed = 5; //не используется?
 
-
+        recovering = false;
+        recoveryTimer = 0;
     }
 
-    //Functions
+    //=====Functions======
+    public boolean isRecovering(){return recovering;}
+    public void loseLife(){
+        lives--;
+        recovering = true;
+        //Таймер инициализируем текущим временем
+        recoveryTimer = System.nanoTime();
+    }
 
     //Move player
     public boolean upMove() {
@@ -49,6 +62,7 @@ public class Player {
     }
 
     public void update() {
+
 
         angle = GamePanel.mousePos.copy().minus(pos).angle();
 
@@ -86,6 +100,13 @@ public class Player {
 
             isFiring = false;
         }
+        // пройденное время. разница между текущим временем и инициализированным таймером
+        long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
+        // сли отрезок времени (пройденное время между двумя запущенными таймерами) больше, то устанавливаем
+        if(elapsed > 300){//recovery = false и recoveryTimer не запущен;
+            recovering = false;
+            recoveryTimer = 0;
+        }
 
         velocity.multiple(0.99); // затухание скорости
         velocity.add(acceleration);
@@ -107,32 +128,51 @@ public class Player {
 
     }
 
-    public void hit() {
-        lives--;
-        System.out.println("========== LIVES " + lives + " LIVES =============");
-    }
+
+
+//    public void hit() {
+//        lives--;
+//        System.out.println("========== LIVES " + lives + " LIVES =============");
+//    }
 
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
         //TODO
+
+
         g.setColor(Color.WHITE);
         g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
 //        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
+if(recovering) {
+    AffineTransform origForm; //создаем объект класса AffineTransform
+    origForm = g.getTransform();//получаем текущее значение
+    AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+    newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+    g.setTransform(newForm);//ставим трансформированное изображение
+    g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+    g.setTransform(origForm);//возвращаем старое значение
 
-        AffineTransform origForm; //создаем объект класса AffineTransform
-        origForm = g.getTransform();//получаем текущее значение
-        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-        newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-        g.setTransform(newForm);//ставим трансформированное изображение
-        g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
-        g.setTransform(origForm);//возвращаем старое значение
+    g.setColor(Color.CYAN);
+    g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
+
+
+}else {
+    AffineTransform origForm; //создаем объект класса AffineTransform
+    origForm = g.getTransform();//получаем текущее значение
+    AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+    newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+    g.setTransform(newForm);//ставим трансформированное изображение
+    g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+    g.setTransform(origForm);//возвращаем старое значение
+
+
+
+}
+
+
 
         for(int i = 0; i < lives; i++)//рисуем жизни player
             g.drawImage(imageShip, 10 + (70 * i), 10, null);
-
-
-        g.setColor(Color.CYAN);
-        g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 
         //Player в виде точки
 //        g.setColor(color1);
@@ -158,8 +198,9 @@ public class Player {
         return pos.y;
     }
 
-    public int playerGetLives(){
+    public int getLives(){
         return lives;
     }
+
 
 }

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 public class EnemyMeteor {
     private static Image meteorXlImage;
@@ -12,14 +11,17 @@ public class EnemyMeteor {
     private Point2D velocity = new Point2D(0, 0);
     private double angle;
     private int r;
-
     private double speed;
     private boolean drawMeteorL;
-    private boolean dead;
 
+
+    private boolean ready;
+    private boolean dead;
     private int health;
     private int type;
     private int rank;
+
+
     int hitCooldown;
 
 
@@ -33,6 +35,7 @@ public class EnemyMeteor {
         switch (type) {
             case (1):
                 switch (rank) {
+                    //Default enemyMeteor
                     case (1):
 //                        System.out.println("изменяется картинка у первого типа");
                         meteorXlImage = new ImageIcon("Image/meteors/meteor-01-xl.png").getImage();
@@ -40,10 +43,12 @@ public class EnemyMeteor {
                         pos.y = 0;
                         r = 27;
                         speed = 0.2;
-                        health = 3;
+                        health = 20;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
                 }
                 switch (rank) {
                     case (2):
@@ -58,6 +63,8 @@ public class EnemyMeteor {
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
                 }
         }
     }
@@ -67,26 +74,30 @@ public class EnemyMeteor {
         return dead;
     }
 
+
     public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
         if (!ignoreCooldown && hitCooldown > 0) {
-            return;
-        }
-
-        health--;
-        hitCooldown = 60;
-
-        if (health <= 0) {
-            dead = true;
-        }
-
-
-        if (player != null) {
             Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
             acceleration.set(speed, 0)  // tmp acceleration
                     .rotate(delta.multiple(-1).angle());
             player.velocity.set(delta.multiple(-1));
             return;
         }
+        hitCooldown = 60;
+
+        health--;
+        if (health <= 0) {
+            dead = true;
+        }
+
+            // Отскок
+//        if (player != null) {
+//            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
+//            acceleration.set(speed, 0)  // tmp acceleration
+//                    .rotate(delta.multiple(-1).angle());
+//            player.velocity.set(delta.multiple(-1));
+//            return;
+//        }
     }
 
     public void update() {
@@ -94,6 +105,10 @@ public class EnemyMeteor {
         velocity.add(acceleration);
         velocity.clamp(3);
         pos.add(velocity);
+
+        if (hitCooldown > 0) {
+            hitCooldown--;
+        }
 
         //проверка выхода за пределы поля
         //еесли враг вышел за пределы поля, то возвращаем его
@@ -104,9 +119,6 @@ public class EnemyMeteor {
 
 
 
-        if (hitCooldown > 0) {
-            hitCooldown--;
-        }
 
 //        System.out.println(hitCooldown);
         angle += Math.PI / 360;
@@ -122,7 +134,7 @@ public class EnemyMeteor {
                 EnemyMeteor e = new EnemyMeteor(1, 2);
                 e.pos.x = this.pos.x;
                 e.pos.y = this.pos.y;
-                GamePanel.enemies.add(e);
+                GamePanel.enemyMeteors.add(e);
             }
         }
     }
@@ -132,26 +144,25 @@ public class EnemyMeteor {
 
         if (drawMeteorL) {
 //                System.out.println("рисуем тип 2");
-                AffineTransform origForm1; //создаем объект класса AffineTransform
-                origForm1 = g.getTransform();//получаем текущее значение
-                AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
-                newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-                g.setTransform(newForm1);//
-                g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
-                g.setTransform(origForm1);
+            AffineTransform origForm1; //создаем объект класса AffineTransform
+            origForm1 = g.getTransform();//получаем текущее значение
+            AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
+            newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm1);//
+            g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
+            g.setTransform(origForm1);
 
         } else {
 
 
 //                System.out.println("рисуем тип 1");
-                AffineTransform origForm; //создаем объект класса AffineTransform
-                origForm = g.getTransform();//получаем текущее значение
-                AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-                newForm.rotate(-angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-                g.setTransform(newForm);//
-                g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
-                g.setTransform(origForm);
-//                g.drawImage(sparksImages.get((animFrame)), (int) pos.x - 124, (int) pos.y - 124, null);
+            AffineTransform origForm; //создаем объект класса AffineTransform
+            origForm = g.getTransform();//получаем текущее значение
+            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+            newForm.rotate(-angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm);//
+            g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
+            g.setTransform(origForm);
 
         }
     }
@@ -168,10 +179,15 @@ public class EnemyMeteor {
     public double getX() {
         return pos.x;
     }
+
     public double getY() {
         return pos.y;
     }
+
     public int getR() {
         return r;
+    }
+    public int getHeath(){
+        return health;
     }
 }

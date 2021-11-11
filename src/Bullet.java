@@ -34,8 +34,8 @@ public class Bullet {
 
 
     public void draw(Graphics2D g){
-        g.drawImage(imgBullet, (int) pos.x - 10,(int)pos.y, null );
 
+        g.drawImage(imgBullet, (int) pos.x - 10,(int)pos.y, null );
         g.setColor(Color.WHITE);
         Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
         g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
