@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE - ";
         waveNumber = 1;
-        waveMultiplier = 1;
+        waveMultiplier = 20;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000

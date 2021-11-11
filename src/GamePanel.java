@@ -159,6 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
                     bullets.remove(j); //удаляем пулю
                     //Check dead enemies
                     if (e.isDead()) {//проверяем врага, если health =< 0, то удаляем
+                        player.addScore(e.getType() + e.getRank());
                         enemyMeteors.remove(i);
                         i--;
                         e.explode();//деление метеоритов
@@ -181,7 +182,7 @@ public class GamePanel extends JPanel implements Runnable {
                 double pY = player.getY();
 
                 double dX = eX - pX;//difference (разница между плеером и врагом)
-                double dY = eY - pY;//difference (разница между плеером и врагом)
+                double dY = eY - pY;
 
                 double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
@@ -203,6 +204,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                     //Check dead meteor
                     if (e.isDead()) {//проверяем врага, если health =< 0, то удаляем
+                        player.addScore(e.getType() + e.getRank());
                         enemyMeteors.remove(i);
                         i--;
                         e.explode();
@@ -271,6 +273,9 @@ public class GamePanel extends JPanel implements Runnable {
 
                     //Player draw
                     player.draw(g);
+
+                    g.setFont(AddFont.createFontSpaceHorizon(16));
+                    g.drawString("Score: " + player.getScore(), 1600, 30);
                     //Bullets draw
                     for (Bullet bullet : bullets) {
                         bullet.draw(g);

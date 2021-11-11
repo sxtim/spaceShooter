@@ -190,4 +190,10 @@ public class EnemyMeteor {
     public int getHeath(){
         return health;
     }
+    public int getType() {
+        return type;
+    }
+    public int getRank(){
+        return rank;
+    }
 }

@@ -173,8 +173,7 @@ if(recovering) {
     g.setTransform(origForm);//возвращаем старое значение
 }
         //Draw player score
-        g.setFont(AddFont.createFontSpaceHorizon(16));
-        g.drawString("Score: " + score, 1600, 30);
+
 
 
         for(int i = 0; i < lives; i++)//рисуем жизни player
@@ -207,6 +206,7 @@ if(recovering) {
     public int getLives(){
         return lives;
     }
+    public int getScore(){return score;}
 
 
 }
