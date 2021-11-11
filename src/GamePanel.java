@@ -176,6 +176,7 @@ public class GamePanel extends JPanel implements Runnable {
                         if(rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
                         else if(rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
                         else if(rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
+                        else powerUps.add(new PowerUp(2, e.getX(), e.getY()));
 
                         player.addScore(e.getType() + e.getRank());
                         enemyMeteors.remove(i);
@@ -188,9 +189,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Player-enemyMeteor collides
-        //если плеер не в состоянии восстановления
-            //проверяем столкновение
-
             for (int i = 0; i < enemyMeteors.size(); i++) {//цикл по врагам
                 EnemyMeteor e = enemyMeteors.get(i);
                 double eX = e.getX();
@@ -226,6 +224,7 @@ public class GamePanel extends JPanel implements Runnable {
                         if(rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
                         else if(rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
                         else if(rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
+                        else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
                         player.addScore(e.getType() + e.getRank());
                         enemyMeteors.remove(i);
                         i--;
@@ -234,39 +233,40 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+            // Player-PowerUp collision
+        double playerX = player.getX();
+        double playerY = player.getY();
+        double playerR = player.getR();
+        for (int i = 0; i < powerUps.size(); i++) {
+            PowerUp  powerUp = powerUps.get(i);
+            double powerUpX = powerUp.getX();
+            double powerUpY = powerUp.getY();
+            double powerUpR = powerUp.getR();
+            double dx = playerX - powerUpX;
+            double dy = playerY - powerUpY;
+            double dist = Math.sqrt(dx * dx + dy * dy);
+            // collected PowerUp
+            if(dist < playerR + powerUpR){
+                int type = powerUp.getType();
+                if (type == 1){
+                    player.gainLife();
+                }
+                if (type == 2){
+                    player.increasePower(1);
+                }
+                if (type == 3){
+                    player.increasePower(2);
+                }
 
 
+                powerUps.remove(i);
+                i--;
+            }
 
-//        for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
-//            EnemyMeteor e = enemies.get(i);
-//            double eX = e.getX();
-//            double eY = e.getY();
-//
-//            double pX = player.getX();//координаты плеера
-//            double pY = player.getY();
-//
-//            double dX = eX - pX;//difference (разница между плеером и врагом)
-//            double dY = eY - pY;//difference (разница между плеером и врагом)
-//
-//            double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
-//
-//            if ((int) distance <= e.getR() + player.getR()) {
-//
-//                if (e.hitCooldown == 0) {
-//                    player.hit();
-//                    explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
-//                }
-//                e.hit(false, player);
-//
-//                //Check dead meteor
-//                if (e.isDead()) {//проверяем врага, если health =< 0, то удаляем
-//                    enemies.remove(i);
-//                    i--;
-//                    e.explode();
-//                    explosions.add(new Explosion(e.getX(), e.getY()));
-//                }
-//            }
-//        }
+
+        }
+
+
                     //Wave update
                     wave.update();
                     //Explosion update

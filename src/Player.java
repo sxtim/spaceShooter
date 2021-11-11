@@ -25,6 +25,12 @@ public class Player {
     private int lives;
     private int score;
 
+    private int powerLevel;
+    private int power;
+    private int[] requiredPower = {
+            1, 2, 3, 4, 5
+    };
+
     public Player() {
         color = Color.RED;
         lives = 10;
@@ -38,15 +44,37 @@ public class Player {
     }
 
     //=====Functions======
-    public boolean isRecovering(){return recovering;}
-    public void loseLife(){
+    public boolean isRecovering() {
+        return recovering;
+    }
+
+    public void gainLife() {
+        lives++;
+    }
+
+    public void increasePower(int i) {
+        power += i;
+        if(powerLevel == 4){
+            if (power > requiredPower[powerLevel]) {
+                power = requiredPower[powerLevel];
+            }
+            return;
+        }
+        if (power >= requiredPower[powerLevel]) {
+            power -= requiredPower[powerLevel];
+            powerLevel++;
+        }
+    }
+
+    public void loseLife() {
         lives--;
         // состояние восстановления - true
         recovering = true;
         //Таймер состояния восстановления инициализируем текущим временем
         recoveryTimer = System.nanoTime();
     }
-    public void addScore(int i){
+
+    public void addScore(int i) {
         score += i;
     }
 
@@ -74,8 +102,8 @@ public class Player {
 
         acceleration.set(0, 0);
 
-      //  System.out.println("движение вверх " + upMove());
-      //  System.out.println("кнопка вверх нажата " + up);
+        //  System.out.println("движение вверх " + upMove());
+        //  System.out.println("кнопка вверх нажата " + up);
         if (upMove()) {
             acceleration.add(Point2D.UP);
         }
@@ -98,18 +126,24 @@ public class Player {
         //Shoot player
         if (isFiring) {
             acceleration.minus(new Point2D(1, 0).rotate(angle));
-            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
-//            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.05));
-//            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.05));
-//            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
-//            GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
+            if (powerLevel < 2) {
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+            } else if (powerLevel < 4) {
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.05));
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.05));
+            } else {
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
+
+            }
 
             isFiring = false;
         }
         // пройденное время. разница между текущим временем и инициализированным таймером
         long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
         // сли отрезок времени (пройденное время между двумя запущенными таймерами) больше, то устанавливаем
-        if(elapsed > 300){//recovery = false и recoveryTimer не запущен;
+        if (elapsed > 300) {//recovery = false и recoveryTimer не запущен;
             recovering = false;
             recoveryTimer = 0;
         }
@@ -131,9 +165,7 @@ public class Player {
         }
 
 
-
     }
-
 
 
 //    public void hit() {
@@ -150,33 +182,39 @@ public class Player {
         g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
 
 //        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
-if(recovering) {
-    AffineTransform origForm; //создаем объект класса AffineTransform
-    origForm = g.getTransform();//получаем текущее значение
-    AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-    newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-    g.setTransform(newForm);//ставим трансформированное изображение
-    g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
-    g.setTransform(origForm);//возвращаем старое значение
+        if (recovering) {
+            AffineTransform origForm; //создаем объект класса AffineTransform
+            origForm = g.getTransform();//получаем текущее значение
+            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+            newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm);//ставим трансформированное изображение
+            g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+            g.setTransform(origForm);//возвращаем старое значение
 
-    g.setColor(Color.CYAN);
-    g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
-
-
-}else {
-    AffineTransform origForm; //создаем объект класса AffineTransform
-    origForm = g.getTransform();//получаем текущее значение
-    AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-    newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-    g.setTransform(newForm);//ставим трансформированное изображение
-    g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
-    g.setTransform(origForm);//возвращаем старое значение
-}
-        //Draw player score
+            g.setColor(Color.CYAN);
+            g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 
 
+        } else {
+            AffineTransform origForm; //создаем объект класса AffineTransform
+            origForm = g.getTransform();//получаем текущее значение
+            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+            newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+            g.setTransform(newForm);//ставим трансформированное изображение
+            g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+            g.setTransform(origForm);//возвращаем старое значение
+        }
+        //Draw player power
+        g.setColor(Color.ORANGE);
+        g.fillRect(20, 100, getPower() * 20, 20);
+        g.setColor(Color.ORANGE.darker());
+        g.setStroke(new BasicStroke(4));
+        for (int i = 0; i < getRequiredPower(); i++) {
+            g.drawRect(20 + 20 * i, 100, 20, 20);
+        }
 
-        for(int i = 0; i < lives; i++)//рисуем жизни player
+        //Draw player lives
+        for (int i = 0; i < lives; i++)
             g.drawImage(imageShip, 10 + (70 * i), 10, null);
 
         //Player в виде точки
@@ -203,10 +241,25 @@ if(recovering) {
         return pos.y;
     }
 
-    public int getLives(){
+    public int getLives() {
         return lives;
     }
-    public int getScore(){return score;}
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getPowerLevel() {
+        return powerLevel;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public int getRequiredPower() {
+        return requiredPower[powerLevel];
+    }
 
 
 }
