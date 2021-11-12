@@ -100,6 +100,7 @@ public class Player {
 
         angle = GamePanel.mousePos.copy().minus(pos).angle();
 
+
         acceleration.set(0, 0);
 
         //  System.out.println("движение вверх " + upMove());
@@ -168,18 +169,12 @@ public class Player {
     }
 
 
-//    public void hit() {
-//        lives--;
-//        System.out.println("========== LIVES " + lives + " LIVES =============");
-//    }
-
-
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
         //TODO
 
-
-        g.setColor(Color.WHITE);
-        g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
+            //Сервисные линии
+//        g.setColor(Color.WHITE);
+//        g.drawLine((int) pos.x, (int) pos.y, (int) GamePanel.mousePos.x, (int) GamePanel.mousePos.y);
 
 //        g.drawString("angle=" + angle, (int)pos.x, (int)pos.y);
         if (recovering) {

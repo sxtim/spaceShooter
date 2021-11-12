@@ -1,20 +1,38 @@
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalTheme;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Bullet {
 
     //Fields
-    private static Image imgBullet = new ImageIcon("Image/bullets/bullet21.png").getImage();
+    private static Image imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
     private Point2D pos = new Point2D(0, 0);
+    private double angle;
     private int r;
     private Point2D deltaPos;
+    private double x;
+    private double y;
+    private double distX;
+    private double distY;
+    private double dist;
+
 
     private Color color;
 
 
     //Constructor
-    public Bullet(int x, int y, double angle){
+    public Bullet(double x, double y, double angle) {
         this.pos.set(x, y);
+        //нач координаты пули - координаты героя
+        x = pos.x;
+        y = pos.y;
+        distX = GamePanel.mousePos.x - x;// разница по Х от мыши до пули
+        distY = y - GamePanel.mousePos.y;// разница по Y от мыши до пули
+
+        dist = (Math.sqrt(distX * distX + distY * distY));//расстояние от мыши до пули
+
+
         r = 2;
         deltaPos = new Point2D(10, 0).rotate(angle);
 //        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
@@ -24,21 +42,37 @@ public class Bullet {
     //Functions
     public void update(){
         pos.add(deltaPos);
+
+//        System.out.println(deltaPos);
+//        angle = GamePanel.mousePos.copy().minus(pos).angle();
+
     }
 
     //проверка не улетела ли пуля за экран
     public boolean remove(){
-        // TODO proper bounds checking
         return pos.y < 0 || pos.y > GamePanel.HEIGHT || pos.x < 0 || pos.x > GamePanel.WIDTH;
     }
 
 
     public void draw(Graphics2D g){
 
-        g.drawImage(imgBullet, (int) pos.x - 10,(int)pos.y, null );
-        g.setColor(Color.WHITE);
-        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
-        g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
+        AffineTransform origForm; //создаем объект класса AffineTransform
+        origForm = g.getTransform();//получаем текущее значение
+        AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
+      if(distX > 0)  newForm.rotate(Math.acos(distY/(dist)), pos.x, pos.y);//вертим полученное изображение относительно X и Y
+      if(distX < 0)  newForm.rotate(-Math.acos(distY/(dist)), pos.x, pos.y);//вертим полученное изображение относительно X и Y
+        g.setTransform(newForm);//ставим трансформированное изображение
+        g.drawImage(imgBullet, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+        g.setTransform(origForm);//возвращаем старое значение
+
+
+
+
+
+//        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
+//        g.drawImage(imgBullet, (int) nextPos.x, (int) nextPos.y, null);
+//        g.setColor(Color.WHITE);
+//        g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
 //        g.drawString("angle=" + deltaPos.angle(), (int)pos.x, (int)pos.y);
 
 //        g.setColor(color);
