@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 public class Bullet {
 
     //Fields
-    private static Image imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
+    private static Image imgBullet;
     private Point2D pos = new Point2D(0, 0);
     private double angle;
     private int r;
@@ -23,6 +23,7 @@ public class Bullet {
 
     //Constructor
     public Bullet(double x, double y, double angle) {
+        imgBullet = new ImageIcon("Image/bullets/bullet21.png").getImage();
         this.pos.set(x, y);
         //нач координаты пули - координаты героя
         x = pos.x;
@@ -32,7 +33,6 @@ public class Bullet {
 
         dist = (Math.sqrt(distX * distX + distY * distY));//расстояние от мыши до пули
 
-
         r = 2;
         deltaPos = new Point2D(10, 0).rotate(angle);
 //        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
@@ -40,33 +40,36 @@ public class Bullet {
     }
 
     //Functions
-    public void update(){
+    public void update() {
         pos.add(deltaPos);
-
-//        System.out.println(deltaPos);
-//        angle = GamePanel.mousePos.copy().minus(pos).angle();
 
     }
 
     //проверка не улетела ли пуля за экран
-    public boolean remove(){
+    public boolean remove() {
         return pos.y < 0 || pos.y > GamePanel.HEIGHT || pos.x < 0 || pos.x > GamePanel.WIDTH;
     }
 
 
     public void draw(Graphics2D g){
-
+        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(0));
         AffineTransform origForm; //создаем объект класса AffineTransform
         origForm = g.getTransform();//получаем текущее значение
         AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
       if(distX > 0)  newForm.rotate(Math.acos(distY/(dist)), pos.x, pos.y);//вертим полученное изображение относительно X и Y
       if(distX < 0)  newForm.rotate(-Math.acos(distY/(dist)), pos.x, pos.y);//вертим полученное изображение относительно X и Y
         g.setTransform(newForm);//ставим трансформированное изображение
-        g.drawImage(imgBullet, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
         g.setTransform(origForm);//возвращаем старое значение
+        g.drawImage(imgBullet, (int) nextPos.x - 4* r, (int) nextPos.y - 3 *r, null);
+
+//        g.setColor(Color.CYAN);
+//        g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
 
 
 
+
+//                g.setColor(color);
+//        g.fillOval((int)pos.x,(int)pos.y,r,5 * r);
 
 
 //        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
@@ -83,8 +86,8 @@ public class Bullet {
 //        sun.java2d.SunGraphics2D
 
 
-
     }
+
     //Getters
     public double getX() {
         return pos.x;

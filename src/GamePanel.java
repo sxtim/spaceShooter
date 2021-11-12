@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean leftMouse;
 
     private Thread thread;
-    private BufferedImage image; //переменная нашего холста на котором будем рисловать
+    private BufferedImage image; //переменная нашего холста на котором будем рисовать
     private Graphics2D g; //переменная кисточка
     public GameBack backGround;
     public static Player player;
@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements Runnable {
                }
         }
 
-        //Bullets-enemies collides
+        //Bullets-enemies collision
         for (int i = 0; i < enemyMeteors.size(); i++) {
             EnemyMeteor e = enemyMeteors.get(i);
             double ex = e.getX();//получаем координаты врага по икс
@@ -188,7 +188,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        //Player-enemyMeteor collides
+        //Player-enemyMeteor collision
             for (int i = 0; i < enemyMeteors.size(); i++) {//цикл по врагам
                 EnemyMeteor e = enemyMeteors.get(i);
                 double eX = e.getX();
@@ -208,8 +208,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                     //отнимаем жизнь у метеора
                     e.hit(false, player);
-
-
                     //если плеер не в состоянии восстановления
                     //отнимаем жизнь у плеера и создаем объект explosionHit
                     if (!player.isRecovering()) {
@@ -217,17 +215,20 @@ public class GamePanel extends JPanel implements Runnable {
                         explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                     }
 
-
                     //Check dead meteor
-                    if (e.isDead()) {//проверяем врага, если health =< 0, то удаляем
+                    if (e.isDead()) {
+                        //Chance for powerUp
                         double rand = Math.random();
                         if(rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
                         else if(rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
                         else if(rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
                         else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                        //Add score
                         player.addScore(e.getType() + e.getRank());
+                        //Remove dead meteor
                         enemyMeteors.remove(i);
                         i--;
+                        //разделяем метеор
                         e.explode();
                         explosions.add(new Explosion(e.getX(), e.getY()));
                     }
