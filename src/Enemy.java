@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class EnemyMeteor {
-    private static Image meteorXlImage;
-    private static Image meteorLImage;
+public class Enemy {
+    public static final int TYPE_METEOR = 1;
+    public static final int TYPE_MINE = 2;
+    private Image image;
 
     private Point2D pos = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
@@ -12,8 +13,6 @@ public class EnemyMeteor {
     private double angle;
     private int r;
     private double speed;
-    private boolean drawMeteorL;
-
 
     private boolean ready;
     private boolean dead;
@@ -26,19 +25,19 @@ public class EnemyMeteor {
 
 
     //Constructor
-    public EnemyMeteor(int type, int rank) {
-        System.out.println("meteor created");
+    public Enemy(int type, int rank) {
+        System.out.println("meteor created type=" + type + " rank=" + rank);
 
         this.type = type;
         this.rank = rank;
 
         switch (type) {
-            case (1):
+            case TYPE_METEOR:
                 switch (rank) {
                     //Default enemyMeteor
-                    case (1):
+                    case (1): {
 //                        System.out.println("изменяется картинка у первого типа");
-                        meteorXlImage = new ImageIcon("Image/meteors/meteor-01-xl.png").getImage();
+                        image = new ImageIcon("Image/meteors/meteor-01-xl.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 27;
@@ -49,12 +48,10 @@ public class EnemyMeteor {
                         acceleration.y = Math.cos(angle) * speed;
                         ready = false;
                         dead = false;
-                }
-                switch (rank) {
-                    case (2):
-                        drawMeteorL = true;
-//                        System.out.println("создаем второй тип метеора");
-                        meteorLImage = new ImageIcon("Image/meteors/meteor-01-l.png").getImage();
+                        break;
+                    }
+                    case (2): {
+                        image = new ImageIcon("Image/meteors/meteor-01-l.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 20;
@@ -65,7 +62,45 @@ public class EnemyMeteor {
                         acceleration.y = Math.cos(angle) * speed;
                         ready = false;
                         dead = false;
+                        break;
+                    }
                 }
+                break;
+            case TYPE_MINE:
+                switch (rank) {
+                    //Default enemyMeteor
+                    case (1): {
+//                        System.out.println("изменяется картинка у первого типа");
+                        image = new ImageIcon("Image/space-mine_s_gray.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 16;
+                        speed = 0.2;
+                        health = 2;
+                        double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    }
+                    case (2): {
+//                        System.out.println("создаем второй тип метеора");
+                        image = new ImageIcon("Image/space-mine_s_graylight.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 16;
+                        speed = 0.3;
+                        health = 1;
+                        double angle = Math.toRadians(Math.random() * 360);
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    }
+                }
+
         }
     }
 
@@ -90,7 +125,7 @@ public class EnemyMeteor {
             dead = true;
         }
 
-            // Отскок
+        // Отскок
 //        if (player != null) {
 //            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
 //            acceleration.set(speed, 0)  // tmp acceleration
@@ -118,8 +153,6 @@ public class EnemyMeteor {
         if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
 
-
-
 //        System.out.println(hitCooldown);
         angle += Math.PI / 360;
     }
@@ -127,14 +160,14 @@ public class EnemyMeteor {
     public void explode() {
         if (rank == 1) {
             int amount = 0;
-            if (type == 1) {
+            if (type == TYPE_METEOR) {
                 amount = 3;
             }
             for (int i = 0; i < amount; i++) {
-                EnemyMeteor e = new EnemyMeteor(1, 2);
+                Enemy e = new Enemy(type, 2);
                 e.pos.x = this.pos.x;
                 e.pos.y = this.pos.y;
-                GamePanel.enemyMeteors.add(e);
+                GamePanel.enemies.add(e);
             }
         }
     }
@@ -142,29 +175,15 @@ public class EnemyMeteor {
 
     public void draw(Graphics2D g) {
 
-        if (drawMeteorL) {
 //                System.out.println("рисуем тип 2");
-            AffineTransform origForm1; //создаем объект класса AffineTransform
-            origForm1 = g.getTransform();//получаем текущее значение
-            AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
-            newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-            g.setTransform(newForm1);//
-            g.drawImage(meteorLImage, (int) pos.x - 20, (int) pos.y - 20, null);
-            g.setTransform(origForm1);
+        AffineTransform origForm1; //создаем объект класса AffineTransform
+        origForm1 = g.getTransform();//получаем текущее значение
+        AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
+        newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+        g.setTransform(newForm1);//
+        g.drawImage(image, (int) pos.x - r, (int) pos.y - r, null);
+        g.setTransform(origForm1);
 
-        } else {
-
-
-//                System.out.println("рисуем тип 1");
-            AffineTransform origForm; //создаем объект класса AffineTransform
-            origForm = g.getTransform();//получаем текущее значение
-            AffineTransform newForm = (AffineTransform) (origForm.clone());//клонируем текущее значение
-            newForm.rotate(-angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
-            g.setTransform(newForm);//
-            g.drawImage(meteorXlImage, (int) pos.x - 27, (int) pos.y - 27, null);
-            g.setTransform(origForm);
-
-        }
     }
 //        g.drawImage(enemyImages.get(0), (int) pos.x - 27, (int) pos.y - 27, null);//анимация
     //  g.setColor(Color.CYAN);
@@ -187,13 +206,16 @@ public class EnemyMeteor {
     public int getR() {
         return r;
     }
-    public int getHeath(){
+
+    public int getHeath() {
         return health;
     }
+
     public int getType() {
         return type;
     }
-    public int getRank(){
+
+    public int getRank() {
         return rank;
     }
 }

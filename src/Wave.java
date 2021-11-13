@@ -29,9 +29,9 @@ public class Wave {
         int enemyCount = waveNumber * waveMultiplier;
         if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
             while(enemyCount > 0) {//создаем врагов
-                int type = 1;
                 int rank = 1;
-                GamePanel.enemyMeteors.add(new EnemyMeteor(type, rank));
+                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_MINE;
+                GamePanel.enemies.add(new Enemy(type, rank));
 
                 System.out.println(" create meteor ");
 
@@ -43,7 +43,7 @@ public class Wave {
 
 
     public void update() {//необходимо узнать нужно лди запускать волну
-        if (GamePanel.enemyMeteors.size() == 0 && waveTimer == 0)//если список врагов пуст и таймер волны равен 0
+        if (GamePanel.enemies.size() == 0 && waveTimer == 0)//если список врагов пуст и таймер волны равен 0
             waveTimer = System.nanoTime();//устанавливаем таймер волны в соответствии с текущем временем
 
         if (waveTimer > 0) {//если таймер запущен

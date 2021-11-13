@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GameBack backGround;
     public static Player player;
     public static ArrayList<Bullet> bullets;
-    public static ArrayList<EnemyMeteor> enemyMeteors;
+    public static ArrayList<Enemy> enemies;
     public static ArrayList<Explosion> explosions;
     public static ArrayList<ExplosionHit> explosionHits;
     public static ArrayList<PowerUp> powerUps;
@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // сглаживание
 
         bullets = new ArrayList<>();
-        enemyMeteors = new ArrayList<>();
+        enemies = new ArrayList<>();
         explosions = new ArrayList<>();
         explosionHits = new ArrayList<>();
         powerUps = new ArrayList<>();
@@ -134,8 +134,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Enemies update
-        for (EnemyMeteor enemyMeteor : enemyMeteors) {
-            enemyMeteor.update();
+        for (Enemy enemy : enemies) {
+            enemy.update();
         }
 
         //PowerUp update
@@ -148,8 +148,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         //Bullets-enemies collision
-        for (int i = 0; i < enemyMeteors.size(); i++) {
-            EnemyMeteor e = enemyMeteors.get(i);
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
             double ex = e.getX();//получаем координаты врага по икс
             double ey = e.getY();//получаем координаты по Y
 
@@ -179,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
                         else powerUps.add(new PowerUp(2, e.getX(), e.getY()));
 
                         player.addScore(e.getType() + e.getRank());
-                        enemyMeteors.remove(i);
+                        enemies.remove(i);
                         i--;
                         e.explode();//деление метеоритов
                         explosions.add(new Explosion(e.getX(), e.getY()));
@@ -189,8 +189,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Player-enemyMeteor collision
-            for (int i = 0; i < enemyMeteors.size(); i++) {//цикл по врагам
-                EnemyMeteor e = enemyMeteors.get(i);
+            for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
+                Enemy e = enemies.get(i);
                 double eX = e.getX();
                 double eY = e.getY();
 
@@ -226,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable {
                         //Add score
                         player.addScore(e.getType() + e.getRank());
                         //Remove dead meteor
-                        enemyMeteors.remove(i);
+                        enemies.remove(i);
                         i--;
                         //разделяем метеор
                         e.explode();
@@ -307,14 +307,14 @@ public class GamePanel extends JPanel implements Runnable {
                     g.setFont(new Font("Consolas", Font.PLAIN, 18));
                     g.drawString("Bullets counter = " + bullets.size(), 1560, 900);
                     //Draw Meteor enemies
-                    for (EnemyMeteor enemyMeteor : enemyMeteors) {
-                        enemyMeteor.draw(g);
+                    for (Enemy enemy : enemies) {
+                        enemy.draw(g);
                     }
                     //Meteors counter
                     g.setFont(new Font("Consolas", Font.PLAIN, 18));
-                    g.drawString("Meteors counter = " + enemyMeteors.size(), 1560, 920);
+                    g.drawString("Meteors counter = " + enemies.size(), 1560, 920);
 //                    //Meteor health counter
-//                    for (EnemyMeteor enemyMeteor : enemyMeteors) {
+//                    for (Enemy enemyMeteor : enemies) {
 //                        g.setFont(new Font("Consolas", Font.PLAIN, 18));
 //                        g.drawString("Health of meteor = " + enemyMeteor.getHeath(), 1560, 940);
 //                    }

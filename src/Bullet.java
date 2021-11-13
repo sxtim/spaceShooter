@@ -23,7 +23,7 @@ public class Bullet {
 
     //Constructor
     public Bullet(double x, double y, double angle) {
-        imgBullet = new ImageIcon("Image/bullets/bullet21.png").getImage();
+        imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
         this.pos.set(x, y);
         //нач координаты пули - координаты героя
         x = pos.x;
