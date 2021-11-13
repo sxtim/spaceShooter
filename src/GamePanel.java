@@ -208,7 +208,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //Check collision player and meteor
             if ((int) distance <= e.getR() + player.getR()) {
-//                    System.out.println("register hit of meteor");
+                    System.out.println("register hit of meteor");
 
                 //отнимаем жизнь у метеора
                 e.hit(false, player);

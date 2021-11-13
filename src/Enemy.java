@@ -42,7 +42,7 @@ public class Enemy {
                         pos.y = 0;
                         r = 27;
                         speed = 0.2;
-                        health = 2;
+                        health = 10;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -56,7 +56,7 @@ public class Enemy {
                         pos.y = 0;
                         r = 20;
                         speed = 0.3;
-                        health = 1;
+                        health = 10;
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -111,13 +111,13 @@ public class Enemy {
 
 
     public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
-        if (!ignoreCooldown && hitCooldown > 0) {
-            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
-            acceleration.set(speed, 0)  // tmp acceleration
-                    .rotate(delta.multiple(-1).angle());
-            player.velocity.set(delta.multiple(-1));
-            return;
-        }
+//        if (!ignoreCooldown && hitCooldown > 0) {
+//            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
+//            acceleration.set(speed, 0)  // tmp acceleration
+//                    .rotate(delta.multiple(-1).angle());
+//            player.velocity.set(delta.multiple(-1));
+//            return;
+//        }
         hitCooldown = 60;
 
         health--;
@@ -125,14 +125,15 @@ public class Enemy {
             dead = true;
         }
 
+        System.out.println("MEteor helth = " + health);
         // Отскок
-//        if (player != null) {
-//            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
-//            acceleration.set(speed, 0)  // tmp acceleration
-//                    .rotate(delta.multiple(-1).angle());
-//            player.velocity.set(delta.multiple(-1));
-//            return;
-//        }
+        if (player != null) {
+            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
+            acceleration.set(speed, 0)  // tmp acceleration
+                    .rotate(delta.multiple(-1).angle());
+            player.velocity.set(delta.multiple(-1));
+            return;
+        }
     }
 
     int fireCooldown = (int) (Math.random() * 320);
@@ -155,7 +156,6 @@ public class Enemy {
         if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
 
-//        System.out.println(hitCooldown);
         angle += Math.PI / 360;
 
 
