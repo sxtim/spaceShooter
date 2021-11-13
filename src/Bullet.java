@@ -1,12 +1,13 @@
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalTheme;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class Bullet {
 
+    public static final int TYPE_MY_BULLET = 1;
+    public static final int TYPE_ENEMY_BULLET = 2;
     //Fields
-    private static Image imgBullet;
+    private Image imgBullet;
     private Point2D pos = new Point2D(0, 0);
     private double angle;
     private int r;
@@ -16,14 +17,24 @@ public class Bullet {
     private double distX;
     private double distY;
     private double dist;
+    public int type = TYPE_MY_BULLET;
 
 
     private Color color;
 
 
     //Constructor
-    public Bullet(double x, double y, double angle) {
-        imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
+    public Bullet(int type, double x, double y, double angle) {
+        this.type = type;
+
+        switch (type) {
+            case TYPE_MY_BULLET:
+                imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
+                break;
+            case TYPE_ENEMY_BULLET:
+                imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
+                break;
+        }
         this.pos.set(x, y);
         //нач координаты пули - координаты героя
         x = pos.x;
@@ -61,29 +72,6 @@ public class Bullet {
         g.setTransform(newForm);//ставим трансформированное изображение
         g.setTransform(origForm);//возвращаем старое значение
         g.drawImage(imgBullet, (int) nextPos.x - 4* r, (int) nextPos.y - 3 *r, null);
-
-//        g.setColor(Color.CYAN);
-//        g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
-
-
-
-
-//                g.setColor(color);
-//        g.fillOval((int)pos.x,(int)pos.y,r,5 * r);
-
-
-//        Point2D nextPos = pos.copy().add(deltaPos.copy().multiple(10));
-//        g.drawImage(imgBullet, (int) nextPos.x, (int) nextPos.y, null);
-//        g.setColor(Color.WHITE);
-//        g.drawLine((int) pos.x, (int) pos.y, (int) nextPos.x, (int) nextPos.y);
-//        g.drawString("angle=" + deltaPos.angle(), (int)pos.x, (int)pos.y);
-
-//        g.setColor(color);
-//        g.fillOval((int)x,(int)y,r,5 * r);
-        //ищем в каком классе переопределяется метод drawOval
-//        String name = g.getClass().getName();
-//        System.out.println(name);
-//        sun.java2d.SunGraphics2D
 
 
     }

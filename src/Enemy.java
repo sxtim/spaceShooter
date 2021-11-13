@@ -163,7 +163,7 @@ public class Enemy {
             case TYPE_MINE:
             {
                 if (fireCooldown == 0) {
-                    fireItself();
+                    fireBullet();
                     fireCooldown = 60;
                 } else {
                     fireCooldown--;
@@ -172,16 +172,11 @@ public class Enemy {
         }
     }
 
-    private void fireItself() {
-        Enemy e = new Enemy(TYPE_METEOR, 2);
-        e.pos.x = this.pos.x;
-        e.pos.y = this.pos.y;
-
+    private void fireBullet() {
         double newAngle = GamePanel.player.pos.copy().minus(pos).multiple(1).angle();
-        double length = e.acceleration.length();
-        e.acceleration.set(length, 0).rotate(newAngle);
+        Bullet e = new Bullet(Bullet.TYPE_ENEMY_BULLET, pos.x,pos.y, newAngle );
 
-        GamePanel.enemies.add(e);
+        GamePanel.bullets.add(e);
     }
 
     public void explode() {

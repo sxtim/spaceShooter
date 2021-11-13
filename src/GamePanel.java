@@ -130,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
             boolean remove = bullets.get(i).remove();
             if (remove) { //если пуля выходит за прелеы
                 bullets.remove(i);//удаляем пулю из списка
-//                i--;//переводим счетчик назад
+                i--;//переводим счетчик назад
             }
         }
         //Enemies update
@@ -141,11 +141,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         //PowerUp update
         for (int i = 0; i < powerUps.size(); i++) {
-               boolean remove = powerUps.get(i).update();
-               if (remove){
-                   powerUps.remove(i);
-                   i--;
-               }
+            boolean remove = powerUps.get(i).update();
+            if (remove) {
+                powerUps.remove(i);
+                i--;
+            }
         }
 
         //Bullets-enemies collision
@@ -156,6 +156,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
+                if (b.type == Bullet.TYPE_ENEMY_BULLET ) {
+                    continue; //TODO HANDLE
+                }
                 double bx = b.getX();///получаем координаты по икс
                 double by = b.getY();//получаем координаты по Y
 
@@ -167,16 +170,16 @@ public class GamePanel extends JPanel implements Runnable {
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
 //                    System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
                     explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
-                  e.hit(true, null);
+                    e.hit(true, null);
                     bullets.remove(j); //удаляем пулю
                     //Check dead enemies
                     if (e.isDead()) {
                         //Chance for powerUp
                         double rand = Math.random();
                         System.out.println(rand);
-                        if(rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else if(rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
-                        else if(rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
+                        if (rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                        else if (rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
+                        else if (rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
                         else powerUps.add(new PowerUp(2, e.getX(), e.getY()));
 
                         player.addScore(e.getType() + e.getRank());
@@ -190,57 +193,57 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         //Player-enemyMeteor collision
-            for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
-                Enemy e = enemies.get(i);
-                double eX = e.getX();
-                double eY = e.getY();
+        for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
+            Enemy e = enemies.get(i);
+            double eX = e.getX();
+            double eY = e.getY();
 
-                double pX = player.getX();//координаты плеера
-                double pY = player.getY();
+            double pX = player.getX();//координаты плеера
+            double pY = player.getY();
 
-                double dX = eX - pX;//difference (разница между плеером и врагом)
-                double dY = eY - pY;
+            double dX = eX - pX;//difference (разница между плеером и врагом)
+            double dY = eY - pY;
 
-                double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
+            double distance = Math.sqrt(dX * dX + dY * dY); //Дистанция
 
-                //Check collision player and meteor
-                if ((int) distance <= e.getR() + player.getR()) {
+            //Check collision player and meteor
+            if ((int) distance <= e.getR() + player.getR()) {
 //                    System.out.println("register hit of meteor");
 
-                    //отнимаем жизнь у метеора
-                    e.hit(false, player);
-                    //если плеер не в состоянии восстановления
-                    //отнимаем жизнь у плеера и создаем объект explosionHit
-                    if (!player.isRecovering()) {
-                        player.loseLife();
-                        explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
-                    }
+                //отнимаем жизнь у метеора
+                e.hit(false, player);
+                //если плеер не в состоянии восстановления
+                //отнимаем жизнь у плеера и создаем объект explosionHit
+                if (!player.isRecovering()) {
+                    player.loseLife();
+                    explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
+                }
 
-                    //Check dead meteor
-                    if (e.isDead()) {
-                        //Chance for powerUp
-                        double rand = Math.random();
-                        if(rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else if(rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
-                        else if(rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
-                        else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        //Add score
-                        player.addScore(e.getType() + e.getRank());
-                        //Remove dead meteor
-                        enemies.remove(i);
-                        i--;
-                        //разделяем метеор
-                        e.explode();
-                        explosions.add(new Explosion(e.getX(), e.getY()));
-                    }
+                //Check dead meteor
+                if (e.isDead()) {
+                    //Chance for powerUp
+                    double rand = Math.random();
+                    if (rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                    else if (rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
+                    else if (rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
+                    else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                    //Add score
+                    player.addScore(e.getType() + e.getRank());
+                    //Remove dead meteor
+                    enemies.remove(i);
+                    i--;
+                    //разделяем метеор
+                    e.explode();
+                    explosions.add(new Explosion(e.getX(), e.getY()));
                 }
             }
-            // Player-PowerUp collision
+        }
+        // Player-PowerUp collision
         double playerX = player.getX();
         double playerY = player.getY();
         double playerR = player.getR();
         for (int i = 0; i < powerUps.size(); i++) {
-            PowerUp  powerUp = powerUps.get(i);
+            PowerUp powerUp = powerUps.get(i);
             double powerUpX = powerUp.getX();
             double powerUpY = powerUp.getY();
             double powerUpR = powerUp.getR();
@@ -248,15 +251,15 @@ public class GamePanel extends JPanel implements Runnable {
             double dy = playerY - powerUpY;
             double dist = Math.sqrt(dx * dx + dy * dy);
             // collected PowerUp
-            if(dist < playerR + powerUpR){
+            if (dist < playerR + powerUpR) {
                 int type = powerUp.getType();
-                if (type == 1){
+                if (type == 1) {
                     player.gainLife();
                 }
-                if (type == 2){
+                if (type == 2) {
                     player.increasePower(1);
                 }
-                if (type == 3){
+                if (type == 3) {
                     player.increasePower(2);
                 }
 
@@ -269,79 +272,79 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
 
-                    //Wave update
-                    wave.update();
-                    //Explosion update
-                    for (int i = 0; i < explosions.size(); i++) {
-                        boolean remove = explosions.get(i).update();
-                        if (remove) {
-                            explosions.remove(i);
-                            i--;
-                        }
-                    }
-                    //ExplosionSmall Update
-                    for (int i = 0; i < explosionHits.size(); i++) {
-                        boolean remove = explosionHits.get(i).update();
-                        if (remove) {
-                            explosionHits.remove(i);
-                            i--;
-                        }
-                    }
-                }
+        //Wave update
+        wave.update();
+        //Explosion update
+        for (int i = 0; i < explosions.size(); i++) {
+            boolean remove = explosions.get(i).update();
+            if (remove) {
+                explosions.remove(i);
+                i--;
+            }
+        }
+        //ExplosionSmall Update
+        for (int i = 0; i < explosionHits.size(); i++) {
+            boolean remove = explosionHits.get(i).update();
+            if (remove) {
+                explosionHits.remove(i);
+                i--;
+            }
+        }
+    }
 
-                public void gameRender () { // обновляет картинку
-                    //Custom cursor draw
-                    customCursor();
-                    //BackGround draw
-                    backGround.draw(g);
+    public void gameRender() { // обновляет картинку
+        //Custom cursor draw
+        customCursor();
+        //BackGround draw
+        backGround.draw(g);
 
-                    //Player draw
-                    player.draw(g);
+        //Player draw
+        player.draw(g);
 
-                    g.setFont(AddFont.createFontSpaceHorizon(16));
-                    g.drawString("Score: " + player.getScore(), 1600, 30);
-                    //Bullets draw
-                    for (Bullet bullet : bullets) {
-                        bullet.draw(g);
-                    }
-                    //Bullets counter draw
-                    g.setFont(new Font("Consolas", Font.PLAIN, 18));
-                    g.drawString("Bullets counter = " + bullets.size(), 1560, 900);
-                    //Draw Meteor enemies
-                    for (Enemy enemy : enemies) {
-                        enemy.draw(g);
-                    }
-                    //Meteors counter
-                    g.setFont(new Font("Consolas", Font.PLAIN, 18));
-                    g.drawString("Meteors counter = " + enemies.size(), 1560, 920);
+        g.setFont(AddFont.createFontSpaceHorizon(16));
+        g.drawString("Score: " + player.getScore(), 1600, 30);
+        //Bullets draw
+        for (Bullet bullet : bullets) {
+            bullet.draw(g);
+        }
+        //Bullets counter draw
+        g.setFont(new Font("Consolas", Font.PLAIN, 18));
+        g.drawString("Bullets counter = " + bullets.size(), 1560, 900);
+        //Draw Meteor enemies
+        for (Enemy enemy : enemies) {
+            enemy.draw(g);
+        }
+        //Meteors counter
+        g.setFont(new Font("Consolas", Font.PLAIN, 18));
+        g.drawString("Meteors counter = " + enemies.size(), 1560, 920);
 //                    //Meteor health counter
 //                    for (Enemy enemyMeteor : enemies) {
 //                        g.setFont(new Font("Consolas", Font.PLAIN, 18));
 //                        g.drawString("Health of meteor = " + enemyMeteor.getHeath(), 1560, 940);
 //                    }
 
-                    //Draw wave
-                    if (wave.showWave())//если надо показывать то пишем на экране текст
-                        wave.draw(g);
+        //Draw wave
+        if (wave.showWave())//если надо показывать то пишем на экране текст
+            wave.draw(g);
 
-                    //PowerUp draw
-                    for (int i = 0; i < powerUps.size(); i++) {
-                        powerUps.get(i).draw(g);
-                    }
-                    //Explosion draw
-                    for (int i = 0; i < explosions.size(); i++) {
-                        explosions.get(i).draw(g);
-                    }
-                    //SmallExplosion draw
-                    for (int i = 0; i < explosionHits.size(); i++) {
-                        explosionHits.get(i).draw(g);
-                    }
+        //PowerUp draw
+        for (int i = 0; i < powerUps.size(); i++) {
+            powerUps.get(i).draw(g);
+        }
+        //Explosion draw
+        for (int i = 0; i < explosions.size(); i++) {
+            explosions.get(i).draw(g);
+        }
+        //SmallExplosion draw
+        for (int i = 0; i < explosionHits.size(); i++) {
+            explosionHits.get(i).draw(g);
+        }
 
-                }
+    }
 
-                private void gameDraw () { // передаем изображение в нашу компоненту
-                    Graphics g2 = this.getGraphics(); // выводим на JPanel нарисованные элементы
-                    g2.drawImage(image, 0, 0, null);
-                    g2.dispose(); // убрать сборщиком мусора переменную g2, которую мы уже нарисовали
-                }
-            }
+    private void gameDraw() { // передаем изображение в нашу компоненту
+        Graphics g2 = this.getGraphics(); // выводим на JPanel нарисованные элементы
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose(); // убрать сборщиком мусора переменную g2, которую мы уже нарисовали
+    }
+}

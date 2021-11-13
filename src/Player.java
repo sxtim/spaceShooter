@@ -128,14 +128,14 @@ public class Player {
         if (isFiring) {
             acceleration.minus(new Point2D(1, 0).rotate(angle));
             if (powerLevel < 2) {
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
             } else if (powerLevel < 4) {
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.05));
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.05));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.05));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.05));
             } else {
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
-                GamePanel.bullets.add(new Bullet((int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
+                GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
 
             }
 
