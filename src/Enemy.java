@@ -135,7 +135,7 @@ public class Enemy {
 //        }
     }
 
-    int fireCooldown = 0;
+    int fireCooldown = (int) (Math.random() * 320);
 
     public void update() {
         velocity.multiple(0.9);
@@ -164,7 +164,7 @@ public class Enemy {
             {
                 if (fireCooldown == 0) {
                     fireBullet();
-                    fireCooldown = 60;
+                    fireCooldown = 320;
                 } else {
                     fireCooldown--;
                 }

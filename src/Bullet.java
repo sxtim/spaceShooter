@@ -27,11 +27,13 @@ public class Bullet {
     public Bullet(int type, double x, double y, double angle) {
         this.type = type;
 
+        int speed = 10;
         switch (type) {
             case TYPE_MY_BULLET:
                 imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
                 break;
             case TYPE_ENEMY_BULLET:
+                speed = 2;
                 imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
                 break;
         }
@@ -45,7 +47,8 @@ public class Bullet {
         dist = (Math.sqrt(distX * distX + distY * distY));//расстояние от мыши до пули
 
         r = 2;
-        deltaPos = new Point2D(10, 0).rotate(angle);
+
+        deltaPos = new Point2D(speed, 0).rotate(angle);
 //        System.out.println("bullet create with angle=" + angle + " actualAngle=" + deltaPos.angle());
         color = Color.YELLOW;
     }
