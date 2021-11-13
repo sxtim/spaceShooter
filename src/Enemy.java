@@ -135,6 +135,8 @@ public class Enemy {
 //        }
     }
 
+    int fireCooldown = 0;
+
     public void update() {
         velocity.multiple(0.9);
         velocity.add(acceleration);
@@ -155,6 +157,31 @@ public class Enemy {
 
 //        System.out.println(hitCooldown);
         angle += Math.PI / 360;
+
+
+        switch (type) {
+            case TYPE_MINE:
+            {
+                if (fireCooldown == 0) {
+                    fireItself();
+                    fireCooldown = 60;
+                } else {
+                    fireCooldown--;
+                }
+            }
+        }
+    }
+
+    private void fireItself() {
+        Enemy e = new Enemy(TYPE_METEOR, 2);
+        e.pos.x = this.pos.x;
+        e.pos.y = this.pos.y;
+
+        double newAngle = GamePanel.player.pos.copy().minus(pos).multiple(1).angle();
+        double length = e.acceleration.length();
+        e.acceleration.set(length, 0).rotate(newAngle);
+
+        GamePanel.enemies.add(e);
     }
 
     public void explode() {
