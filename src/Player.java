@@ -35,7 +35,7 @@ public class Player {
         color = Color.RED;
         lives = 10;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
-        r = 30;
+        r = 34;
         speed = 5; //не используется?
 
         recovering = false;

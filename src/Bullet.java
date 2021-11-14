@@ -8,7 +8,9 @@ public class Bullet {
     public static final int TYPE_ENEMY_BULLET = 2;
     //Fields
     private Image imgBullet;
-    private Point2D pos = new Point2D(0, 0);
+    public Point2D pos = new Point2D(0, 0);
+    public Point2D velocity = new Point2D(0, 0);
+    private Point2D acceleration = new Point2D(0, 0);
     private double angle;
     private int r;
     private Point2D deltaPos;
@@ -36,7 +38,7 @@ public class Bullet {
                 speed = 10;
                 break;
             case TYPE_ENEMY_BULLET:
-                speed = 10;
+                speed = 5;
                 r = 10;
                 imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
                 break;
@@ -61,6 +63,14 @@ public class Bullet {
     public void update() {
         pos.add(deltaPos);
 
+    }
+
+    public void hit(Player player) {
+            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
+            acceleration.set(10, 0)  // tmp acceleration
+                    .rotate(delta.multiple(-1).angle());
+            player.velocity.set(delta.multiple(-1));
+            return;
     }
 
     //проверка не улетела ли пуля за экран

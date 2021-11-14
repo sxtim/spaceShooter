@@ -14,9 +14,9 @@ public class Wave {
 
     //Constructor
     public Wave() {
-        waveText = "WAVE - ";
+        waveText = "WAVE: ";
         waveNumber = 1;
-        waveMultiplier = 40;
+        waveMultiplier = 7;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000
@@ -30,8 +30,8 @@ public class Wave {
         if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
             while(enemyCount > 0) {//создаем врагов
                 int rank = 1;
-                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_MINE;
-               // int type = Enemy.TYPE_MINE;
+//                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_MINE;
+                int type = Enemy.TYPE_MINE;
                 GamePanel.enemies.add(new Enemy(type, rank));
 
                 System.out.println(" create meteor ");
@@ -71,7 +71,7 @@ public class Wave {
         alpha = 255 * Math.sin(Math.toRadians(alpha));//рисуем с эффектом
         if(alpha < 0) alpha = 0;//корректируем alpha
         if(alpha > 255) alpha = 255;//корректируем alpha
-        g.setFont(new Font("consolas", Font.PLAIN, 20));
+        g.setFont(AddFont.createFontSpaceHorizon(50));
         g.setColor(new Color(200,52,200,(int) alpha));//рисуем с эффектом
         String s = waveText + waveNumber;
         long length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth(); //получаем длину текста в пикселях

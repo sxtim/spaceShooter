@@ -111,13 +111,6 @@ public class Enemy {
 
 
     public void hit(boolean ignoreCooldown, Player player) {//при попадании уменьшаем здоровье
-//        if (!ignoreCooldown && hitCooldown > 0) {
-//            Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
-//            acceleration.set(speed, 0)  // tmp acceleration
-//                    .rotate(delta.multiple(-1).angle());
-//            player.velocity.set(delta.multiple(-1));
-//            return;
-//        }
         hitCooldown = 60;
 
         health--;

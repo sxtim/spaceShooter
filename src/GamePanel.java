@@ -157,6 +157,27 @@ public class GamePanel extends JPanel implements Runnable {
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
                 if (b.type == Bullet.TYPE_ENEMY_BULLET ) {
+                    Bullet bulletTypeEnemy = bullets.get(j);
+                    double bulletTypeEnemyX = b.getX();///получаем координаты по икс
+                    double bulletTypeEnemyY = b.getY();//получаем координаты по Y
+
+                    double distX = player.getX() - bulletTypeEnemyX;//difference (разница между врагом и пулей)
+                    double distY = player.getY() - bulletTypeEnemyY;//difference (разница между врагом и пулей)
+
+                    double dist = Math.sqrt(distX * distX + distY * distY);//Дистанция
+                    if((int) dist <= player.getR() + bulletTypeEnemy.getR()){
+
+                        explosionHits.add(new ExplosionHit(player.getX(), player.getY()));
+                        bullets.remove(j);
+                        System.out.println("Hit PLAYER");
+
+                        bulletTypeEnemy.hit(player);
+
+                        if(!player.isRecovering()){
+                            player.loseLife();
+                        }
+                    }
+
                     continue; //TODO HANDLE
                 }
                 double bx = b.getX();///получаем координаты по икс
@@ -168,7 +189,8 @@ public class GamePanel extends JPanel implements Runnable {
                 double dist = Math.sqrt(dx * dx + dy * dy);//Дистанция
                 //Registration hit of meteor
                 if ((int) dist <= e.getR() + b.getR()) {//если дистанция между врагом и пулей меньше
-//                    System.out.println("register hit of meteor");//чем сумма радиусов врага и пули, то есть попадание
+//                    System.out.println("register hit of meteor");
+                        // чем сумма радиусов врага и пули, то есть попадание
                     explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                     e.hit(true, null);
                     bullets.remove(j); //удаляем пулю
@@ -192,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        //Player-enemyMeteor collision
+        //Player-enemy collision
         for (int i = 0; i < enemies.size(); i++) {//цикл по врагам
             Enemy e = enemies.get(i);
             double eX = e.getX();
