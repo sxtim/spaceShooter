@@ -28,15 +28,19 @@ public class Wave {
     public void createEnemies() {
         int enemyCount = waveNumber * waveMultiplier;
         if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
-            while(enemyCount > 0) {//создаем врагов
+            for(int i = 0; enemyCount > i; i++) {//создаем врагов
+                    int type = 1;
                 int rank = 1;
-                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_FIGTHER;
-//                int type = Enemy.TYPE_FIGTHER;
+                GamePanel.enemies.add(new Enemy(type, rank));
+                type = Enemy.TYPE_FIGTHER_SNIPER;
                 GamePanel.enemies.add(new Enemy(type, rank));
 
-                System.out.println(" create meteor ");
+                System.out.println(" Create Enemy ");
+                enemyCount --;
 
-                enemyCount -= type * rank;
+//                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR_DEFAULT : Enemy.TYPE_FIGTHER_SNIPER;
+//                int type = Enemy.TYPE_FIGTHER;
+
             }
         }
         waveNumber++;

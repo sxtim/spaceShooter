@@ -177,7 +177,6 @@ public class GamePanel extends JPanel implements Runnable {
                             player.loseLife();
                         }
                     }
-
                     continue; //TODO HANDLE
                 }
                 double bx = b.getX();///получаем координаты по икс

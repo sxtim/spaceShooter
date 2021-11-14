@@ -3,8 +3,13 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class Enemy {
-    public static final int TYPE_METEOR = 1;
-    public static final int TYPE_FIGTHER = 2;
+    public static final int TYPE_METEOR_DEFAULT = 1;
+    public static final int TYPE_METEOR_DEFAULT_SHARD = 2;
+    public static final int TYPE_METEOR_ALTERNATIVE = 3;
+    public static final int TYPE_METEOR_ALTERNATIVE_SHARD = 4;
+    public static final int TYPE_FIGHTER = 5;
+    public static final int TYPE_FIGTHER_SNIPER = 6;
+    public static final int TYPE_FIGTHER_MINER = 7;
     private Image image;
 
     private Point2D pos = new Point2D(0, 0);
@@ -28,11 +33,12 @@ public class Enemy {
     public Enemy(int type, int rank) {
         System.out.println("meteor created type=" + type + " rank=" + rank);
 
+
         this.type = type;
         this.rank = rank;
 
         switch (type) {
-            case TYPE_METEOR:
+            case TYPE_METEOR_DEFAULT:
                 switch (rank) {
                     //Default enemyMeteor
                     case (1): {
@@ -66,12 +72,12 @@ public class Enemy {
                     }
                 }
                 break;
-            case TYPE_FIGTHER:
+            case TYPE_FIGTHER_SNIPER:
                 switch (rank) {
                     //Default enemyMeteor
                     case (1): {
 //                        System.out.println("изменяется картинка у первого типа");
-                        image = new ImageIcon("Image/enemy/figther1.png").getImage();
+                        image = new ImageIcon("Image/enemy/figthersniper.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
@@ -86,7 +92,7 @@ public class Enemy {
                     }
                     case (2): {
 //                        System.out.println("создаем второй тип метеора");
-                        image = new ImageIcon("Image/enemy/figther2.png").getImage();
+                        image = new ImageIcon("Image/enemy/figthersniper.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
@@ -100,7 +106,6 @@ public class Enemy {
                         break;
                     }
                 }
-
         }
     }
 
@@ -137,7 +142,7 @@ public class Enemy {
         velocity.clamp(3);
         pos.add(velocity);
 
-        if(type == TYPE_METEOR){
+        if(type == TYPE_METEOR_DEFAULT){
             angleRotate += Math.PI / 360;
         }
 
@@ -155,7 +160,7 @@ public class Enemy {
 
 
         switch (type) {
-            case TYPE_FIGTHER:
+            case TYPE_FIGTHER_SNIPER:
             {
                 if (fireCooldown == 0) {
                     fireBullet();
@@ -177,7 +182,7 @@ public class Enemy {
     public void explode() {
         if (rank == 1) {
             int amount = 0;
-            if (type == TYPE_METEOR) {
+            if (type == TYPE_METEOR_DEFAULT) {
                 amount = 3;
             }
             for (int i = 0; i < amount; i++) {
@@ -196,7 +201,7 @@ public class Enemy {
         AffineTransform origForm1; //создаем объект класса AffineTransform
         origForm1 = g.getTransform();//получаем текущее значение
         AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
-        newForm1.rotate(angleRotate, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+        newForm1.rotate(angleRotate, pos.x, pos.y);//вертим     полученное изображение относительно X и Y
         g.setTransform(newForm1);//
         g.drawImage(image, (int) pos.x - r, (int) pos.y - r, null);
         g.setTransform(origForm1);
