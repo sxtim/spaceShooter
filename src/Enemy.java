@@ -4,13 +4,13 @@ import java.awt.geom.AffineTransform;
 
 public class Enemy {
     public static final int TYPE_METEOR = 1;
-    public static final int TYPE_MINE = 2;
+    public static final int TYPE_FIGTHER = 2;
     private Image image;
 
     private Point2D pos = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
     private Point2D velocity = new Point2D(0, 0);
-    private double angle;
+    private double angleRotate;
     private int r;
     private double speed;
 
@@ -66,27 +66,27 @@ public class Enemy {
                     }
                 }
                 break;
-            case TYPE_MINE:
+            case TYPE_FIGTHER:
                 switch (rank) {
                     //Default enemyMeteor
                     case (1): {
 //                        System.out.println("изменяется картинка у первого типа");
-                        image = new ImageIcon("Image/space-mine_s_gray.png").getImage();
+                        image = new ImageIcon("Image/enemy/figther1.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
                         speed = 0.2;
                         health = 2;
-                        double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
-                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
-                        acceleration.y = Math.cos(angle) * speed;
+                        double angleDirection = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angleDirection) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angleDirection) * speed;
                         ready = false;
                         dead = false;
                         break;
                     }
                     case (2): {
 //                        System.out.println("создаем второй тип метеора");
-                        image = new ImageIcon("Image/space-mine_s_graylight.png").getImage();
+                        image = new ImageIcon("Image/enemy/figther2.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
@@ -137,6 +137,10 @@ public class Enemy {
         velocity.clamp(3);
         pos.add(velocity);
 
+        if(type == TYPE_METEOR){
+            angleRotate += Math.PI / 360;
+        }
+
         if (hitCooldown > 0) {
             hitCooldown--;
         }
@@ -149,11 +153,9 @@ public class Enemy {
         if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
 
-        angle += Math.PI / 360;
-
 
         switch (type) {
-            case TYPE_MINE:
+            case TYPE_FIGTHER:
             {
                 if (fireCooldown == 0) {
                     fireBullet();
@@ -194,7 +196,7 @@ public class Enemy {
         AffineTransform origForm1; //создаем объект класса AffineTransform
         origForm1 = g.getTransform();//получаем текущее значение
         AffineTransform newForm1 = (AffineTransform) (origForm1.clone());//клонируем текущее значение
-        newForm1.rotate(angle, pos.x, pos.y);//вертим полученное изображение относительно X и Y
+        newForm1.rotate(angleRotate, pos.x, pos.y);//вертим полученное изображение относительно X и Y
         g.setTransform(newForm1);//
         g.drawImage(image, (int) pos.x - r, (int) pos.y - r, null);
         g.setTransform(origForm1);

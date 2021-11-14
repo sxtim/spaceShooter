@@ -30,8 +30,8 @@ public class Wave {
         if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
             while(enemyCount > 0) {//создаем врагов
                 int rank = 1;
-//                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_MINE;
-                int type = Enemy.TYPE_MINE;
+                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR : Enemy.TYPE_FIGTHER;
+//                int type = Enemy.TYPE_FIGTHER;
                 GamePanel.enemies.add(new Enemy(type, rank));
 
                 System.out.println(" create meteor ");
