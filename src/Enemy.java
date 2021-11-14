@@ -4,9 +4,7 @@ import java.awt.geom.AffineTransform;
 
 public class Enemy {
     public static final int TYPE_METEOR_DEFAULT = 1;
-    public static final int TYPE_METEOR_DEFAULT_SHARD = 2;
-    public static final int TYPE_METEOR_ALTERNATIVE = 3;
-    public static final int TYPE_METEOR_ALTERNATIVE_SHARD = 4;
+    public static final int TYPE_METEOR_ALTERNATIVE = 2;
     public static final int TYPE_FIGHTER = 5;
     public static final int TYPE_FIGTHER_SNIPER = 6;
     public static final int TYPE_FIGTHER_MINER = 7;
@@ -40,29 +38,28 @@ public class Enemy {
         switch (type) {
             case TYPE_METEOR_DEFAULT:
                 switch (rank) {
-                    //Default enemyMeteor
+                    //Default
                     case (1): {
-//                        System.out.println("изменяется картинка у первого типа");
                         image = new ImageIcon("Image/meteors/meteor-01-xl.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 27;
-                        speed = 0.2;
-                        health = 10;
+                        speed = 0.1;
+                        health = 5;
                         double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
                         ready = false;
                         dead = false;
                         break;
-                    }
+                    }//Shard. increase speed, decrease health
                     case (2): {
                         image = new ImageIcon("Image/meteors/meteor-01-l.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 20;
-                        speed = 0.3;
-                        health = 10;
+                        speed = 0.2;
+                        health = 2;
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -72,6 +69,42 @@ public class Enemy {
                     }
                 }
                 break;
+
+            case TYPE_METEOR_ALTERNATIVE:
+                //Default
+                switch (rank) {
+                    case (1): {
+                        image = new ImageIcon("Image/meteors/meteor-02-xl.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 25;
+                        speed = 0.2;
+                        health = 5;
+                        double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    } //Shard. increase speed, health
+                    case (2): {
+                        image = new ImageIcon("Image/meteors/meteor-02-l.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 17;
+                        speed = 0.3;
+                        health = 10;
+                        double angle = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    }
+                }
+                break;
+
+
             case TYPE_FIGTHER_SNIPER:
                 switch (rank) {
                     //Default enemyMeteor
@@ -142,8 +175,11 @@ public class Enemy {
         velocity.clamp(3);
         pos.add(velocity);
 
-        if(type == TYPE_METEOR_DEFAULT){
+        if (type == TYPE_METEOR_DEFAULT) {
             angleRotate += Math.PI / 360;
+        }
+        if (type == TYPE_METEOR_ALTERNATIVE) {
+            angleRotate -= Math.PI / 360;
         }
 
         if (hitCooldown > 0) {
@@ -158,10 +194,8 @@ public class Enemy {
         if (pos.y > GamePanel.HEIGHT && acceleration.y > 0) acceleration.y = -acceleration.y;
 
 
-
         switch (type) {
-            case TYPE_FIGTHER_SNIPER:
-            {
+            case TYPE_FIGTHER_SNIPER: {
                 if (fireCooldown == 0) {
                     fireBullet();
                     fireCooldown = 320;
@@ -174,7 +208,7 @@ public class Enemy {
 
     private void fireBullet() {
         double newAngle = GamePanel.player.pos.copy().minus(pos).multiple(1).angle();
-        Bullet e = new Bullet(Bullet.TYPE_ENEMY_BULLET, pos.x,pos.y, newAngle );
+        Bullet e = new Bullet(Bullet.TYPE_ENEMY_BULLET, pos.x, pos.y, newAngle);
 
         GamePanel.bullets.add(e);
     }
@@ -182,6 +216,9 @@ public class Enemy {
     public void explode() {
         if (rank == 1) {
             int amount = 0;
+            if (type == TYPE_METEOR_ALTERNATIVE) {
+                amount = 4;
+            }
             if (type == TYPE_METEOR_DEFAULT) {
                 amount = 3;
             }
