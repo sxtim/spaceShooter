@@ -6,6 +6,7 @@ public class AnimationImageData {
     public static ArrayList<Image> explosionsBigImage;
     public static ArrayList<Image> explosionsBig2Image;
     public static ArrayList<Image> explosionsSmallImage;
+    public static ArrayList<Image> shield;
 
     //Create explosion Big
     public static ArrayList<Image> createExplosionBig() {
@@ -76,7 +77,7 @@ public class AnimationImageData {
         return explosionsBigImage;
     }
 
-    public static ArrayList<Image> createExplosionSmall(){
+    public static ArrayList<Image> createExplosionSmall() {
         explosionsSmallImage = new ArrayList<>();
         explosionsSmallImage.add(new ImageIcon("Image/explosions/small/explosion1.png").getImage());
         explosionsSmallImage.add(new ImageIcon("Image/explosions/small/explosion2.png").getImage());
@@ -215,6 +216,76 @@ public class AnimationImageData {
         explosionsBig2Image.add(new ImageIcon("Image/explosions/big2/explosion264.png").getImage());
 
         return explosionsBig2Image;
+    }
+
+    public static ArrayList<Image> createShield() {
+        shield = new ArrayList<>();
+        shield.add(new ImageIcon("Image/player/animationshield/0.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/1.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/2.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/3.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/4.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/5.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/6.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/7.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/8.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/9.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/10.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/11.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/12.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/13.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/14.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/15.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/16.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/17.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/18.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/19.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/20.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/21.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/22.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/23.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/24.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/25.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/26.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/27.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/28.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/29.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/30.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/31.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/32.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/33.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/34.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/35.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/36.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/37.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/38.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/39.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/40.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/41.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/42.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/43.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/44.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/45.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/46.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/47.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/48.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/49.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/50.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/51.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/52.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/53.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/54.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/55.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/56.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/57.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/58.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/59.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/60.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/61.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/62.gif").getImage());
+        shield.add(new ImageIcon("Image/player/animationshield/63.gif").getImage());
+
+        return shield;
     }
 
 

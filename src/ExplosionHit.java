@@ -26,6 +26,7 @@ public class ExplosionHit {
     public boolean update() {
         counterImageFrame++;
         if (counterImageFrame >= explosionsSmallImage.size()){
+            counterImageFrame = 0;
             return true;
         }
         return false;

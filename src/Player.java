@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 public class Player {
     //Fields
     private static Image imageShip = new ImageIcon("Image/player/playership8.png").getImage();
+    private Image imageShield = new ImageIcon("Image/player/XDZT.gif").getImage();
     public Point2D pos = new Point2D(0, 0);
     public Point2D velocity = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
@@ -144,7 +145,7 @@ public class Player {
         // пройденное время. разница между текущим временем и инициализированным таймером
         long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
         // сли отрезок времени (пройденное время между двумя запущенными таймерами) больше, то устанавливаем
-        if (elapsed > 300) {//recovery = false и recoveryTimer не запущен;
+        if (elapsed > 10000) {//recovery = false и recoveryTimer не запущен;
             recovering = false;
             recoveryTimer = 0;
         }
@@ -184,10 +185,14 @@ public class Player {
             newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
             g.setTransform(newForm);//ставим трансформированное изображение
             g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
+            g.drawImage(imageShield, (int) pos.x - 90 / 2, (int) pos.y - 90 / 2 + 3, null);//рисуем картинку
             g.setTransform(origForm);//возвращаем старое значение
 
-            g.setColor(Color.CYAN);
-            g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
+
+//            g.setColor(Color.CYAN);
+//            g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
+
+
 
 
         } else {

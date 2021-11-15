@@ -34,13 +34,18 @@ public class Wave {
                 GamePanel.enemies.add(new Enemy(type, rank));
                 type = Enemy.TYPE_METEOR_ALTERNATIVE;
                 GamePanel.enemies.add(new Enemy(type, rank));
+                type = Enemy.TYPE_FIGTHER_SNIPER;
+                GamePanel.enemies.add(new Enemy(type, rank));
+                rank = 2;
+                GamePanel.enemies.add(new Enemy(type, rank));
+
+
 
                 System.out.println(" Create Enemy ");
                 enemyCount --;
 
 //                int type = Math.random() > 0.3 ? Enemy.TYPE_METEOR_DEFAULT : Enemy.TYPE_FIGTHER_SNIPER;
 //                int type = Enemy.TYPE_FIGTHER;
-
             }
         }
         waveNumber++;
