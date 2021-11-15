@@ -156,6 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
+                //Bullet - player collision
                 if (b.type == Bullet.TYPE_ENEMY_BULLET ) {
                     Bullet bulletTypeEnemy = bullets.get(j);
                     double bulletTypeEnemyX = b.getX();///получаем координаты по икс
@@ -169,11 +170,12 @@ public class GamePanel extends JPanel implements Runnable {
 
                         explosionHits.add(new ExplosionHit(player.getX(), player.getY()));
                         bullets.remove(j);
-                        System.out.println("Hit PLAYER");
 
+                        //Отскок
                         bulletTypeEnemy.hit(player);
 
                         if(!player.isRecovering()){
+                            System.out.println("Hit PLAYER");
                             player.loseLife();
                         }
                     }
@@ -235,9 +237,10 @@ public class GamePanel extends JPanel implements Runnable {
                 e.hit(false, player);
                 //если плеер не в состоянии восстановления
                 //отнимаем жизнь у плеера и создаем объект explosionHit
+                explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
                 if (!player.isRecovering()) {
                     player.loseLife();
-                    explosionHits.add(new ExplosionHit(e.getX(), e.getY()));
+
                 }
 
                 //Check dead meteor
