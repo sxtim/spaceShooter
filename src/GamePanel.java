@@ -133,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
             if(b.type == Bullet.TYPE_ENEMY_MINE && b.isDeadMine()) {
                 explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
             }
+
             boolean remove = bullets.get(i).remove();
             if (remove) { //если пуля выходит за прелеы
                 bullets.remove(i);//удаляем пулю из списка
@@ -176,7 +177,6 @@ public class GamePanel extends JPanel implements Runnable {
                     if((int) dist <= player.getR() + bulletTypeEnemy.getR()){
                         if(b.type == Bullet.TYPE_ENEMY_MINE) {
                             explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
-
                         }
 
                         explosionHits.add(new ExplosionHit(player.getX(), player.getY()));
