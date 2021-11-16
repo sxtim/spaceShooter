@@ -7,6 +7,7 @@ public class ExplosionBigSize {
     private double x;
     private double y;
     private int counterImageFrame;
+    private int r;
     private int hitCooldown;
 
 
@@ -17,6 +18,7 @@ public class ExplosionBigSize {
         explosionsBigSize.addAll(AnimationImageData.createExplosionBigSize());
         this.x = x;
         this.y = y;
+        r = 250;
     }
 
 
@@ -33,6 +35,6 @@ public class ExplosionBigSize {
 
     public void draw(Graphics2D g) {
         System.out.println("РИСУЕМ ОГРОМНЫЙ ВЗРЫВ");
-        g.drawImage(explosionsBigSize.get((counterImageFrame)), (int) x - 124, (int) y - 124, null);
+        g.drawImage(explosionsBigSize.get((counterImageFrame)), (int) x - r, (int) y - r, null);
     }
 }

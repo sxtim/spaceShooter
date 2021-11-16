@@ -170,7 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
                     double dist = Math.sqrt(distX * distX + distY * distY);//Дистанция
                     if((int) dist <= player.getR() + bulletTypeEnemy.getR()){
 
-                        explosionBigSizes.add(new ExplosionBigSize(player.getX(), player.getY()));
+                        explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
                         bullets.remove(j);
 
                         //Отскок
