@@ -145,7 +145,7 @@ public class Player {
         // пройденное время. разница между текущим временем и инициализированным таймером
         long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
         // сли отрезок времени (пройденное время между двумя запущенными таймерами) больше, то устанавливаем
-        if (elapsed > 10000) {//recovery = false и recoveryTimer не запущен;
+        if (elapsed > 400) {//recovery = false и recoveryTimer не запущен;
             recovering = false;
             recoveryTimer = 0;
         }
@@ -171,7 +171,6 @@ public class Player {
 
 
     public void draw(Graphics2D g) {//передаем графику и рисуем игрока
-        //TODO
 
             //Сервисные линии
 //        g.setColor(Color.WHITE);

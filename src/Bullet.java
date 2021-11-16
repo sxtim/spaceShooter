@@ -6,6 +6,7 @@ public class Bullet {
 
     public static final int TYPE_MY_BULLET = 1;
     public static final int TYPE_ENEMY_BULLET = 2;
+    public static final int TYPE_ENEMY_MINE = 3;
     //Fields
     private Image imgBullet;
     public Point2D pos = new Point2D(0, 0);
@@ -13,6 +14,7 @@ public class Bullet {
     private Point2D acceleration = new Point2D(0, 0);
     private double angle;
     private int r;
+    private int rMineMax;
     private Point2D deltaPos;
     private double x;
     private double y;
@@ -33,14 +35,20 @@ public class Bullet {
         r = 0;
         switch (type) {
             case TYPE_MY_BULLET:
-                imgBullet = new ImageIcon("Image/bullets/bullet4.png").getImage();
-                r = 17;
+                imgBullet = new ImageIcon("Image/bullets/bullet21.png").getImage();
+                r = 10;
                 speed = 10;
                 break;
             case TYPE_ENEMY_BULLET:
                 speed = 5;
                 r = 10;
                 imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
+                break;
+            case TYPE_ENEMY_MINE:
+                System.out.println("MINE");
+                speed = 0;
+                r = 15;
+                imgBullet = new ImageIcon("Image/bullets/mine.gif").getImage();
                 break;
         }
 

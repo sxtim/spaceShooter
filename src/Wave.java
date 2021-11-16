@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE: ";
         waveNumber = 1;
-        waveMultiplier = 7;
+        waveMultiplier = 3;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000
@@ -30,14 +30,16 @@ public class Wave {
         if (waveNumber < 2) {//до 4 волны создаем определенный алгоритм
             for(int i = 0; enemyCount > i; i++) {//создаем врагов
                 int rank = 1;
-                int type = Enemy.TYPE_METEOR_DEFAULT;
+                int type = Enemy.TYPE_MINER;
                 GamePanel.enemies.add(new Enemy(type, rank));
-                type = Enemy.TYPE_METEOR_ALTERNATIVE;
+                rank = 1;
                 GamePanel.enemies.add(new Enemy(type, rank));
-                type = Enemy.TYPE_FIGTHER_SNIPER;
-                GamePanel.enemies.add(new Enemy(type, rank));
-                rank = 2;
-                GamePanel.enemies.add(new Enemy(type, rank));
+//                type = Enemy.TYPE_METEOR_ALTERNATIVE;
+//                GamePanel.enemies.add(new Enemy(type, rank));
+//                type = Enemy.TYPE_FIGTHER_SNIPER;
+//                GamePanel.enemies.add(new Enemy(type, rank));
+//                rank = 2;
+//                GamePanel.enemies.add(new Enemy(type, rank));
 
 
 

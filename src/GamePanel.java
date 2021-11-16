@@ -157,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
                 //Bullet - player collision
-                if (b.type == Bullet.TYPE_ENEMY_BULLET ) {
+                if (b.type == Bullet.TYPE_ENEMY_BULLET || b.type == Bullet.TYPE_ENEMY_MINE) {
                     Bullet bulletTypeEnemy = bullets.get(j);
                     double bulletTypeEnemyX = b.getX();///получаем координаты по икс
                     double bulletTypeEnemyY = b.getY();//получаем координаты по Y

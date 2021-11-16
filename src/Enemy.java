@@ -7,7 +7,7 @@ public class Enemy {
     public static final int TYPE_METEOR_ALTERNATIVE = 2;
     public static final int TYPE_FIGHTER = 5;
     public static final int TYPE_FIGTHER_SNIPER = 6;
-    public static final int TYPE_FIGTHER_MINER = 7;
+    public static final int TYPE_MINER = 7;
     private Image image;
 
     private Point2D pos = new Point2D(0, 0);
@@ -107,14 +107,14 @@ public class Enemy {
 
             case TYPE_FIGTHER_SNIPER:
                 switch (rank) {
-                    //Default enemyMeteor
+                    //Default
                     case (1): {
 //                        System.out.println("изменяется картинка у первого типа");
                         image = new ImageIcon("Image/enemy/figthersniper.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
-                        speed = 0.2;
+                        speed = 0.15;
                         health = 2;
                         double angleDirection = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
                         acceleration.x = Math.sin(angleDirection) * speed; //смещение шариков
@@ -125,12 +125,47 @@ public class Enemy {
                     }
                     case (2): {
 //                        System.out.println("создаем второй тип метеора");
-                        image = new ImageIcon("Image/enemy/figthersniper.png").getImage();
+                        image = new ImageIcon("Image/enemy/figthersniper2.png").getImage();
                         pos.x = Math.random() * GamePanel.WIDTH;
                         pos.y = 0;
                         r = 16;
-                        speed = 0.3;
+                        speed = 0.25;
                         health = 1;
+                        double angle = Math.toRadians(Math.random() * 360);
+                        acceleration.x = Math.sin(angle) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angle) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    }
+                }
+                break;
+            case TYPE_MINER:
+                switch (rank) {
+                    //Default - increase HP, speed
+                    case (1): {
+
+                        image = new ImageIcon("Image/enemy/miner.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 21;
+                        speed = 0.24;
+                        health = 7;
+                        double angleDirection = Math.toRadians(Math.random() * 360);// угол направления шариков от 0 до 360
+                        acceleration.x = Math.sin(angleDirection) * speed; //смещение шариков
+                        acceleration.y = Math.cos(angleDirection) * speed;
+                        ready = false;
+                        dead = false;
+                        break;
+                    }
+                    case (2): {
+
+                        image = new ImageIcon("Image/enemy/miner2.png").getImage();
+                        pos.x = Math.random() * GamePanel.WIDTH;
+                        pos.y = 0;
+                        r = 21;
+                        speed = 0.3;
+                        health = 10;
                         double angle = Math.toRadians(Math.random() * 360);
                         acceleration.x = Math.sin(angle) * speed; //смещение шариков
                         acceleration.y = Math.cos(angle) * speed;
@@ -156,7 +191,7 @@ public class Enemy {
             dead = true;
         }
 
-        System.out.println("MEteor helth = " + health);
+        System.out.println("Enemy health = " + health);
         // Отскок
         if (player != null) {
             Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора
@@ -203,14 +238,25 @@ public class Enemy {
                     fireCooldown--;
                 }
             }
+            break;
+            case TYPE_MINER: {
+                if (fireCooldown == 0) {
+                    fireBullet();
+                    fireCooldown = 200;
+                } else {
+                    fireCooldown--;
+                }
+            }
         }
     }
 
     private void fireBullet() {
-        double newAngle = GamePanel.player.pos.copy().minus(pos).multiple(1).angle();
-        Bullet e = new Bullet(Bullet.TYPE_ENEMY_BULLET, pos.x, pos.y, newAngle);
-
-        GamePanel.bullets.add(e);
+        if(type == TYPE_MINER){
+            GamePanel.bullets.add(new Bullet (Bullet.TYPE_ENEMY_MINE, pos.x, pos.y, 0));
+        }else {
+            double newAngle = GamePanel.player.pos.copy().minus(pos).multiple(1).angle();
+            GamePanel.bullets.add(new Bullet(Bullet.TYPE_ENEMY_BULLET, pos.x, pos.y, newAngle));
+        }
     }
 
     public void explode() {
