@@ -6,7 +6,9 @@ public class AnimationImageData {
     public static ArrayList<Image> explosionsBigImage;
     public static ArrayList<Image> explosionsBig2Image;
     public static ArrayList<Image> explosionsSmallImage;
-    public static ArrayList<Image> shield;
+    public static ArrayList<Image> explosionsBigSizeImage;
+    public static ArrayList<Image> shield;//not used
+
 
     //Create explosion Big
     public static ArrayList<Image> createExplosionBig() {
@@ -286,6 +288,73 @@ public class AnimationImageData {
         shield.add(new ImageIcon("Image/player/animationshield/63.gif").getImage());
 
         return shield;
+    }
+    public static ArrayList<Image> createExplosionBigSize(){
+        explosionsBigSizeImage = new ArrayList<>();
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion301.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion302.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion303.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion304.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion305.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion306.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion307.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion308.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion309.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion310.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion311.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion312.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion313.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion314.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion315.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion316.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion317.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion318.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion319.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion320.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion321.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion322.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion323.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion324.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion325.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion326.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion327.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion328.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion329.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion330.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion331.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion332.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion333.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion334.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion335.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion336.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion337.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion338.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion339.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion340.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion341.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion342.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion343.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion344.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion345.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion346.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion347.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion348.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion349.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion350.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion351.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion352.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion353.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion354.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion355.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion356.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion357.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion358.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion359.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion360.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion361.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion362.png").getImage());
+        explosionsBigSizeImage.add(new ImageIcon("Image/explosions/bigsize/explosion363.png").getImage());
+        return explosionsBigSizeImage;
     }
 
 

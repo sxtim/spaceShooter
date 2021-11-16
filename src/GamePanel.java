@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Enemy> enemies;
     public static ArrayList<Explosion> explosions;
     public static ArrayList<ExplosionHit> explosionHits;
+    public static ArrayList<ExplosionBigSize> explosionBigSizes;
     public static ArrayList<PowerUp> powerUps;
     public static Wave wave;
     public static Menu menu;
@@ -78,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
         enemies = new ArrayList<>();
         explosions = new ArrayList<>();
         explosionHits = new ArrayList<>();
+        explosionBigSizes = new ArrayList<>();
         powerUps = new ArrayList<>();
         wave = new Wave();
         menu = new Menu();
@@ -168,7 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
                     double dist = Math.sqrt(distX * distX + distY * distY);//Дистанция
                     if((int) dist <= player.getR() + bulletTypeEnemy.getR()){
 
-                        explosionHits.add(new ExplosionHit(player.getX(), player.getY()));
+                        explosionBigSizes.add(new ExplosionBigSize(player.getX(), player.getY()));
                         bullets.remove(j);
 
                         //Отскок
@@ -314,6 +316,14 @@ public class GamePanel extends JPanel implements Runnable {
                 i--;
             }
         }
+        //Explosion Big size update
+        for (int i = 0; i < explosionBigSizes.size(); i++) {
+            boolean remove = explosionBigSizes.get(i).update();
+            if (remove) {
+                explosionBigSizes.remove(i);
+                i--;
+            }
+        }
     }
 
     public void gameRender() { // обновляет картинку
@@ -362,6 +372,10 @@ public class GamePanel extends JPanel implements Runnable {
         //SmallExplosion draw
         for (int i = 0; i < explosionHits.size(); i++) {
             explosionHits.get(i).draw(g);
+        }
+        //Explosion big size draw
+        for (int i = 0; i < explosionBigSizes.size(); i++) {
+            explosionBigSizes.get(i).draw(g);
         }
 
     }
