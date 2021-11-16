@@ -203,6 +203,7 @@ public class Enemy {
     }
 
     int fireCooldown = (int) (Math.random() * 320);
+    int fireCooldownMine = (int) (Math.random() * 200);
 
     public void update() {
         velocity.multiple(0.9);
@@ -240,11 +241,11 @@ public class Enemy {
             }
             break;
             case TYPE_MINER: {
-                if (fireCooldown == 0) {
+                if (fireCooldownMine == 0) {
                     fireBullet();
-                    fireCooldown = 200;
+                    fireCooldownMine = 200;
                 } else {
-                    fireCooldown--;
+                    fireCooldownMine--;
                 }
             }
         }

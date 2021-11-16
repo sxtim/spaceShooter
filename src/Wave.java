@@ -16,7 +16,7 @@ public class Wave {
     public Wave() {
         waveText = "WAVE: ";
         waveNumber = 1;
-        waveMultiplier = 3;
+        waveMultiplier = 5;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000
@@ -32,8 +32,8 @@ public class Wave {
                 int rank = 1;
                 int type = Enemy.TYPE_MINER;
                 GamePanel.enemies.add(new Enemy(type, rank));
-                rank = 1;
-                GamePanel.enemies.add(new Enemy(type, rank));
+//                type = Enemy.TYPE_FIGTHER_SNIPER;
+//                GamePanel.enemies.add(new Enemy(type, rank));
 //                type = Enemy.TYPE_METEOR_ALTERNATIVE;
 //                GamePanel.enemies.add(new Enemy(type, rank));
 //                type = Enemy.TYPE_FIGTHER_SNIPER;

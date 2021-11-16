@@ -128,7 +128,11 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
         //Bullets update
         for (int i = 0; i < bullets.size(); i++) {
+            Bullet b = bullets.get(i);
             bullets.get(i).update();
+            if(b.type == Bullet.TYPE_ENEMY_MINE && b.isDeadMine()) {
+                explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
+            }
             boolean remove = bullets.get(i).remove();
             if (remove) { //если пуля выходит за прелеы
                 bullets.remove(i);//удаляем пулю из списка
@@ -161,6 +165,7 @@ public class GamePanel extends JPanel implements Runnable {
                 //Bullet - player collision
                 if (b.type == Bullet.TYPE_ENEMY_BULLET || b.type == Bullet.TYPE_ENEMY_MINE) {
                     Bullet bulletTypeEnemy = bullets.get(j);
+
                     double bulletTypeEnemyX = b.getX();///получаем координаты по икс
                     double bulletTypeEnemyY = b.getY();//получаем координаты по Y
 
@@ -169,8 +174,12 @@ public class GamePanel extends JPanel implements Runnable {
 
                     double dist = Math.sqrt(distX * distX + distY * distY);//Дистанция
                     if((int) dist <= player.getR() + bulletTypeEnemy.getR()){
+                        if(b.type == Bullet.TYPE_ENEMY_MINE) {
+                            explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
 
-                        explosionBigSizes.add(new ExplosionBigSize(b.getX(), b.getY()));
+                        }
+
+                        explosionHits.add(new ExplosionHit(player.getX(), player.getY()));
                         bullets.remove(j);
 
                         //Отскок
