@@ -34,7 +34,6 @@ public class ExplosionBigSize {
     }
 
     public void draw(Graphics2D g) {
-        System.out.println("РИСУЕМ ОГРОМНЫЙ ВЗРЫВ");
         g.drawImage(explosionsBigSize.get((counterImageFrame)), (int) x - r, (int) y - r, null);
     }
 }

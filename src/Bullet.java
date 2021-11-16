@@ -13,10 +13,10 @@ public class Bullet {
     public Point2D velocity = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
     private double angle;
-    private int timerMine;
+    private int timerMineExplosion;
     private boolean deadMine;
     private int r;
-    private int rMaxExplosion;
+    public  int rMineExplosion;
     private Point2D deltaPos;
     private double x;
     private double y;
@@ -31,12 +31,12 @@ public class Bullet {
 
     //Constructor
     public Bullet(int type, double x, double y, double angle) {
-        timerMine = 600;
-        rMaxExplosion = 300;
+        timerMineExplosion = 400;
         this.type = type;
         this.pos.set(x, y);
         int speed = 0;
         r = 0;
+        rMineExplosion = 0;
         switch (type) {
             case TYPE_MY_BULLET:
                 imgBullet = new ImageIcon("Image/bullets/bullet21.png").getImage();
@@ -52,6 +52,7 @@ public class Bullet {
                 System.out.println("MINE");
                 speed = 0;
                 r = 15;
+                rMineExplosion = r;
                 imgBullet = new ImageIcon("Image/bullets/mine.gif").getImage();
                 break;
         }
@@ -71,31 +72,18 @@ public class Bullet {
     }
 
     //Functions
-    public boolean isDeadMine(){
+    public boolean isDeadMine() {
         return deadMine;
     }
 
-
-    public void increaseRadius() {
-        System.out.println("Увеличиваем радиус");
-            r ++;
-            if (r >= rMaxExplosion) {
-                r = 15;
-            }
-    }
-
-
-
     public void update() {
-        if(type == TYPE_ENEMY_MINE) {
-            timerMine--;
-            if (timerMine == 1) {
-                r = 250;
-            }
-            if (timerMine == 0) {
-                deadMine = true;
-                timerMine = 600;
-            }
+        timerMineExplosion--;
+        if (timerMineExplosion == 1) {
+            rMineExplosion = 300;
+        }
+        if (timerMineExplosion == 0) {
+            timerMineExplosion = 400;
+            deadMine = true;
         }
         pos.add(deltaPos);
     }
@@ -129,6 +117,7 @@ public class Bullet {
         g.setTransform(origForm);//возвращаем старое значение
 
 //        g.drawOval((int) pos.x - r / 2, (int) pos.y - r / 2, r, r);
+//        g.drawOval((int) pos.x - rMineExplosion / 2, (int) pos.y - rMineExplosion / 2, rMineExplosion, rMineExplosion);
 
 //        g.drawImage(imgBullet, (int) nextPos.x - 4* r, (int) nextPos.y - 3 *r, null);
 
@@ -158,5 +147,8 @@ public class Bullet {
 
     public int getR() {
         return r;
+    }
+    public int getRMineExplosion(){
+     return rMineExplosion;
     }
 }
