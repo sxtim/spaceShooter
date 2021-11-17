@@ -4,10 +4,11 @@ import java.awt.geom.AffineTransform;
 
 public class Player {
     //Fields
-    private static Image imagePowerUpFrame = new ImageIcon("Image/icon/iconframepowerup.png").getImage();
-    private static Image imagePowerUp = new ImageIcon("Image/icon/iconpowerup.png").getImage();
+    public static Image imagePowerUpFrame = new ImageIcon("Image/icon/iconframepowerup.png").getImage();
+    public static Image imagePowerUp = new ImageIcon("Image/icon/iconpowerup.png").getImage();
     private static Image imageShip = new ImageIcon("Image/player/playership8.png").getImage();
-    private Image imageShield = new ImageIcon("Image/player/XDZT.gif").getImage();
+    private Image imageEnergyShield = new ImageIcon("Image/player/XDZT.gif").getImage();
+    public static long recoveryLength;
     public Point2D pos = new Point2D(0, 0);
     public Point2D velocity = new Point2D(0, 0);
     private Point2D acceleration = new Point2D(0, 0);
@@ -35,6 +36,7 @@ public class Player {
     };
 
     public Player() {
+        recoveryLength = 150;
         color = Color.RED;
         lives = 10;
         pos.set(GamePanel.WIDTH / 2.0, GamePanel.HEIGHT / 1.3);
@@ -144,7 +146,7 @@ public class Player {
         // пройденное время. разница между текущим временем и инициализированным таймером
         long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
         // сли отрезок времени (пройденное время между двумя запущенными таймерами) больше, то устанавливаем
-        if (elapsed > 400) {//recovery = false и recoveryTimer не запущен;
+        if (elapsed > recoveryLength) {//recovery = false и recoveryTimer не запущен;
             recovering = false;
             recoveryTimer = 0;
         }
@@ -181,15 +183,12 @@ public class Player {
             newForm.rotate(angle + Math.PI / 2, pos.x, pos.y);//вертим полученное изображение относительно X и Y
             g.setTransform(newForm);//ставим трансформированное изображение
             g.drawImage(imageShip, (int) pos.x - 60 / 2, (int) pos.y - 54 / 2, null);//рисуем картинку
-            g.drawImage(imageShield, (int) pos.x - 90 / 2, (int) pos.y - 90 / 2 + 3, null);//рисуем картинку
+            g.drawImage(imageEnergyShield, (int) pos.x - 90 / 2, (int) pos.y - 90 / 2 + 3, null);//рисуем картинку
             g.setTransform(origForm);//возвращаем старое значение
 
 
 //            g.setColor(Color.CYAN);
 //            g.drawOval((int) (pos.x - r), (int) (pos.y - r), r * 2, r * 2);
-
-
-
 
         } else {
             AffineTransform origForm; //создаем объект класса AffineTransform
@@ -202,17 +201,17 @@ public class Player {
         }
         //Draw player power
 
-        g.setColor(Color.ORANGE);
-        g.fillRect(20, 100, getPower() * 20, 20);
+//        g.setColor(Color.ORANGE);
+//        g.fillRect(20, 100, getPower() * 20, 20);
 
             g.drawImage(imagePowerUp, 20 + 36 * getPower(), 100,null);
 
 
 
-        g.setColor(Color.ORANGE.darker());
-        g.setStroke(new BasicStroke(4));
+//        g.setColor(Color.ORANGE.darker());
+//        g.setStroke(new BasicStroke(4));
         for (int i = 0; i < getRequiredPower(); i++) {
-            g.drawRect(20 + 20 * i, 100, 20, 20);
+//            g.drawRect(20 + 20 * i, 100, 20, 20);
             g.drawImage(imagePowerUpFrame, 20 + 36 * i, 100,null);
         }
 
@@ -275,5 +274,7 @@ public class Player {
         return requiredPower[powerLevel];
     }
 
-
+    public static void setRecoveryLength(long recoveryLength) {
+        Player.recoveryLength = recoveryLength;
+    }
 }

@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class PowerUp {
     //Fields
+    public static Image iconSlowDown = new ImageIcon("Image/icon/iconslowdown.png").getImage();
     public static final int TYPE_POWERUP = 1;
     public static final int TYPE_LIFE = 2;
     public static final int TYPE_SLOW_DOWN = 3;

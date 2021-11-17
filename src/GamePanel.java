@@ -1,10 +1,12 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
-    //Field
+    //========Field==========
     public static int WIDTH = 1800;
     public static int HEIGHT = 980;
     public static STATES state = STATES.MENU;//по умолчанию хотели бы попасть в меню
@@ -13,6 +15,11 @@ public class GamePanel extends JPanel implements Runnable {
     private double millisPerFrame;//миллисеккунд чтобы получить фпс
     private long timerFPS;
     private int sleepTime;
+
+    //Slow down
+    public long slowDownTimer;
+    public long slowDownTimerDiff;
+    public long slowDownLength;
 
     public static Point2D mousePos = new Point2D(0, 0);//координаты мыши
     public static boolean leftMouse;
@@ -68,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         FPS = 120;
         millisPerFrame = (float) 1000 / FPS; //сколько миллисекунд на отрисовку 1 кадра
+        slowDownLength = 6000;
         sleepTime = 0;
         leftMouse = false;
 
@@ -214,7 +222,7 @@ public class GamePanel extends JPanel implements Runnable {
                         else if (rand >= 2.6 && rand <= 5.0) powerUps.add(new PowerUp(PowerUp.TYPE_LIFE, e.getX(), e.getY()));
                         else if (rand >= 5.2 && rand <= 7.0) powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
                         else if (rand >= 7.5 && rand <= 10.0) powerUps.add(new PowerUp(PowerUp.TYPE_ENERGY_SHIELD, e.getX(), e.getY()));
-//                        else powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
+                        else powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
 
                         player.addScore(e.getType() * e.getRank());
                         enemies.remove(i);
@@ -297,20 +305,24 @@ public class GamePanel extends JPanel implements Runnable {
                     player.gainLife();
                 }
                 if (type == PowerUp.TYPE_SLOW_DOWN) {
-                    //TODO
+                    slowDownTimer = System.nanoTime();
                 }
                 if (type == PowerUp.TYPE_ENERGY_SHIELD){
                     //TODO
-                }
 
+                }
                 powerUps.remove(i);
                 i--;
             }
-
-
         }
 
-
+        //Slow down update
+        if(slowDownTimer != 0){//если таймер установлен
+            slowDownTimerDiff = (System.nanoTime() - slowDownTimer) / 1000000;//разница равна системное текущее время - то время когда ззапустился таймер
+            if(slowDownTimerDiff > slowDownLength) {//если разница больше установленной величины таймера, то устанавливаем таймер в 0
+                slowDownTimer = 0;//то устанавливаем таймер в 0
+            }
+        }
         //Wave update
         wave.update();
         //Explosion update
@@ -382,11 +394,22 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < powerUps.size(); i++) {
             powerUps.get(i).draw(g);
         }
+        //Slowdown meter draw
+        g.drawImage(Player.imagePowerUpFrame, 20, 145, null);
+        g.drawImage(PowerUp.iconSlowDown, 20,145,null);
+        if(slowDownTimer != 0) {
+            g.setColor(new Color(5,223,254,255));
+
+//            g.drawRect(20,160,100, 20);
+            g.fillRect(60,155,
+                    (int)(100 - 100.0 * slowDownTimerDiff / slowDownLength ), 22);
+        }
+
+
         //Explosion draw
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).draw(g);
         }
-        //SmallExplosion draw
         for (int i = 0; i < explosionHits.size(); i++) {
             explosionHits.get(i).draw(g);
         }
@@ -394,6 +417,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < explosionBigSizes.size(); i++) {
             explosionBigSizes.get(i).draw(g);
         }
+
 
     }
 
