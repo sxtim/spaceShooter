@@ -49,7 +49,6 @@ public class Bullet {
                 imgBullet = new ImageIcon("Image/bullets/bullet1.png").getImage();
                 break;
             case TYPE_ENEMY_MINE:
-                System.out.println("MINE");
                 speed = 0;
                 r = 15;
                 rMineExplosion = r;

@@ -208,14 +208,15 @@ public class GamePanel extends JPanel implements Runnable {
                     //Check dead enemies
                     if (e.isDead()) {
                         //Chance for powerUp
-                        double rand = Math.random();
+                        double rand =  (Math.random() * 10);
                         System.out.println(rand);
-                        if (rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else if (rand < 0.020) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else if (rand < 0.120) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                        if (rand <= 2.5) powerUps.add(new PowerUp(PowerUp.TYPE_POWERUP, e.getX(), e.getY()));
+                        else if (rand >= 2.6 && rand <= 5.0) powerUps.add(new PowerUp(PowerUp.TYPE_LIFE, e.getX(), e.getY()));
+                        else if (rand >= 5.2 && rand <= 7.0) powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
+                        else if (rand >= 7.5 && rand <= 10.0) powerUps.add(new PowerUp(PowerUp.TYPE_ENERGY_SHIELD, e.getX(), e.getY()));
+//                        else powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
 
-                        player.addScore(e.getType() + e.getRank());
+                        player.addScore(e.getType() * e.getRank());
                         enemies.remove(i);
                         i--;
                         e.explode();//деление метеоритов
@@ -241,7 +242,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //Check collision player and meteor
             if ((int) distance <= e.getR() + player.getR()) {
-                    System.out.println("register hit of meteor");
+//                    System.out.println("register hit of meteor");
 
                 //отнимаем жизнь у метеора
                 e.hit(false, player);
@@ -256,13 +257,15 @@ public class GamePanel extends JPanel implements Runnable {
                 //Check dead meteor
                 if (e.isDead()) {
                     //Chance for powerUp
+                    //TODO
                     double rand = Math.random();
-                    if (rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                    else if (rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
-                    else if (rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
-                    else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                    System.out.println(rand);
+                    if (rand < 0.001) powerUps.add(new PowerUp(PowerUp.TYPE_POWERUP, e.getX(), e.getY()));
+                    else if (rand < 0.020 ) powerUps.add(new PowerUp(PowerUp.TYPE_LIFE, e.getX(), e.getY()));
+                    else if (rand < 0.120) powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
+                    else powerUps.add(new PowerUp(PowerUp.TYPE_SLOW_DOWN, e.getX(), e.getY()));
                     //Add score
-                    player.addScore(e.getType() + e.getRank());
+                    player.addScore(e.getType() * e.getRank());
                     //Remove dead meteor
                     enemies.remove(i);
                     i--;
@@ -287,16 +290,18 @@ public class GamePanel extends JPanel implements Runnable {
             // collected PowerUp
             if (dist < playerR + powerUpR) {
                 int type = powerUp.getType();
-                if (type == 1) {
+                if (type == PowerUp.TYPE_POWERUP) {
                     player.increasePower(1);
                 }
-                if (type == 2) {
-                    player.increasePower(1);
+                if (type == PowerUp.TYPE_LIFE) {
+                    player.gainLife();
                 }
-                if (type == 3) {
-                    player.increasePower(2);
+                if (type == PowerUp.TYPE_SLOW_DOWN) {
+                    //TODO
                 }
-
+                if (type == PowerUp.TYPE_ENERGY_SHIELD){
+                    //TODO
+                }
 
                 powerUps.remove(i);
                 i--;
@@ -332,6 +337,7 @@ public class GamePanel extends JPanel implements Runnable {
                 i--;
             }
         }
+
     }
 
     public void gameRender() { // обновляет картинку
