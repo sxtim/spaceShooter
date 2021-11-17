@@ -8,15 +8,15 @@ public class Wave {
 
 
     private long waveTimer;//Timers
-    private long waveDelay;//Timers
-    private long waveTimerDiff;//Timers
+    private long waveDelay;
+    private long waveTimerDiff;
 
 
     //Constructor
     public Wave() {
         waveText = "WAVE: ";
         waveNumber = 1;
-        waveMultiplier = 2;
+        waveMultiplier = 7;
 
         waveTimer = 0;
         waveDelay = 1000; //orig 5000
@@ -32,14 +32,16 @@ public class Wave {
                 int rank = 1;
                 int type = Enemy.TYPE_MINER;
                 GamePanel.enemies.add(new Enemy(type, rank));
-//                type = Enemy.TYPE_FIGTHER_SNIPER;
-//                GamePanel.enemies.add(new Enemy(type, rank));
-//                type = Enemy.TYPE_METEOR_ALTERNATIVE;
-//                GamePanel.enemies.add(new Enemy(type, rank));
-//                type = Enemy.TYPE_FIGTHER_SNIPER;
-//                GamePanel.enemies.add(new Enemy(type, rank));
-//                rank = 2;
-//                GamePanel.enemies.add(new Enemy(type, rank));
+                type = Enemy.TYPE_FIGTHER_SNIPER;
+                GamePanel.enemies.add(new Enemy(type, rank));
+                type = Enemy.TYPE_METEOR_ALTERNATIVE;
+                GamePanel.enemies.add(new Enemy(type, rank));
+                type = Enemy.TYPE_METEOR_DEFAULT;
+                GamePanel.enemies.add(new Enemy(type, rank));
+                rank = 2;
+                GamePanel.enemies.add(new Enemy(type, rank));
+
+
 
 
 
@@ -83,7 +85,7 @@ public class Wave {
         if(alpha < 0) alpha = 0;//корректируем alpha
         if(alpha > 255) alpha = 255;//корректируем alpha
         g.setFont(AddFont.createFontSpaceHorizon(50));
-        g.setColor(new Color(200,52,200,(int) alpha));//рисуем с эффектом
+        g.setColor(new Color(5,223,254,(int) alpha));//рисуем с эффектом
         String s = waveText + waveNumber;
         long length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth(); //получаем длину текста в пикселях
 

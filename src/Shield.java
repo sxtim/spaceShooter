@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+
+// NOT USED
 public class Shield {
 
     //Fields

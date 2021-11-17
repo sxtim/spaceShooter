@@ -211,9 +211,9 @@ public class GamePanel extends JPanel implements Runnable {
                         double rand = Math.random();
                         System.out.println(rand);
                         if (rand < 0.001) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
-                        else if (rand < 0.020) powerUps.add(new PowerUp(3, e.getX(), e.getY()));
-                        else if (rand < 0.120) powerUps.add(new PowerUp(2, e.getX(), e.getY()));
-                        else powerUps.add(new PowerUp(2, e.getX(), e.getY()));
+                        else if (rand < 0.020) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                        else if (rand < 0.120) powerUps.add(new PowerUp(1, e.getX(), e.getY()));
+                        else powerUps.add(new PowerUp(1, e.getX(), e.getY()));
 
                         player.addScore(e.getType() + e.getRank());
                         enemies.remove(i);
@@ -288,7 +288,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (dist < playerR + powerUpR) {
                 int type = powerUp.getType();
                 if (type == 1) {
-                    player.gainLife();
+                    player.increasePower(1);
                 }
                 if (type == 2) {
                     player.increasePower(1);
@@ -342,8 +342,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Player draw
         player.draw(g);
-
+        //Player score draw
         g.setFont(AddFont.createFontSpaceHorizon(16));
+        g.setColor(new Color(5,223,254,255));
         g.drawString("Score: " + player.getScore(), 1600, 30);
         //Bullets draw
         for (Bullet bullet : bullets) {
@@ -351,6 +352,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //Bullets counter draw
         g.setFont(new Font("Consolas", Font.PLAIN, 18));
+        g.setColor(new Color(5,223,254,255));
         g.drawString("Bullets counter = " + bullets.size(), 1560, 900);
         //Draw Meteor enemies
         for (Enemy enemy : enemies) {
@@ -358,6 +360,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //Meteors counter
         g.setFont(new Font("Consolas", Font.PLAIN, 18));
+        g.setColor(new Color(5,223,254,255));
         g.drawString("Meteors counter = " + enemies.size(), 1560, 920);
 //                    //Meteor health counter
 //                    for (Enemy enemyMeteor : enemies) {

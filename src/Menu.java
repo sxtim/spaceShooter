@@ -13,7 +13,7 @@ public class Menu {
     public Menu() {
         buttonWidth = 240;
         buttonHeight = 120;
-        color = Color.WHITE;
+        color = new Color(5,223,254,(int) 255);
         text = "PLAY";
     }
 
@@ -45,7 +45,7 @@ public class Menu {
         g.drawRect(GamePanel.WIDTH / 2 - buttonWidth / 2, GamePanel.HEIGHT / 2 - buttonHeight / 2,
                 buttonWidth, buttonHeight);
 
-        g.setColor(new Color(255,255,255,transp));
+        g.setColor(new Color(5,223,254,transp));
 
         g.fillRect(GamePanel.WIDTH / 2 - buttonWidth / 2, GamePanel.HEIGHT / 2 - buttonHeight / 2,
                 buttonWidth, buttonHeight);

@@ -4,6 +4,8 @@ import java.awt.geom.AffineTransform;
 
 public class Player {
     //Fields
+    private static Image imagePowerUpFrame = new ImageIcon("Image/icon/iconframepowerup.png").getImage();
+    private static Image imagePowerUp = new ImageIcon("Image/icon/iconpowerup.png").getImage();
     private static Image imageShip = new ImageIcon("Image/player/playership8.png").getImage();
     private Image imageShield = new ImageIcon("Image/player/XDZT.gif").getImage();
     public Point2D pos = new Point2D(0, 0);
@@ -101,7 +103,6 @@ public class Player {
 
         angle = GamePanel.mousePos.copy().minus(pos).angle();
 
-
         acceleration.set(0, 0);
 
         //  System.out.println("движение вверх " + upMove());
@@ -137,9 +138,7 @@ public class Player {
                 GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle + 0.1));
                 GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle));
                 GamePanel.bullets.add(new Bullet(Bullet.TYPE_MY_BULLET, (int) GamePanel.player.getX(), (int) GamePanel.player.getY(), angle - 0.1));
-
             }
-
             isFiring = false;
         }
         // пройденное время. разница между текущим временем и инициализированным таймером
@@ -165,8 +164,6 @@ public class Player {
         } else if (pos.x > GamePanel.WIDTH) {
             pos.x = -r;
         }
-
-
     }
 
 
@@ -204,13 +201,31 @@ public class Player {
             g.setTransform(origForm);//возвращаем старое значение
         }
         //Draw player power
+
         g.setColor(Color.ORANGE);
         g.fillRect(20, 100, getPower() * 20, 20);
+
+            g.drawImage(imagePowerUp, 20 + 36 * getPower(), 100,null);
+
+
+
         g.setColor(Color.ORANGE.darker());
         g.setStroke(new BasicStroke(4));
         for (int i = 0; i < getRequiredPower(); i++) {
             g.drawRect(20 + 20 * i, 100, 20, 20);
+            g.drawImage(imagePowerUpFrame, 20 + 36 * i, 100,null);
         }
+
+
+
+
+//        g.setColor(Color.ORANGE);
+//        g.fillRect(20, 100, getPower() * 20, 20);
+//        g.setColor(Color.ORANGE.darker());
+//        g.setStroke(new BasicStroke(4));
+//        for (int i = 0; i < getRequiredPower(); i++) {
+//            g.drawRect(20 + 20 * i, 100, 20, 20);
+//        }
 
         //Draw player lives
         for (int i = 0; i < lives; i++)

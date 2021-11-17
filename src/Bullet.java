@@ -79,7 +79,7 @@ public class Bullet {
     public void update() {
         timerMineExplosion--;
         if (timerMineExplosion == 1) {
-            rMineExplosion = 300;
+            rMineExplosion = 200;
         }
         if (timerMineExplosion == 0) {
             timerMineExplosion = 400;
