@@ -306,6 +306,9 @@ public class GamePanel extends JPanel implements Runnable {
                 }
                 if (type == PowerUp.TYPE_SLOW_DOWN) {
                     slowDownTimer = System.nanoTime();
+                    for (int j = 0; j < enemies.size(); j++) {
+                        enemies.get(j).setSlow(true);
+                    }
                 }
                 if (type == PowerUp.TYPE_ENERGY_SHIELD){
                     //TODO
@@ -321,6 +324,9 @@ public class GamePanel extends JPanel implements Runnable {
             slowDownTimerDiff = (System.nanoTime() - slowDownTimer) / 1000000;//разница равна системное текущее время - то время когда ззапустился таймер
             if(slowDownTimerDiff > slowDownLength) {//если разница больше установленной величины таймера, то устанавливаем таймер в 0
                 slowDownTimer = 0;//то устанавливаем таймер в 0
+                for (int j = 0; j < enemies.size(); j++) {
+                    enemies.get(j).setSlow(false);
+                }
             }
         }
         //Wave update

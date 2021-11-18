@@ -19,6 +19,7 @@ public class Enemy {
 
     private boolean ready;
     private boolean dead;
+    public boolean slow;
     private int health;
     private int type;
     private int rank;
@@ -206,10 +207,19 @@ public class Enemy {
     int fireCooldownMine = (int) (Math.random() * 200);
 
     public void update() {
-        velocity.multiple(0.9);
-        velocity.add(acceleration);
-        velocity.clamp(3);
-        pos.add(velocity);
+        if(slow){
+            System.out.println("SLOW");
+            velocity.multiple(0.7);
+            velocity.add(acceleration);
+            velocity.clamp(3);
+            pos.add(velocity);
+        } else {
+            velocity.multiple(0.9);
+            velocity.add(acceleration);
+            velocity.clamp(3);
+            pos.add(velocity);
+        }
+
 
         if (type == TYPE_METEOR_DEFAULT) {
             angleRotate += Math.PI / 360;
@@ -300,6 +310,10 @@ public class Enemy {
 
 
     //Getters
+
+    public void setSlow(boolean b){
+        slow = b;
+    }
 
     public double getX() {
         return pos.x;
