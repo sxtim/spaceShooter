@@ -192,7 +192,7 @@ public class Enemy {
             dead = true;
         }
 
-//        System.out.println("Enemy health = " + health);
+
         // Отскок
         if (player != null) {
             Point2D delta = player.pos.copy().minus(pos);//расстояние между позициями игрока и метеора

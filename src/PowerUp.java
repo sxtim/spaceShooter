@@ -17,7 +17,8 @@ public class PowerUp {
     private int type;
     // 1 -- +1 power
     // 2 -- +1 life
-    // 3 -- +2 power
+    // 3 -- slowdown
+    // 4 -- energy shield
 
 
     //Constructor
@@ -48,19 +49,6 @@ public class PowerUp {
             }
         }
 
-//        if (type == 1) {
-//            color1 = Color.PINK;
-//            r = 10;
-//        }
-//        if (type == 2) {
-//            image = new ImageIcon("Image/iconpowerup.png").getImage();
-//            r = 18;
-//        }
-//        if (type == 3) {
-//            color1 = Color.YELLOW.darker();
-//            r = 20;
-//        }
-
 
     }
 
@@ -76,12 +64,7 @@ public class PowerUp {
         g.drawImage(image, (int) x - r, (int) y - r, null);
 
 
-//        g.fillRect((int) x - r, (int) y - r, 2 * r, 2 * r);
-//
-//        g.setStroke(new BasicStroke(3));
-//        g.setColor(color1.darker());
-//        g.drawRect((int) x - r, (int) y - r, 2 * r, 2 * r);
-//        g.setStroke(new BasicStroke(3));
+
     }
 
 

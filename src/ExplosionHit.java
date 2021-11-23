@@ -33,7 +33,7 @@ public class ExplosionHit {
     }
 
     public void draw(Graphics2D g) {
-//        System.out.println("РИСУЕМ МАЛЕНЬКИЙ ВЗРЫВ");
+
         g.drawImage(explosionsSmallImage.get((counterImageFrame)), (int) x - 124, (int) y - 124, null);
     }
 }

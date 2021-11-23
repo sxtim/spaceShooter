@@ -50,12 +50,12 @@ public class Menu {
         g.fillRect(GamePanel.WIDTH / 2 - buttonWidth / 2, GamePanel.HEIGHT / 2 - buttonHeight / 2,
                 buttonWidth, buttonHeight);
 
-        g.setStroke(new BasicStroke(1));//возвращаем толщину контцров кнопки
+        g.setStroke(new BasicStroke(1));
 
         g.setColor(color);
         g.setFont(AddFont.createFontSpaceHorizon(40));
 
-//        g.setFont(new Font("Consolas", Font.BOLD, 60));
+
         long length = (int) g.getFontMetrics().getStringBounds(text, g).getWidth();//определяем длинну надписи, чтоб разместить ее по центру
         g.drawString(text, (int) (GamePanel.WIDTH / 2 - length / 2), (int) GamePanel.HEIGHT / 2 + buttonHeight / 5);
 
